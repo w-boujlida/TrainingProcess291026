@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { RECRUITMENT_CATEGORIES, USER_MANAGERS } from '../roles';
 import Icon from './Icon';
@@ -15,6 +15,10 @@ export default function Layout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const shift = useMemo(getCurrentShift, []);
+  const { pathname } = useLocation();
+  const employeesActive = pathname.startsWith('/recruitment');
+  const [employeesOpen, setEmployeesOpen] = useState(true);
+  useEffect(() => { if (employeesActive) setEmployeesOpen(true); }, [employeesActive]);
   const initials = user.fullName.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
 
   const handleLogout = () => {
@@ -57,9 +61,18 @@ export default function Layout({ children }) {
 
           <div className="nav-group">
             <span className="nav-group-title">Recrutement</span>
-            {RECRUITMENT_CATEGORIES.map((c) => (
-              <NavLink key={c.code} to={`/recruitment/${c.slug}`} className={navClass}><Icon name={c.icon} />{c.label}</NavLink>
-            ))}
+            <button type="button" className={`nav-item nav-parent${employeesActive ? ' parent-active' : ''}`}
+              onClick={() => setEmployeesOpen((o) => !o)} aria-expanded={employeesOpen}>
+              <Icon name="users" />Employés
+              <Icon name="chevron" size={13} className={`nav-chevron${employeesOpen ? ' open' : ''}`} />
+            </button>
+            {employeesOpen && (
+              <div className="nav-sub">
+                {RECRUITMENT_CATEGORIES.map((c) => (
+                  <NavLink key={c.code} to={`/recruitment/${c.slug}`} className={navClass}><Icon name={c.icon} />{c.label}</NavLink>
+                ))}
+              </div>
+            )}
           </div>
 
           {USER_MANAGERS.includes(user.role) && (

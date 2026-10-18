@@ -245,7 +245,7 @@ export default function RecruitmentPage() {
 
   return (
     <>
-      <PageHeader title={`Recrutement — ${category.label}`} subtitle="Suivi des candidats et des recrutements" />
+      <PageHeader title={`Employés — ${category.label}`} subtitle="Recrutement · suivi des candidats et des recrutements" />
       <div className="content">
         <div className="stats-grid stats-grid-6">
           <div className="stat-card stat-green">

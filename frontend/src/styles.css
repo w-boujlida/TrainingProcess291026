@@ -489,3 +489,12 @@ fieldset:disabled .form-input { background: #f8fafc; color: var(--text-primary);
 }
 .form-section-title:not(:first-child) { margin-top: 10px; }
 .form-textarea { resize: vertical; min-height: 70px; font-family: inherit; }
+
+/* Sidebar sub-menu */
+.nav-parent { cursor: pointer; font-family: inherit; text-align: left; }
+.nav-parent.parent-active { color: #fff; }
+.nav-parent.parent-active svg { stroke: #86efac; }
+.nav-chevron { margin-left: auto; transition: transform .2s; }
+.nav-chevron.open { transform: rotate(180deg); }
+.nav-sub { margin: 2px 0 4px 14px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,.1); }
+.nav-sub .nav-item { padding: 7px 10px; font-size: 12.5px; }
