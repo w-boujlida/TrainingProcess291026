@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { recruitmentApi } from '../api/recruitment.api';
 import { errorMessage } from '../api/client';
 import { useAuth } from '../contexts/AuthContext';
-import { CANDIDATE_STATUSES, RECRUITMENT_CATEGORIES, RECRUITMENT_EDITORS, SHIFTS } from '../roles';
+import { CANDIDATE_STATUSES, RECRUITMENT_CATEGORIES, RECRUITMENT_EDITORS, SHIFTS, TRAINING_LEVELS } from '../roles';
 import PageHeader from '../components/PageHeader';
 import Icon from '../components/Icon';
 import ImportExcelModal from '../components/ImportExcelModal';
@@ -11,8 +11,22 @@ import ImportExcelModal from '../components/ImportExcelModal';
 const EMPTY_FORM = {
   matricule: '', fullName: '', cin: '', birthDate: '', phone: '', email: '', address: '',
   position: '', department: '', hireDate: '', educationLevel: '', shift: '',
-  trainerId: '', teamLeaderId: '', status: 'CANDIDAT', remarks: '',
+  trainerId: '', teamLeaderId: '', status: 'CANDIDAT', remarks: '', trainingLevel: '',
 };
+
+/** Mirrors backend TrainingLevel.trialEnd (java.time.Period semantics: month added first, day clamped). */
+function trialEnd(hireDate, level) {
+  if (!hireDate || !level) return '';
+  const [y, m, d] = hireDate.split('-').map(Number);
+  let date;
+  if (level === 'APPRENTIE') {
+    const lastDay = new Date(y, m + 1, 0).getDate();
+    date = new Date(y, m, Math.min(d, lastDay) + 15);
+  } else {
+    date = new Date(y, m - 1, d + (level === 'JUNIOR' ? 21 : 15));
+  }
+  return date.toLocaleDateString('fr-FR');
+}
 
 const STATUS_STATS = [
   { code: 'CANDIDAT', label: 'Candidats', color: 'stat-blue', icon: 'user' },
@@ -47,11 +61,91 @@ function toPayload(form, category) {
   return payload;
 }
 
-function CandidateModal({ candidate, category, staff, positions, readOnly, onClose, onSaved }) {
+/** First step for Direct (position) and Formation (level): a focused pop-up before the full form. */
+function PreStepModal({ category, positions, onClose, onContinue }) {
+  const isLevel = Boolean(category.hasLevel);
+  const [value, setValue] = useState('');
+  const [query, setQuery] = useState('');
+  const options = isLevel
+    ? TRAINING_LEVELS
+    : positions
+      .filter((p) => p.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '')
+        .includes(query.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '')))
+      .map((p) => ({ code: p, label: p }));
+  const next = (v = value) => { if (v) onContinue(isLevel ? { trainingLevel: v } : { position: v }); };
+
+  return (
+    <div className="modal-backdrop" onMouseDown={onClose}>
+      <form className={`modal-card ${isLevel ? 'modal-md' : 'modal-wide'}`} onMouseDown={(e) => e.stopPropagation()}
+        onSubmit={(e) => { e.preventDefault(); next(); }}>
+        <div className="modal-head">
+          <div className="modal-head-title">
+            <Icon name={isLevel ? 'graduation' : 'briefcase'} size={17} />
+            Nouveau candidat — {category.label}
+          </div>
+          <button type="button" className="modal-close" onClick={onClose} aria-label="Fermer"><Icon name="x" size={18} /></button>
+        </div>
+        <div className="modal-body-pad">
+          <div className="prestep-head">
+            <span className="prestep-badge">Étape 1 / 2</span>
+            <div>
+              <div className="prestep-title">{isLevel ? 'Choisir le niveau' : 'Choisir le poste'}</div>
+              <div className="prestep-sub">
+                {isLevel ? 'Le niveau détermine la durée de la période d\'essai.' : 'Sélectionnez le poste avant de remplir la fiche.'}
+              </div>
+            </div>
+          </div>
+
+          {!isLevel && (
+            <div className="search-container prestep-search">
+              <span className="search-icon"><Icon name="search" size={14} /></span>
+              <input className="search-input" placeholder="Rechercher un poste…" value={query} autoFocus
+                onChange={(e) => setQuery(e.target.value)} />
+            </div>
+          )}
+
+          <div className={isLevel ? 'choice-grid choice-grid-3' : 'choice-grid choice-grid-pos'} role="radiogroup">
+            {options.map((o) => {
+              const checked = value === o.code;
+              return (
+                <label key={o.code} className={`choice-card${checked ? ' checked' : ''}${o.color ? ` ${o.color}` : ''}`}
+                  onDoubleClick={() => next(o.code)}>
+                  <input type="checkbox" checked={checked} onChange={() => setValue(checked ? '' : o.code)}
+                    aria-label={o.label} />
+                  <span className="choice-check"><Icon name="check" size={12} strokeWidth={3} /></span>
+                  {isLevel ? (
+                    <span className="choice-body">
+                      <span className="choice-icon"><Icon name={o.icon} size={20} /></span>
+                      <span className="choice-label">{o.label}</span>
+                      <span className="choice-trial"><Icon name="clock" size={12} />Période d'essai : {o.trial}</span>
+                      <span className="choice-hint">{o.hint}</span>
+                    </span>
+                  ) : (
+                    <span className="choice-label">{o.label}</span>
+                  )}
+                </label>
+              );
+            })}
+            {!isLevel && options.length === 0 && <div className="empty-hint">Aucun poste ne correspond.</div>}
+          </div>
+        </div>
+        <div className="modal-foot">
+          <button type="button" className="btn btn-secondary" onClick={onClose}>Annuler</button>
+          <button type="submit" className="btn btn-primary" disabled={!value}>
+            Continuer<Icon name="arrowRight" size={14} strokeWidth={2.5} />
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function CandidateModal({ candidate, preset, category, staff, positions, readOnly, onClose, onSaved }) {
   const isEdit = Boolean(candidate);
   const fixedPositions = positions.length > 0;
+  const hasLevel = Boolean(category.hasLevel);
   const [form, setForm] = useState(() => {
-    const f = toForm(candidate);
+    const f = { ...toForm(candidate), ...preset };
     // A legacy free-text position must be replaced by a value from the list.
     if (fixedPositions && !readOnly && f.position && !positions.includes(f.position)) f.position = '';
     return f;
@@ -65,6 +159,7 @@ function CandidateModal({ candidate, category, staff, positions, readOnly, onClo
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (readOnly) return;
+    if (hasLevel && !form.trainingLevel) { setError('Choisissez le niveau : Apprentie, Junior ou Confirmée.'); return; }
     setError('');
     setSaving(true);
     try {
@@ -88,7 +183,8 @@ function CandidateModal({ candidate, category, staff, positions, readOnly, onClo
     </div>
   );
 
-  const title = readOnly ? 'Fiche candidat' : isEdit ? 'Modifier le candidat' : `Nouveau candidat — ${category.label}`;
+  const title = readOnly ? 'Fiche candidat' : isEdit ? 'Modifier le candidat'
+    : `Nouveau candidat — ${category.label}${preset ? ' · Étape 2 / 2' : ''}`;
 
   return (
     <div className="modal-backdrop" onMouseDown={onClose}>
@@ -108,11 +204,36 @@ function CandidateModal({ candidate, category, staff, positions, readOnly, onClo
               <label className="form-label label-required" htmlFor="c-position">
                 <Icon name="briefcase" size={14} />Poste {category.label}
               </label>
-              <select id="c-position" className="form-input" value={form.position} onChange={set('position')} required autoFocus={!isEdit}>
+              <select id="c-position" className="form-input" value={form.position} onChange={set('position')} required autoFocus={!isEdit && !preset?.position}>
                 <option value="">— Choisir le poste —</option>
                 {form.position && !positions.includes(form.position) && <option value={form.position}>{form.position}</option>}
                 {positions.map((p) => <option key={p} value={p}>{p}</option>)}
               </select>
+            </div>
+          )}
+
+          {hasLevel && (
+            <div className="position-picker">
+              <div className="form-label label-required"><Icon name="graduation" size={14} />Niveau</div>
+              <div className="level-inline" role="radiogroup" aria-label="Niveau">
+                {TRAINING_LEVELS.map((l) => (
+                  <label key={l.code} className={`level-chip ${l.color}${form.trainingLevel === l.code ? ' checked' : ''}`}>
+                    <input type="checkbox" checked={form.trainingLevel === l.code}
+                      onChange={() => setForm((f) => ({ ...f, trainingLevel: l.code }))} />
+                    <span className="choice-check"><Icon name="check" size={11} strokeWidth={3} /></span>
+                    <span>{l.label}</span><small>{l.trial}</small>
+                  </label>
+                ))}
+              </div>
+              {form.trainingLevel && (
+                <div className="trial-info">
+                  <Icon name="clock" size={13} />
+                  Période d'essai : <strong>{TRAINING_LEVELS.find((l) => l.code === form.trainingLevel)?.trial}</strong>
+                  {form.hireDate
+                    ? <> · fin prévue le <strong>{trialEnd(form.hireDate, form.trainingLevel)}</strong></>
+                    : <> · renseignez la date de recrutement pour calculer la fin</>}
+                </div>
+              )}
             </div>
           )}
 
@@ -210,6 +331,7 @@ export default function RecruitmentPage() {
   const [exporting, setExporting] = useState(false);
   const [positionsMap, setPositionsMap] = useState({});
   const [positionFilter, setPositionFilter] = useState('');
+  const [levelFilter, setLevelFilter] = useState('');
   const positions = positionsMap[category?.code] || [];
 
   useEffect(() => {
@@ -219,7 +341,7 @@ export default function RecruitmentPage() {
   useEffect(() => {
     if (!category) return;
     let cancelled = false;
-    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setPositionFilter(''); setModal(null); setImportOpen(false);
+    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setPositionFilter(''); setLevelFilter(''); setModal(null); setImportOpen(false);
     Promise.all([recruitmentApi.list(category.code), recruitmentApi.staff()])
       .then(([c, s]) => { if (!cancelled) { setCandidates(c); setStaff(s); } })
       .catch((err) => { if (!cancelled) setError(errorMessage(err)); })
@@ -232,9 +354,10 @@ export default function RecruitmentPage() {
     return candidates.filter((c) =>
       (!statusFilter || c.status === statusFilter)
       && (!positionFilter || c.position === positionFilter)
+      && (!levelFilter || c.trainingLevel === levelFilter)
       && (!q || [c.fullName, c.cin, c.matricule, c.position, c.department, c.phone]
         .some((v) => (v || '').toLowerCase().includes(q))));
-  }, [candidates, search, statusFilter, positionFilter]);
+  }, [candidates, search, statusFilter, positionFilter, levelFilter]);
 
   const counts = useMemo(() => {
     const map = Object.fromEntries(CANDIDATE_STATUSES.map((s) => [s.code, 0]));
@@ -323,6 +446,12 @@ export default function RecruitmentPage() {
                   {positions.map((p) => <option key={p} value={p}>{p}</option>)}
                 </select>
               )}
+              {category.hasLevel && (
+                <select className="filter-select" value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)} aria-label="Filtrer par niveau">
+                  <option value="">Tous les niveaux</option>
+                  {TRAINING_LEVELS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
+                </select>
+              )}
               <button className="tool-btn" onClick={handleExport} disabled={exporting || loading} title="Exporter la liste en Excel">
                 {exporting ? <span className="btn-spinner dark" /> : <Icon name="download" size={14} />}Exporter
               </button>
@@ -332,7 +461,7 @@ export default function RecruitmentPage() {
                 </button>
               )}
               {canEdit && (
-                <button className="add-btn" onClick={() => setModal({ mode: 'create' })}>
+                <button className="add-btn" onClick={() => setModal({ mode: (category.hasLevel || positions.length) ? 'pick' : 'create' })}>
                   <Icon name="plus" size={13} strokeWidth={2.5} />Nouveau candidat
                 </button>
               )}
@@ -365,6 +494,12 @@ export default function RecruitmentPage() {
                     <td className="left wrap">
                       <div className="cell-main">{c.position || '—'}</div>
                       <div className="cell-sub">{c.department || ''}</div>
+                      {category.hasLevel && c.trainingLevel && (
+                        <div className="level-row">
+                          <span className={`level-badge ${TRAINING_LEVELS.find((l) => l.code === c.trainingLevel)?.color || ''}`}>{c.trainingLevelLabel}</span>
+                          {c.trialEndDate && <span className="cell-sub" title="Fin de période d'essai">fin essai {formatDate(c.trialEndDate)}</span>}
+                        </div>
+                      )}
                     </td>
                     <td className="muted-cell">{formatDate(c.hireDate)}</td>
                     <td>{c.shiftLabel ? <span className="shift-chip">{c.shiftLabel}</span> : <span className="muted-cell">—</span>}</td>
@@ -400,8 +535,12 @@ export default function RecruitmentPage() {
         </div>
       </div>
 
-      {modal && (
-        <CandidateModal candidate={modal.candidate} category={category} staff={staff} positions={positions}
+      {modal?.mode === 'pick' && (
+        <PreStepModal category={category} positions={positions} onClose={() => setModal(null)}
+          onContinue={(preset) => setModal({ mode: 'create', preset })} />
+      )}
+      {modal && modal.mode !== 'pick' && (
+        <CandidateModal candidate={modal.candidate} preset={modal.preset} category={category} staff={staff} positions={positions}
           readOnly={modal.mode === 'view'} onClose={() => setModal(null)} onSaved={handleSaved} />
       )}
       {importOpen && (

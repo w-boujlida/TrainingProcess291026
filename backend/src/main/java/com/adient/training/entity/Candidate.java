@@ -58,6 +58,10 @@ public class Candidate {
     @Column(length = 20)
     private WorkShift shift;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "training_level", length = 20)
+    private TrainingLevel trainingLevel;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trainer_id")
     private AppUser trainer;
@@ -117,6 +121,8 @@ public class Candidate {
     public void setEducationLevel(String educationLevel) { this.educationLevel = educationLevel; }
     public WorkShift getShift() { return shift; }
     public void setShift(WorkShift shift) { this.shift = shift; }
+    public TrainingLevel getTrainingLevel() { return trainingLevel; }
+    public void setTrainingLevel(TrainingLevel trainingLevel) { this.trainingLevel = trainingLevel; }
     public AppUser getTrainer() { return trainer; }
     public void setTrainer(AppUser trainer) { this.trainer = trainer; }
     public AppUser getTeamLeader() { return teamLeader; }

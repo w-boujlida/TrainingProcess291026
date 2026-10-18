@@ -32,6 +32,9 @@ public enum RecruitmentCategory {
 
     public boolean hasFixedPositions() { return !positions.isEmpty(); }
 
+    /** Formation employees must have a level (Apprentie / Junior / Confirmée). */
+    public boolean requiresTrainingLevel() { return this == FORMATION; }
+
     /** Returns the canonical position label matching the value (ignoring case, accents, spaces and symbols). */
     public Optional<String> resolvePosition(String value) {
         if (value == null) return Optional.empty();

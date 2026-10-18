@@ -37,8 +37,10 @@ public class CandidateExcelService {
     private static final String[] HEADERS = {
             "Matricule", "Nom et prénom *", "CIN *", "Date de naissance", "Téléphone", "E-mail", "Adresse",
             "Poste / fonction", "Département / ligne", "Date de recrutement", "Niveau d'étude / diplôme",
-            "Shift", "Formatrice", "Team leader", "Statut", "Remarques"};
-    private static final int[] WIDTHS = {14, 26, 14, 16, 16, 26, 30, 24, 22, 18, 22, 12, 22, 22, 15, 40};
+            "Shift", "Formatrice", "Team leader", "Statut", "Remarques", "Niveau", "Fin période d'essai"};
+    private static final int[] WIDTHS = {14, 26, 14, 16, 16, 26, 30, 24, 22, 18, 22, 12, 22, 22, 15, 40, 14, 18};
+    /** Columns 16+ (level, trial end) only exist for categories with a training level. */
+    private static final int BASE_COLUMNS = 16;
     private static final Set<Integer> DATE_COLS = Set.of(3, 9);
 
     private final CandidateRepository candidates;
@@ -60,18 +62,21 @@ public class CandidateExcelService {
     public byte[] export(RecruitmentCategory category) {
         List<Candidate> list = candidates.findAllByCategoryOrderByCreatedAtDesc(category);
         try (XSSFWorkbook wb = new XSSFWorkbook()) {
-            Sheet sheet = createDataSheet(wb, category.getLabel());
+            Sheet sheet = createDataSheet(wb, category);
             CellStyle dateStyle = dateStyle(wb);
             int r = 1;
             for (Candidate c : list) {
                 Row row = sheet.createRow(r++);
+                TrainingLevel level = c.getTrainingLevel();
                 Object[] values = {c.getMatricule(), c.getFullName(), c.getCin(), c.getBirthDate(), c.getPhone(),
                         c.getEmail(), c.getAddress(), c.getPosition(), c.getDepartment(), c.getHireDate(),
                         c.getEducationLevel(), c.getShift() == null ? null : c.getShift().getLabel(),
                         c.getTrainer() == null ? null : c.getTrainer().getFullName(),
                         c.getTeamLeader() == null ? null : c.getTeamLeader().getFullName(),
-                        c.getStatus().getLabel(), c.getRemarks()};
-                for (int i = 0; i < values.length; i++) {
+                        c.getStatus().getLabel(), c.getRemarks(),
+                        level == null ? null : level.getLabel(),
+                        level == null ? null : level.trialEnd(c.getHireDate())};
+                for (int i = 0; i < columnCount(category); i++) {
                     if (values[i] == null) continue;
                     Cell cell = row.createCell(i);
                     if (values[i] instanceof LocalDate d) {
@@ -92,7 +97,7 @@ public class CandidateExcelService {
     @Transactional(readOnly = true)
     public byte[] template(RecruitmentCategory category) {
         try (XSSFWorkbook wb = new XSSFWorkbook()) {
-            Sheet sheet = createDataSheet(wb, category.getLabel());
+            Sheet sheet = createDataSheet(wb, category);
             addValidations(sheet, category, 1000);
 
             Sheet help = wb.createSheet("Instructions");
@@ -104,6 +109,11 @@ public class CandidateExcelService {
                     category.hasFixedPositions()
                             ? "• Poste (liste déroulante) : " + String.join(", ", category.getPositions())
                             : "• Poste : texte libre.",
+                    category.requiresTrainingLevel()
+                            ? "• Niveau (obligatoire) : " + Arrays.stream(TrainingLevel.values())
+                                    .map(l -> l.getLabel() + " (" + l.getTrialLabel() + ")").collect(Collectors.joining(", "))
+                                    + ". La fin de période d'essai est calculée à partir de la date de recrutement (colonne ignorée à l'import)."
+                            : "",
                     "• Si le CIN existe déjà dans cette catégorie, la fiche est mise à jour (les cellules vides ne modifient rien).",
                     "• Dates : format JJ/MM/AAAA ou cellule de type date.",
                     "• Shift : " + Arrays.stream(WorkShift.values()).map(WorkShift::getLabel).collect(Collectors.joining(", ")),
@@ -232,6 +242,7 @@ public class CandidateExcelService {
         d.teamLeader = text(row, cols.get(13), fmt);
         d.status = text(row, cols.get(14), fmt);
         d.remarks = text(row, cols.get(15), fmt);
+        d.trainingLevel = text(row, cols.get(16), fmt);
         return d;
     }
 
@@ -242,11 +253,13 @@ public class CandidateExcelService {
                 : parseEnum(CandidateStatus.values(), d.status, CandidateStatus::getLabel, "Statut");
         Long trainerId = d.trainer == null ? null : staffId(trainers, d.trainer, "Formatrice");
         Long leaderId = d.teamLeader == null ? null : staffId(leaders, d.teamLeader, "Team leader");
+        TrainingLevel level = d.trainingLevel == null || !category.requiresTrainingLevel() ? null
+                : parseEnum(TrainingLevel.values(), d.trainingLevel, TrainingLevel::getLabel, "Niveau");
 
         if (existing == null) {
             return new CandidateRequest(category, d.matricule, d.fullName, d.cin, d.birthDate, d.phone, d.email,
                     d.address, d.position, d.department, d.hireDate, d.educationLevel, shift, trainerId, leaderId,
-                    status, d.remarks);
+                    status, d.remarks, level);
         }
         // Update: empty cells keep the current values.
         return new CandidateRequest(category,
@@ -258,7 +271,7 @@ public class CandidateExcelService {
                 or(shift, existing.getShift()),
                 or(trainerId, existing.getTrainer() == null ? null : existing.getTrainer().getId()),
                 or(leaderId, existing.getTeamLeader() == null ? null : existing.getTeamLeader().getId()),
-                status, or(d.remarks, existing.getRemarks()));
+                status, or(d.remarks, existing.getRemarks()), or(level, existing.getTrainingLevel()));
     }
 
     private void validate(CandidateRequest req) {
@@ -294,8 +307,13 @@ public class CandidateExcelService {
 
     // ---------------------------------------------------------------- helpers
 
-    private Sheet createDataSheet(XSSFWorkbook wb, String name) {
-        Sheet sheet = wb.createSheet(name);
+    private static int columnCount(RecruitmentCategory category) {
+        return category.requiresTrainingLevel() ? HEADERS.length : BASE_COLUMNS;
+    }
+
+    private Sheet createDataSheet(XSSFWorkbook wb, RecruitmentCategory category) {
+        int count = columnCount(category);
+        Sheet sheet = wb.createSheet(category.getLabel());
         CellStyle head = wb.createCellStyle();
         Font font = wb.createFont();
         font.setBold(true);
@@ -307,7 +325,7 @@ public class CandidateExcelService {
         head.setVerticalAlignment(VerticalAlignment.CENTER);
         Row header = sheet.createRow(0);
         header.setHeightInPoints(22);
-        for (int i = 0; i < HEADERS.length; i++) {
+        for (int i = 0; i < count; i++) {
             Cell c = header.createCell(i);
             c.setCellValue(HEADERS[i]);
             c.setCellStyle(head);
@@ -317,11 +335,12 @@ public class CandidateExcelService {
         CellStyle text = wb.createCellStyle();
         text.setDataFormat(wb.createDataFormat().getFormat("@"));
         for (int col : DATE_COLS) sheet.setDefaultColumnStyle(col, dateStyle);
+        if (count > BASE_COLUMNS) sheet.setDefaultColumnStyle(17, dateStyle);
         sheet.setDefaultColumnStyle(0, text);
         sheet.setDefaultColumnStyle(2, text);
         sheet.setDefaultColumnStyle(4, text);
         sheet.createFreezePane(0, 1);
-        sheet.setAutoFilter(new org.apache.poi.ss.util.CellRangeAddress(0, 0, 0, HEADERS.length - 1));
+        sheet.setAutoFilter(new org.apache.poi.ss.util.CellRangeAddress(0, 0, 0, count - 1));
         return sheet;
     }
 
@@ -342,6 +361,9 @@ public class CandidateExcelService {
         }
         addList(sheet, helper, 11, lastRow, Arrays.stream(WorkShift.values()).map(WorkShift::getLabel).toArray(String[]::new));
         addList(sheet, helper, 14, lastRow, Arrays.stream(CandidateStatus.values()).map(CandidateStatus::getLabel).toArray(String[]::new));
+        if (category.requiresTrainingLevel()) {
+            addList(sheet, helper, 16, lastRow, Arrays.stream(TrainingLevel.values()).map(TrainingLevel::getLabel).toArray(String[]::new));
+        }
     }
 
     private void addList(Sheet sheet, DataValidationHelper helper, int col, int lastRow, String[] values) {
@@ -410,7 +432,7 @@ public class CandidateExcelService {
 
     private static final class RowData {
         String matricule, fullName, cin, phone, email, address, position, department, educationLevel,
-                shift, trainer, teamLeader, status, remarks;
+                shift, trainer, teamLeader, status, remarks, trainingLevel;
         LocalDate birthDate, hireDate;
     }
 

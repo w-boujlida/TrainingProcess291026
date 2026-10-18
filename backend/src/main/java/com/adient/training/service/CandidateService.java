@@ -104,6 +104,14 @@ public class CandidateService {
         c.setTrainer(staffMember(req.trainerId(), Role.FORMATRICE, "La formatrice sélectionnée est invalide."));
         c.setTeamLeader(staffMember(req.teamLeaderId(), Role.TEAM_LEADER, "Le team leader sélectionné est invalide."));
         c.setRemarks(clean(req.remarks()));
+        if (req.category().requiresTrainingLevel()) {
+            if (req.trainingLevel() == null) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Le niveau (Apprentie, Junior ou Confirmée) est obligatoire.");
+            }
+            c.setTrainingLevel(req.trainingLevel());
+        } else {
+            c.setTrainingLevel(null);
+        }
     }
 
     private static String position(RecruitmentCategory category, String value) {

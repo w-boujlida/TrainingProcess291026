@@ -22,7 +22,14 @@ export const RECRUITMENT_CATEGORIES = [
   { code: 'CADRE', slug: 'cadre', label: 'Cadre', icon: 'briefcase' },
   { code: 'DIRECT', slug: 'direct', label: 'Direct', icon: 'tool' },
   { code: 'INDIRECT', slug: 'indirect', label: 'Indirect', icon: 'layers' },
-  { code: 'FORMATION', slug: 'formation', label: 'Formation', icon: 'graduation' },
+  { code: 'FORMATION', slug: 'formation', label: 'Formation', icon: 'graduation', hasLevel: true },
+];
+
+/** Formation levels; mirrors backend TrainingLevel. */
+export const TRAINING_LEVELS = [
+  { code: 'APPRENTIE', label: 'Apprentie', trial: '1 mois et demi', hint: 'Débutante, découverte du poste', icon: 'graduation', color: 'level-apprentie' },
+  { code: 'JUNIOR', label: 'Junior', trial: '2 à 3 semaines', hint: 'Notions acquises, montée en autonomie', icon: 'userCheck', color: 'level-junior' },
+  { code: 'CONFIRMEE', label: 'Confirmée', trial: '15 jours', hint: 'Expérimentée, autonome au poste', icon: 'checkCircle', color: 'level-confirmee' },
 ];
 
 export const CANDIDATE_STATUSES = [

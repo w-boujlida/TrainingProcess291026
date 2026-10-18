@@ -4,6 +4,7 @@ import com.adient.training.entity.AppUser;
 import com.adient.training.entity.Candidate;
 import com.adient.training.entity.CandidateStatus;
 import com.adient.training.entity.RecruitmentCategory;
+import com.adient.training.entity.TrainingLevel;
 import com.adient.training.entity.WorkShift;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -38,7 +39,8 @@ public final class RecruitmentDtos {
             Long trainerId,
             Long teamLeaderId,
             CandidateStatus status,
-            @Size(max = 2000, message = "Les remarques sont trop longues.") String remarks) {}
+            @Size(max = 2000, message = "Les remarques sont trop longues.") String remarks,
+            TrainingLevel trainingLevel) {}
 
     public record CandidateStatusRequest(@NotNull(message = "Le statut est obligatoire.") CandidateStatus status) {}
 
@@ -57,8 +59,10 @@ public final class RecruitmentDtos {
                                String email, String address, String position, String department,
                                LocalDate hireDate, String educationLevel, String shift, String shiftLabel,
                                StaffDto trainer, StaffDto teamLeader, String remarks, String createdBy,
-                               LocalDateTime createdAt, LocalDateTime updatedAt) {
+                               LocalDateTime createdAt, LocalDateTime updatedAt, String trainingLevel,
+                               String trainingLevelLabel, String trialLabel, LocalDate trialEndDate) {
         public static CandidateDto of(Candidate c) {
+            TrainingLevel level = c.getTrainingLevel();
             return new CandidateDto(c.getId(), c.getCategory().name(), c.getCategory().getLabel(),
                     c.getStatus().name(), c.getStatus().getLabel(), c.getMatricule(), c.getFullName(), c.getCin(),
                     c.getBirthDate(), c.getPhone(), c.getEmail(), c.getAddress(), c.getPosition(),
@@ -66,7 +70,10 @@ public final class RecruitmentDtos {
                     c.getShift() == null ? null : c.getShift().name(),
                     c.getShift() == null ? null : c.getShift().getLabel(),
                     StaffDto.of(c.getTrainer()), StaffDto.of(c.getTeamLeader()), c.getRemarks(),
-                    c.getCreatedBy(), c.getCreatedAt(), c.getUpdatedAt());
+                    c.getCreatedBy(), c.getCreatedAt(), c.getUpdatedAt(),
+                    level == null ? null : level.name(), level == null ? null : level.getLabel(),
+                    level == null ? null : level.getTrialLabel(),
+                    level == null ? null : level.trialEnd(c.getHireDate()));
         }
     }
 }
