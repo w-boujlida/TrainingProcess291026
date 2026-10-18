@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public enum RecruitmentCategory {
-    CADRE("Cadre", List.of()),
+    FORMATION("Formation", List.of()),
     DIRECT("Direct", List.of(
             "Préparation", "Assemblage", "Retouche / Reprise", "Campo", "Préparation Campo",
             "Fermeture Invisible", "Tresse / Ba2", "Profil", "Airbag",
@@ -15,7 +15,7 @@ public enum RecruitmentCategory {
             "ASSEMBLAGE NON AIRBAG + RENFORT AIRBAG", "FERMETURE SAC AIRBAG", "Wire", "Alimentatrice",
             "Contrôle Qualité")),
     INDIRECT("Indirect", List.of()),
-    FORMATION("Formation", List.of());
+    CADRE("Cadre", List.of());
 
     private final String label;
     /** Allowed positions; empty means free text. */

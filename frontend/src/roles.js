@@ -19,10 +19,10 @@ export const USER_MANAGERS = [ROLES.SUPER_ADMIN, ROLES.ADMIN];
 export const RECRUITMENT_EDITORS = [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.FORMATRICE];
 
 export const RECRUITMENT_CATEGORIES = [
-  { code: 'CADRE', slug: 'cadre', label: 'Cadre', icon: 'briefcase' },
+  { code: 'FORMATION', slug: 'formation', label: 'Formation', icon: 'graduation', hasLevel: true },
   { code: 'DIRECT', slug: 'direct', label: 'Direct', icon: 'tool' },
   { code: 'INDIRECT', slug: 'indirect', label: 'Indirect', icon: 'layers' },
-  { code: 'FORMATION', slug: 'formation', label: 'Formation', icon: 'graduation', hasLevel: true },
+  { code: 'CADRE', slug: 'cadre', label: 'Cadre', icon: 'briefcase' },
 ];
 
 /** Formation levels; mirrors backend TrainingLevel. */

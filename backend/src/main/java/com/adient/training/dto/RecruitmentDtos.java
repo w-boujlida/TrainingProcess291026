@@ -42,7 +42,9 @@ public final class RecruitmentDtos {
             @Size(max = 2000, message = "Les remarques sont trop longues.") String remarks,
             TrainingLevel trainingLevel) {}
 
-    public record CandidateStatusRequest(@NotNull(message = "Le statut est obligatoire.") CandidateStatus status) {}
+    public record CandidateStatusRequest(@NotNull(message = "Le statut est obligatoire.") CandidateStatus status,
+                                         /** Direct position, required when validating a Formation employee. */
+                                         String position) {}
 
     public record ImportError(int row, String message) {}
 
@@ -60,7 +62,8 @@ public final class RecruitmentDtos {
                                LocalDate hireDate, String educationLevel, String shift, String shiftLabel,
                                StaffDto trainer, StaffDto teamLeader, String remarks, String createdBy,
                                LocalDateTime createdAt, LocalDateTime updatedAt, String trainingLevel,
-                               String trainingLevelLabel, String trialLabel, LocalDate trialEndDate) {
+                               String trainingLevelLabel, String trialLabel, LocalDate trialEndDate,
+                               LocalDate formationValidatedOn) {
         public static CandidateDto of(Candidate c) {
             TrainingLevel level = c.getTrainingLevel();
             return new CandidateDto(c.getId(), c.getCategory().name(), c.getCategory().getLabel(),
@@ -73,7 +76,8 @@ public final class RecruitmentDtos {
                     c.getCreatedBy(), c.getCreatedAt(), c.getUpdatedAt(),
                     level == null ? null : level.name(), level == null ? null : level.getLabel(),
                     level == null ? null : level.getTrialLabel(),
-                    level == null ? null : level.trialEnd(c.getHireDate()));
+                    level == null ? null : level.trialEnd(c.getHireDate()),
+                    c.getFormationValidatedOn());
         }
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -56,6 +57,7 @@ public class CandidateService {
         apply(c, req);
         c.setStatus(req.status() == null ? CandidateStatus.CANDIDAT : req.status());
         c.setCreatedBy(actor.username());
+        promoteIfValidated(c, null);
         return CandidateDto.of(candidates.save(c));
     }
 
@@ -72,14 +74,33 @@ public class CandidateService {
         }
         apply(c, req);
         if (req.status() != null) c.setStatus(req.status());
+        promoteIfValidated(c, null);
         return CandidateDto.of(c);
     }
 
     @Transactional
-    public CandidateDto setStatus(Long id, CandidateStatus status) {
+    public CandidateDto setStatus(Long id, CandidateStatus status, String directPosition) {
         Candidate c = find(id);
         c.setStatus(status);
+        promoteIfValidated(c, directPosition);
         return CandidateDto.of(c);
+    }
+
+    /**
+     * Workflow: a Formation employee who is validated moves straight to Direct.
+     * Direct requires a position from its fixed list: the given one, else the current position if it matches.
+     */
+    private void promoteIfValidated(Candidate c, String directPosition) {
+        if (c.getCategory() != RecruitmentCategory.FORMATION || c.getStatus() != CandidateStatus.VALIDE) return;
+        RecruitmentCategory target = RecruitmentCategory.DIRECT;
+        String wanted = clean(directPosition) != null ? clean(directPosition) : c.getPosition();
+        String resolved = target.resolvePosition(wanted).orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST,
+                wanted == null
+                        ? "Pour valider et passer en Direct, choisissez le poste Direct."
+                        : "Pour valider et passer en Direct, choisissez un poste Direct (« " + wanted + " » n'en fait pas partie)."));
+        c.setCategory(target);
+        c.setPosition(resolved);
+        c.setFormationValidatedOn(LocalDate.now());
     }
 
     @Transactional
@@ -96,7 +117,8 @@ public class CandidateService {
         c.setPhone(clean(req.phone()));
         c.setEmail(clean(req.email()));
         c.setAddress(clean(req.address()));
-        c.setPosition(position(req.category(), req.position()));
+        c.setPosition(req.category() == RecruitmentCategory.FORMATION
+                ? clean(req.position()) : position(req.category(), req.position()));
         c.setDepartment(clean(req.department()));
         c.setHireDate(req.hireDate());
         c.setEducationLevel(clean(req.educationLevel()));
@@ -109,9 +131,8 @@ public class CandidateService {
                 throw new ApiException(HttpStatus.BAD_REQUEST, "Le niveau (Apprentie, Junior ou Confirmée) est obligatoire.");
             }
             c.setTrainingLevel(req.trainingLevel());
-        } else {
-            c.setTrainingLevel(null);
         }
+        // Other categories keep the stored level as history (e.g. employees promoted from Formation).
     }
 
     private static String position(RecruitmentCategory category, String value) {

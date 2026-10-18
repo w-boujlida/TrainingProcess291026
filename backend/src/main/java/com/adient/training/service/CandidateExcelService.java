@@ -113,6 +113,7 @@ public class CandidateExcelService {
                             ? "• Niveau (obligatoire) : " + Arrays.stream(TrainingLevel.values())
                                     .map(l -> l.getLabel() + " (" + l.getTrialLabel() + ")").collect(Collectors.joining(", "))
                                     + ". La fin de période d'essai est calculée à partir de la date de recrutement (colonne ignorée à l'import)."
+                                    + " Statut « Validé » : la personne passe automatiquement en Direct ; le Poste doit alors être un poste Direct : " + String.join(", ", RecruitmentCategory.DIRECT.getPositions()) + "."
                             : "",
                     "• Si le CIN existe déjà dans cette catégorie, la fiche est mise à jour (les cellules vides ne modifient rien).",
                     "• Dates : format JJ/MM/AAAA ou cellule de type date.",

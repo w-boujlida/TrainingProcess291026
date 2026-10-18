@@ -61,10 +61,13 @@ function toPayload(form, category) {
   return payload;
 }
 
-/** First step for Direct (position) and Formation (level): a focused pop-up before the full form. */
-function PreStepModal({ category, positions, onClose, onContinue }) {
-  const isLevel = Boolean(category.hasLevel);
-  const [value, setValue] = useState('');
+/**
+ * Focused choice pop-up: first step for Direct (position) and Formation (level) when adding,
+ * or the Direct position when a Formation employee is validated (transfer to Direct).
+ */
+function PreStepModal({ category, positions, transfer, busy, onClose, onContinue }) {
+  const isLevel = Boolean(category.hasLevel) && !transfer;
+  const [value, setValue] = useState(() => (transfer && positions.includes(transfer.position) ? transfer.position : ''));
   const [query, setQuery] = useState('');
   const options = isLevel
     ? TRAINING_LEVELS
@@ -72,7 +75,7 @@ function PreStepModal({ category, positions, onClose, onContinue }) {
       .filter((p) => p.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '')
         .includes(query.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '')))
       .map((p) => ({ code: p, label: p }));
-  const next = (v = value) => { if (v) onContinue(isLevel ? { trainingLevel: v } : { position: v }); };
+  const next = (v = value) => { if (v && !busy) onContinue(isLevel ? { trainingLevel: v } : { position: v }); };
 
   return (
     <div className="modal-backdrop" onMouseDown={onClose}>
@@ -80,18 +83,20 @@ function PreStepModal({ category, positions, onClose, onContinue }) {
         onSubmit={(e) => { e.preventDefault(); next(); }}>
         <div className="modal-head">
           <div className="modal-head-title">
-            <Icon name={isLevel ? 'graduation' : 'briefcase'} size={17} />
-            Nouveau candidat — {category.label}
+            <Icon name={transfer ? 'checkCircle' : isLevel ? 'graduation' : 'briefcase'} size={17} />
+            {transfer ? `Valider et passer en Direct — ${transfer.fullName}` : `Nouveau candidat — ${category.label}`}
           </div>
           <button type="button" className="modal-close" onClick={onClose} aria-label="Fermer"><Icon name="x" size={18} /></button>
         </div>
         <div className="modal-body-pad">
           <div className="prestep-head">
-            <span className="prestep-badge">Étape 1 / 2</span>
+            <span className="prestep-badge">{transfer ? 'Formation → Direct' : 'Étape 1 / 2'}</span>
             <div>
-              <div className="prestep-title">{isLevel ? 'Choisir le niveau' : 'Choisir le poste'}</div>
+              <div className="prestep-title">{isLevel ? 'Choisir le niveau' : transfer ? 'Choisir le poste Direct' : 'Choisir le poste'}</div>
               <div className="prestep-sub">
-                {isLevel ? 'Le niveau détermine la durée de la période d\'essai.' : 'Sélectionnez le poste avant de remplir la fiche.'}
+                {transfer
+                  ? `${transfer.fullName} est validée en Formation et sera transférée automatiquement en Direct.`
+                  : isLevel ? 'Le niveau détermine la durée de la période d\'essai.' : 'Sélectionnez le poste avant de remplir la fiche.'}
               </div>
             </div>
           </div>
@@ -131,8 +136,10 @@ function PreStepModal({ category, positions, onClose, onContinue }) {
         </div>
         <div className="modal-foot">
           <button type="button" className="btn btn-secondary" onClick={onClose}>Annuler</button>
-          <button type="submit" className="btn btn-primary" disabled={!value}>
-            Continuer<Icon name="arrowRight" size={14} strokeWidth={2.5} />
+          <button type="submit" className="btn btn-primary" disabled={!value || busy}>
+            {transfer
+              ? <>{busy ? <span className="btn-spinner" /> : <Icon name="check" size={14} strokeWidth={2.5} />}Valider → Direct</>
+              : <>Continuer<Icon name="arrowRight" size={14} strokeWidth={2.5} /></>}
           </button>
         </div>
       </form>
@@ -140,7 +147,7 @@ function PreStepModal({ category, positions, onClose, onContinue }) {
   );
 }
 
-function CandidateModal({ candidate, preset, category, staff, positions, readOnly, onClose, onSaved }) {
+function CandidateModal({ candidate, preset, category, staff, positions, directPositions = [], readOnly, onClose, onSaved }) {
   const isEdit = Boolean(candidate);
   const fixedPositions = positions.length > 0;
   const hasLevel = Boolean(category.hasLevel);
@@ -164,6 +171,8 @@ function CandidateModal({ candidate, preset, category, staff, positions, readOnl
     setSaving(true);
     try {
       const payload = toPayload(form, category.code);
+      delete payload.directPosition;
+      if (hasLevel && form.status === 'VALIDE') payload.position = form.directPosition;
       const saved = isEdit
         ? await recruitmentApi.update(candidate.id, payload)
         : await recruitmentApi.create(payload);
@@ -292,6 +301,18 @@ function CandidateModal({ candidate, preset, category, staff, positions, readOnl
               </select>
             </div>
           </div>
+          {hasLevel && form.status === 'VALIDE' && !readOnly && (
+            <div className="position-picker transfer-box">
+              <label className="form-label label-required" htmlFor="c-directPosition">
+                <Icon name="arrowRight" size={14} />Validée → transfert automatique en Direct : poste Direct
+              </label>
+              <select id="c-directPosition" className="form-input" value={form.directPosition || ''} required
+                onChange={set('directPosition')}>
+                <option value="">— Choisir le poste Direct —</option>
+                {directPositions.map((p) => <option key={p} value={p}>{p}</option>)}
+              </select>
+            </div>
+          )}
           <div className="form-group">
             <label className="form-label" htmlFor="c-remarks">Remarques</label>
             <textarea id="c-remarks" className="form-input form-textarea" rows={3} value={form.remarks}
@@ -332,7 +353,9 @@ export default function RecruitmentPage() {
   const [positionsMap, setPositionsMap] = useState({});
   const [positionFilter, setPositionFilter] = useState('');
   const [levelFilter, setLevelFilter] = useState('');
+  const [transferring, setTransferring] = useState(false);
   const positions = positionsMap[category?.code] || [];
+  const directPositions = positionsMap.DIRECT || [];
 
   useEffect(() => {
     recruitmentApi.positions().then(setPositionsMap).catch(() => {});
@@ -365,7 +388,7 @@ export default function RecruitmentPage() {
     return map;
   }, [candidates]);
 
-  if (!category) return <Navigate to="/recruitment/cadre" replace />;
+  if (!category) return <Navigate to="/recruitment/formation" replace />;
 
   const replace = (updated) => setCandidates((list) => list.map((c) => (c.id === updated.id ? updated : c)));
 
@@ -374,10 +397,24 @@ export default function RecruitmentPage() {
     try { await fn(); } catch (err) { setError(errorMessage(err)); }
   };
 
-  const changeStatus = (c, status) => run(async () => {
-    const updated = await recruitmentApi.setStatus(c.id, status);
-    replace(updated);
-    setNotice(`Statut de ${c.fullName} : ${updated.statusLabel}`);
+  const changeStatus = (c, status) => {
+    if (category.hasLevel && status === 'VALIDE') { setModal({ mode: 'transfer', candidate: c }); return; }
+    run(async () => {
+      const updated = await recruitmentApi.setStatus(c.id, status);
+      replace(updated);
+      setNotice(`Statut de ${c.fullName} : ${updated.statusLabel}`);
+    });
+  };
+
+  const transferNotice = (saved) => `${saved.fullName} validée en Formation → transférée en Direct (poste : ${saved.position}).`;
+  const confirmTransfer = (c, position) => run(async () => {
+    setTransferring(true);
+    try {
+      const updated = await recruitmentApi.setStatus(c.id, 'VALIDE', position);
+      setCandidates((list) => list.filter((x) => x.id !== c.id));
+      setModal(null);
+      setNotice(transferNotice(updated));
+    } finally { setTransferring(false); }
   });
 
   const remove = (c) => {
@@ -400,6 +437,12 @@ export default function RecruitmentPage() {
   };
 
   const handleSaved = (saved, isEdit) => {
+    if (saved.category !== category.code) {
+      setCandidates((list) => list.filter((x) => x.id !== saved.id));
+      setNotice(transferNotice(saved));
+      setModal(null);
+      return;
+    }
     if (isEdit) replace(saved);
     else setCandidates((list) => [saved, ...list]);
     setNotice(isEdit ? `Candidat modifié : ${saved.fullName}` : `Candidat ajouté : ${saved.fullName}`);
@@ -494,6 +537,13 @@ export default function RecruitmentPage() {
                     <td className="left wrap">
                       <div className="cell-main">{c.position || '—'}</div>
                       <div className="cell-sub">{c.department || ''}</div>
+                      {!category.hasLevel && c.formationValidatedOn && (
+                        <div className="level-row">
+                          <span className="level-badge from-formation" title={`Validée en Formation le ${formatDate(c.formationValidatedOn)}`}>
+                            Issue de Formation{c.trainingLevelLabel ? ` · ${c.trainingLevelLabel}` : ''}
+                          </span>
+                        </div>
+                      )}
                       {category.hasLevel && c.trainingLevel && (
                         <div className="level-row">
                           <span className={`level-badge ${TRAINING_LEVELS.find((l) => l.code === c.trainingLevel)?.color || ''}`}>{c.trainingLevelLabel}</span>
@@ -539,8 +589,13 @@ export default function RecruitmentPage() {
         <PreStepModal category={category} positions={positions} onClose={() => setModal(null)}
           onContinue={(preset) => setModal({ mode: 'create', preset })} />
       )}
-      {modal && modal.mode !== 'pick' && (
+      {modal?.mode === 'transfer' && (
+        <PreStepModal category={category} positions={directPositions} transfer={modal.candidate} busy={transferring}
+          onClose={() => setModal(null)} onContinue={({ position }) => confirmTransfer(modal.candidate, position)} />
+      )}
+      {modal && modal.mode !== 'pick' && modal.mode !== 'transfer' && (
         <CandidateModal candidate={modal.candidate} preset={modal.preset} category={category} staff={staff} positions={positions}
+          directPositions={directPositions}
           readOnly={modal.mode === 'view'} onClose={() => setModal(null)} onSaved={handleSaved} />
       )}
       {importOpen && (

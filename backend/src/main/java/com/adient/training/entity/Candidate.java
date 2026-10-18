@@ -62,6 +62,10 @@ public class Candidate {
     @Column(name = "training_level", length = 20)
     private TrainingLevel trainingLevel;
 
+    /** Date the employee was validated in Formation and moved to Direct. */
+    @Column(name = "formation_validated_on")
+    private LocalDate formationValidatedOn;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trainer_id")
     private AppUser trainer;
@@ -123,6 +127,8 @@ public class Candidate {
     public void setShift(WorkShift shift) { this.shift = shift; }
     public TrainingLevel getTrainingLevel() { return trainingLevel; }
     public void setTrainingLevel(TrainingLevel trainingLevel) { this.trainingLevel = trainingLevel; }
+    public LocalDate getFormationValidatedOn() { return formationValidatedOn; }
+    public void setFormationValidatedOn(LocalDate formationValidatedOn) { this.formationValidatedOn = formationValidatedOn; }
     public AppUser getTrainer() { return trainer; }
     public void setTrainer(AppUser trainer) { this.trainer = trainer; }
     public AppUser getTeamLeader() { return teamLeader; }

@@ -21,7 +21,7 @@ export default function App() {
           <Route element={<ProtectedRoute roles={USER_MANAGERS} />}>
             <Route path="/users" element={<UsersPage />} />
           </Route>
-          <Route path="/recruitment" element={<Navigate to="/recruitment/cadre" replace />} />
+          <Route path="/recruitment" element={<Navigate to="/recruitment/formation" replace />} />
           <Route path="/recruitment/:category" element={<RecruitmentPage />} />
         </Route>
       </Route>

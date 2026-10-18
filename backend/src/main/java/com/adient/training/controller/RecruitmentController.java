@@ -69,7 +69,7 @@ public class RecruitmentController {
 
     @PatchMapping("/candidates/{id}/status")
     public CandidateDto setStatus(@PathVariable Long id, @Valid @RequestBody CandidateStatusRequest req) {
-        return service.setStatus(id, req.status());
+        return service.setStatus(id, req.status(), req.position());
     }
 
     @DeleteMapping("/candidates/{id}")
