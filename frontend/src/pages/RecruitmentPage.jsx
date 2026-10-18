@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { CANDIDATE_STATUSES, RECRUITMENT_CATEGORIES, RECRUITMENT_EDITORS, SHIFTS } from '../roles';
 import PageHeader from '../components/PageHeader';
 import Icon from '../components/Icon';
+import ImportExcelModal from '../components/ImportExcelModal';
 
 const EMPTY_FORM = {
   matricule: '', fullName: '', cin: '', birthDate: '', phone: '', email: '', address: '',
@@ -186,11 +187,13 @@ export default function RecruitmentPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [modal, setModal] = useState(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     if (!category) return;
     let cancelled = false;
-    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setModal(null);
+    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setModal(null); setImportOpen(false);
     Promise.all([recruitmentApi.list(category.code), recruitmentApi.staff()])
       .then(([c, s]) => { if (!cancelled) { setCandidates(c); setStaff(s); } })
       .catch((err) => { if (!cancelled) setError(errorMessage(err)); })
@@ -236,6 +239,16 @@ export default function RecruitmentPage() {
     });
   };
 
+  const handleExport = () => run(async () => {
+    setExporting(true);
+    try { await recruitmentApi.exportExcel(category.code); } finally { setExporting(false); }
+  });
+
+  const handleImported = (res) => {
+    setNotice(`Import ${category.label} : ${res.created} créé(s), ${res.updated} mis à jour, ${res.skipped} en erreur.`);
+    recruitmentApi.list(category.code).then(setCandidates).catch((err) => setError(errorMessage(err)));
+  };
+
   const handleSaved = (saved, isEdit) => {
     if (isEdit) replace(saved);
     else setCandidates((list) => [saved, ...list]);
@@ -277,6 +290,14 @@ export default function RecruitmentPage() {
                 <option value="">Tous les statuts</option>
                 {CANDIDATE_STATUSES.map((s) => <option key={s.code} value={s.code}>{s.label}</option>)}
               </select>
+              <button className="tool-btn" onClick={handleExport} disabled={exporting || loading} title="Exporter la liste en Excel">
+                {exporting ? <span className="btn-spinner dark" /> : <Icon name="download" size={14} />}Exporter
+              </button>
+              {canEdit && (
+                <button className="tool-btn" onClick={() => setImportOpen(true)} title="Import en masse depuis Excel">
+                  <Icon name="upload" size={14} />Importer
+                </button>
+              )}
               {canEdit && (
                 <button className="add-btn" onClick={() => setModal({ mode: 'create' })}>
                   <Icon name="plus" size={13} strokeWidth={2.5} />Nouveau candidat
@@ -349,6 +370,9 @@ export default function RecruitmentPage() {
       {modal && (
         <CandidateModal candidate={modal.candidate} category={category} staff={staff}
           readOnly={modal.mode === 'view'} onClose={() => setModal(null)} onSaved={handleSaved} />
+      )}
+      {importOpen && (
+        <ImportExcelModal category={category} onClose={() => setImportOpen(false)} onImported={handleImported} />
       )}
     </>
   );

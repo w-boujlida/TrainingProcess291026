@@ -7,4 +7,33 @@ export const recruitmentApi = {
   update: (id, data) => client.put(`/recruitment/candidates/${id}`, data).then((r) => r.data),
   setStatus: (id, status) => client.patch(`/recruitment/candidates/${id}/status`, { status }).then((r) => r.data),
   remove: (id) => client.delete(`/recruitment/candidates/${id}`),
+  exportExcel: (category) => download('/recruitment/excel/export', category),
+  template: (category) => download('/recruitment/excel/template', category),
+  importExcel: (category, file) => {
+    const data = new FormData();
+    data.append('file', file);
+    return client.post('/recruitment/excel/import', data, { params: { category } }).then((r) => r.data);
+  },
 };
+
+async function download(url, category) {
+  let res;
+  try {
+    res = await client.get(url, { params: { category }, responseType: 'blob' });
+  } catch (err) {
+    if (err.response?.data instanceof Blob) {
+      try { err.response.data = JSON.parse(await err.response.data.text()); } catch { /* keep blob */ }
+    }
+    throw err;
+  }
+  const disposition = res.headers['content-disposition'] || '';
+  const match = /filename="?([^";]+)"?/.exec(disposition);
+  const href = URL.createObjectURL(res.data);
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = match ? match[1] : 'export.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(href);
+}

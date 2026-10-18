@@ -498,3 +498,42 @@ fieldset:disabled .form-input { background: #f8fafc; color: var(--text-primary);
 .nav-chevron.open { transform: rotate(180deg); }
 .nav-sub { margin: 2px 0 4px 14px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,.1); }
 .nav-sub .nav-item { padding: 7px 10px; font-size: 12.5px; }
+
+/* Excel import / export */
+.tool-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 8px;
+  font: inherit; font-size: 12.5px; font-weight: 600; color: #334155; background: #fff;
+  border: 1px solid var(--border); cursor: pointer; transition: all .15s;
+}
+.tool-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: #f0fdf4; }
+.tool-btn:disabled { opacity: .6; cursor: not-allowed; }
+.btn-sm { padding: 6px 10px; font-size: 12px; gap: 6px; }
+.btn-spinner.dark { border-color: rgba(21,128,61,.25); border-top-color: var(--accent); }
+
+.import-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.import-step { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: 10px; background: #f8fafc; }
+.import-step > div { flex: 1; }
+.import-step-num { width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 800; display: grid; place-items: center; }
+.import-step-title { font-weight: 700; font-size: 13px; color: var(--text-primary); }
+.import-step-text { font-size: 11.5px; color: var(--text-muted); }
+
+.dropzone {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 28px 16px; margin-bottom: 16px;
+  border: 2px dashed #cbd5e1; border-radius: 12px; color: var(--text-faint); cursor: pointer; text-align: center;
+  transition: all .15s;
+}
+.dropzone:hover, .dropzone.over { border-color: var(--accent); background: #f0fdf4; color: var(--accent); }
+.dropzone.has-file { border-style: solid; border-color: #86efac; background: #f0fdf4; color: var(--accent); }
+.dropzone-title { font-weight: 700; font-size: 13.5px; color: var(--text-primary); }
+.dropzone-sub { font-size: 11.5px; color: var(--text-muted); }
+
+.import-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.import-sum { display: flex; flex-direction: column; align-items: center; padding: 12px; border-radius: 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; border: 1px solid; }
+.import-sum span { font-family: var(--font-mono); font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+.sum-green { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+.sum-blue { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.sum-red { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.sum-grey { background: #f8fafc; color: #64748b; border-color: #e2e8f0; }
+.import-errors { border: 1px solid #fecaca; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.import-errors-title { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: #fef2f2; color: #991b1b; font-weight: 700; font-size: 12.5px; }
+.import-errors .data-table td { font-size: 12px; }

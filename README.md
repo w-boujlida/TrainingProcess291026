@@ -59,6 +59,9 @@ Au premier démarrage, un compte Super Admin est créé avec `SUPERADMIN_USERNAM
 | GET | `/api/recruitment/staff` | Connecté (formatrices et team leaders actifs) |
 | POST / PUT / DELETE | `/api/recruitment/candidates[/{id}]` | Super Admin, Admin, Formatrice |
 | PATCH | `/api/recruitment/candidates/{id}/status` | Super Admin, Admin, Formatrice |
+| GET | `/api/recruitment/excel/export?category=` | Connecté |
+| GET | `/api/recruitment/excel/template?category=` | Connecté |
+| POST | `/api/recruitment/excel/import?category=` (multipart `file`) | Super Admin, Admin, Formatrice |
 
 ## Recrutement
 
@@ -68,6 +71,15 @@ Quatre catégories sous **Recrutement › Employés** : **Cadre**, **Direct**, *
 - Statuts : Candidat → Recruté → En formation → Validé / Rejeté.
 - CIN et matricule uniques.
 - Super Admin, Admin et Formatrice créent/modifient ; Superviseur et Team Leader consultent en lecture seule.
+
+### Import / export Excel
+
+- **Exporter** (tous les rôles) : télécharge la liste de la catégorie en `.xlsx`.
+- **Importer** (éditeurs) : téléchargez le modèle (`Modèle .xlsx`, avec une feuille *Instructions*), remplissez-le puis déposez-le.
+  - Colonnes obligatoires : *Nom et prénom*, *CIN*. Dates au format JJ/MM/AAAA ; formatrice / team leader par identifiant ou nom complet.
+  - Un CIN déjà présent dans la catégorie **met à jour** la fiche (les cellules vides conservent les valeurs existantes).
+  - Les lignes valides sont importées ; les lignes en erreur sont listées avec leur motif.
+  - Limites : `.xlsx` uniquement, 10 Mo, 5000 lignes.
 
 ## Développement frontend
 

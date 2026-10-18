@@ -42,6 +42,10 @@ public final class RecruitmentDtos {
 
     public record CandidateStatusRequest(@NotNull(message = "Le statut est obligatoire.") CandidateStatus status) {}
 
+    public record ImportError(int row, String message) {}
+
+    public record ImportResult(int created, int updated, int skipped, java.util.List<ImportError> errors) {}
+
     public record StaffDto(Long id, String fullName, String role) {
         public static StaffDto of(AppUser u) {
             return u == null ? null : new StaffDto(u.getId(), u.getFullName(), u.getRole().name());
