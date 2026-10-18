@@ -15,7 +15,7 @@ public enum RecruitmentCategory {
             "ASSEMBLAGE NON AIRBAG + RENFORT AIRBAG", "FERMETURE SAC AIRBAG", "Wire", "Alimentatrice",
             "Contrôle Qualité")),
     INDIRECT("Indirect", List.of()),
-    EXTERNAL("External", List.of());
+    FORMATION("Formation", List.of());
 
     private final String label;
     /** Allowed positions; empty means free text. */

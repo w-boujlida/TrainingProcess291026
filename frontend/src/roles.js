@@ -22,7 +22,7 @@ export const RECRUITMENT_CATEGORIES = [
   { code: 'CADRE', slug: 'cadre', label: 'Cadre', icon: 'briefcase' },
   { code: 'DIRECT', slug: 'direct', label: 'Direct', icon: 'tool' },
   { code: 'INDIRECT', slug: 'indirect', label: 'Indirect', icon: 'layers' },
-  { code: 'EXTERNAL', slug: 'external', label: 'External', icon: 'globe' },
+  { code: 'FORMATION', slug: 'formation', label: 'Formation', icon: 'graduation' },
 ];
 
 export const CANDIDATE_STATUSES = [

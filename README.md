@@ -66,7 +66,7 @@ Au premier démarrage, un compte Super Admin est créé avec `SUPERADMIN_USERNAM
 
 ## Recrutement
 
-Quatre catégories sous **Recrutement › Employés** : **Cadre**, **Direct**, **Indirect**, **External**.
+Quatre catégories sous **Recrutement › Employés** : **Cadre**, **Direct**, **Indirect**, **Formation**.
 
 - Fiche candidat : matricule, nom et prénom, CIN, date de naissance, téléphone, e-mail, adresse, poste, département/ligne, date de recrutement, niveau d'étude, shift, formatrice et team leader affectés, remarques.
 - Statuts : Candidat → Recruté → En formation → Validé / Rejeté.
