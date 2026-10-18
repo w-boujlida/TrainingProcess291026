@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { USER_MANAGERS } from '../roles';
+import { RECRUITMENT_CATEGORIES, USER_MANAGERS } from '../roles';
 import Icon from './Icon';
 
 function getCurrentShift() {
@@ -53,6 +53,13 @@ export default function Layout({ children }) {
           <div className="nav-group">
             <span className="nav-group-title">Principal</span>
             <NavLink to="/" end className={navClass}><Icon name="grid" />Vue d'ensemble</NavLink>
+          </div>
+
+          <div className="nav-group">
+            <span className="nav-group-title">Recrutement</span>
+            {RECRUITMENT_CATEGORIES.map((c) => (
+              <NavLink key={c.code} to={`/recruitment/${c.slug}`} className={navClass}><Icon name={c.icon} />{c.label}</NavLink>
+            ))}
           </div>
 
           {USER_MANAGERS.includes(user.role) && (

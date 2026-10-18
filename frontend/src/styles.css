@@ -446,3 +446,46 @@ button, input, select { font-family: inherit; }
 .empty-icon { width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 16px; background: #fef2f2; color: var(--danger); display: flex; align-items: center; justify-content: center; }
 .empty-state h3 { font-size: 18px; margin-bottom: 4px; }
 .empty-state p { color: var(--text-muted); margin-bottom: 18px; }
+
+/* Recruitment */
+.stats-grid-6 { grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.stats-grid-6 .stat-card { padding: 12px 14px 10px; }
+.stats-grid-6 .stat-icon { width: 30px; height: 30px; }
+.stats-grid-6 .stat-value { font-size: 28px; }
+@media (max-width: 760px) { .stats-grid-6 { grid-template-columns: repeat(3, 1fr); } }
+.data-table.compact td, .data-table.compact th { padding-left: 9px; padding-right: 9px; }
+.data-table.compact td.wrap { white-space: normal; min-width: 120px; }
+.stat-filter { text-align: left; font: inherit; cursor: pointer; width: 100%; }
+.stat-filter.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(21,128,61,.18); }
+
+.cell-main { font-weight: 600; color: var(--text-primary); font-size: 12.5px; }
+.cell-sub { font-size: 11.5px; color: var(--text-faint); }
+.shift-chip { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+.cand-badge { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; border: 1px solid transparent; }
+.cand-CANDIDAT { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.cand-RECRUTE { background: #f0fdfa; color: #0f766e; border-color: #99f6e4; }
+.cand-EN_FORMATION { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+.cand-VALIDE { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+.cand-REJETE { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.user-avatar[class*='cand-'] { border-width: 1px; border-style: solid; }
+.status-select {
+  font: inherit; font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 99px;
+  border: 1px solid; cursor: pointer; outline: none;
+}
+.status-select:focus { box-shadow: 0 0 0 3px rgba(21,128,61,.12); }
+.status-select option { background: #fff; color: var(--text-primary); }
+
+.modal-card.modal-wide { max-width: 860px; }
+.modal-scroll { max-height: calc(100vh - 190px); overflow-y: auto; }
+fieldset.modal-body-pad { border: 0; margin: 0; min-width: 0; }
+fieldset:disabled .form-input { background: #f8fafc; color: var(--text-primary); cursor: default; }
+.form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 14px; }
+@media (max-width: 760px) { .form-grid-3 { grid-template-columns: 1fr; } }
+.form-section-title {
+  display: flex; align-items: center; gap: 8px; margin: 4px 0 12px; padding-bottom: 6px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: var(--accent);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.form-section-title:not(:first-child) { margin-top: 10px; }
+.form-textarea { resize: vertical; min-height: 70px; font-family: inherit; }

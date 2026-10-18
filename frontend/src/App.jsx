@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import HomePage from './pages/HomePage';
 import UsersPage from './pages/UsersPage';
+import RecruitmentPage from './pages/RecruitmentPage';
 import ForbiddenPage from './pages/ForbiddenPage';
 import { USER_MANAGERS } from './roles';
 
@@ -20,6 +21,8 @@ export default function App() {
           <Route element={<ProtectedRoute roles={USER_MANAGERS} />}>
             <Route path="/users" element={<UsersPage />} />
           </Route>
+          <Route path="/recruitment" element={<Navigate to="/recruitment/cadre" replace />} />
+          <Route path="/recruitment/:category" element={<RecruitmentPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

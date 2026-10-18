@@ -1,6 +1,6 @@
 # Training Process
 
-Application de suivi des formations — module d'authentification et de gestion des utilisateurs.
+Application de suivi des formations — authentification, gestion des utilisateurs et recrutement.
 
 ## Stack
 
@@ -55,6 +55,19 @@ Au premier démarrage, un compte Super Admin est créé avec `SUPERADMIN_USERNAM
 | PATCH | `/api/users/{id}/status` | Super Admin, Admin |
 | POST | `/api/users/{id}/reset-password` | Super Admin, Admin |
 | DELETE | `/api/users/{id}` | Super Admin, Admin |
+| GET | `/api/recruitment/candidates?category=` | Connecté |
+| GET | `/api/recruitment/staff` | Connecté (formatrices et team leaders actifs) |
+| POST / PUT / DELETE | `/api/recruitment/candidates[/{id}]` | Super Admin, Admin, Formatrice |
+| PATCH | `/api/recruitment/candidates/{id}/status` | Super Admin, Admin, Formatrice |
+
+## Recrutement
+
+Quatre catégories : **Cadre**, **Direct**, **Indirect**, **External** (menu « Recrutement »).
+
+- Fiche candidat : matricule, nom et prénom, CIN, date de naissance, téléphone, e-mail, adresse, poste, département/ligne, date de recrutement, niveau d'étude, shift, formatrice et team leader affectés, remarques.
+- Statuts : Candidat → Recruté → En formation → Validé / Rejeté.
+- CIN et matricule uniques.
+- Super Admin, Admin et Formatrice créent/modifient ; Superviseur et Team Leader consultent en lecture seule.
 
 ## Développement frontend
 
