@@ -537,3 +537,15 @@ fieldset:disabled .form-input { background: #f8fafc; color: var(--text-primary);
 .import-errors { border: 1px solid #fecaca; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
 .import-errors-title { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: #fef2f2; color: #991b1b; font-weight: 700; font-size: 12.5px; }
 .import-errors .data-table td { font-size: 12px; }
+
+/* Fixed position picker (Direct) */
+.position-picker {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-left: 4px solid #15803d;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.position-picker .form-label { display: flex; align-items: center; gap: 6px; color: #14532d; font-weight: 700; }
+.position-picker .form-input { font-weight: 600; }

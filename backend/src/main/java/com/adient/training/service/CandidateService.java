@@ -96,7 +96,7 @@ public class CandidateService {
         c.setPhone(clean(req.phone()));
         c.setEmail(clean(req.email()));
         c.setAddress(clean(req.address()));
-        c.setPosition(clean(req.position()));
+        c.setPosition(position(req.category(), req.position()));
         c.setDepartment(clean(req.department()));
         c.setHireDate(req.hireDate());
         c.setEducationLevel(clean(req.educationLevel()));
@@ -104,6 +104,16 @@ public class CandidateService {
         c.setTrainer(staffMember(req.trainerId(), Role.FORMATRICE, "La formatrice sélectionnée est invalide."));
         c.setTeamLeader(staffMember(req.teamLeaderId(), Role.TEAM_LEADER, "Le team leader sélectionné est invalide."));
         c.setRemarks(clean(req.remarks()));
+    }
+
+    private static String position(RecruitmentCategory category, String value) {
+        String v = clean(value);
+        if (!category.hasFixedPositions()) return v;
+        if (v == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Le poste est obligatoire pour la catégorie " + category.getLabel() + ".");
+        }
+        return category.resolvePosition(v).orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST,
+                "Poste invalide pour la catégorie " + category.getLabel() + " : « " + v + " »."));
     }
 
     private AppUser staffMember(Long id, Role expected, String error) {

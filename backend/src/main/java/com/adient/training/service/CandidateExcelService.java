@@ -82,7 +82,7 @@ public class CandidateExcelService {
                     }
                 }
             }
-            addValidations(sheet, Math.max(r, 2) + 500);
+            addValidations(sheet, category, Math.max(r, 2) + 500);
             return toBytes(wb);
         } catch (IOException e) {
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la génération du fichier Excel.");
@@ -93,14 +93,17 @@ public class CandidateExcelService {
     public byte[] template(RecruitmentCategory category) {
         try (XSSFWorkbook wb = new XSSFWorkbook()) {
             Sheet sheet = createDataSheet(wb, category.getLabel());
-            addValidations(sheet, 1000);
+            addValidations(sheet, category, 1000);
 
             Sheet help = wb.createSheet("Instructions");
             String[] lines = {
                     "Import en masse — " + category.getLabel(),
                     "",
                     "• Remplir une ligne par candidat dans la feuille « " + category.getLabel() + " » à partir de la ligne 2.",
-                    "• Colonnes obligatoires : Nom et prénom, CIN.",
+                    "• Colonnes obligatoires : Nom et prénom, CIN" + (category.hasFixedPositions() ? ", Poste." : "."),
+                    category.hasFixedPositions()
+                            ? "• Poste (liste déroulante) : " + String.join(", ", category.getPositions())
+                            : "• Poste : texte libre.",
                     "• Si le CIN existe déjà dans cette catégorie, la fiche est mise à jour (les cellules vides ne modifient rien).",
                     "• Dates : format JJ/MM/AAAA ou cellule de type date.",
                     "• Shift : " + Arrays.stream(WorkShift.values()).map(WorkShift::getLabel).collect(Collectors.joining(", ")),
@@ -322,8 +325,21 @@ public class CandidateExcelService {
         return sheet;
     }
 
-    private void addValidations(Sheet sheet, int lastRow) {
+    private void addValidations(Sheet sheet, RecruitmentCategory category, int lastRow) {
         DataValidationHelper helper = sheet.getDataValidationHelper();
+        if (category.hasFixedPositions()) {
+            // The list exceeds Excel's 255-char inline limit, so it lives on a hidden sheet.
+            Workbook wb = sheet.getWorkbook();
+            Sheet lists = wb.createSheet("Postes");
+            List<String> positions = category.getPositions();
+            for (int i = 0; i < positions.size(); i++) lists.createRow(i).createCell(0).setCellValue(positions.get(i));
+            wb.setSheetHidden(wb.getSheetIndex(lists), true);
+            DataValidation v = helper.createValidation(
+                    helper.createFormulaListConstraint("Postes!$A$1:$A$" + positions.size()),
+                    new CellRangeAddressList(1, lastRow, 7, 7));
+            v.setShowErrorBox(true);
+            sheet.addValidationData(v);
+        }
         addList(sheet, helper, 11, lastRow, Arrays.stream(WorkShift.values()).map(WorkShift::getLabel).toArray(String[]::new));
         addList(sheet, helper, 14, lastRow, Arrays.stream(CandidateStatus.values()).map(CandidateStatus::getLabel).toArray(String[]::new));
     }

@@ -47,9 +47,15 @@ function toPayload(form, category) {
   return payload;
 }
 
-function CandidateModal({ candidate, category, staff, readOnly, onClose, onSaved }) {
+function CandidateModal({ candidate, category, staff, positions, readOnly, onClose, onSaved }) {
   const isEdit = Boolean(candidate);
-  const [form, setForm] = useState(() => toForm(candidate));
+  const fixedPositions = positions.length > 0;
+  const [form, setForm] = useState(() => {
+    const f = toForm(candidate);
+    // A legacy free-text position must be replaced by a value from the list.
+    if (fixedPositions && !readOnly && f.position && !positions.includes(f.position)) f.position = '';
+    return f;
+  });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -97,6 +103,19 @@ function CandidateModal({ candidate, category, staff, readOnly, onClose, onSaved
         <fieldset className="modal-body-pad modal-scroll" disabled={readOnly}>
           {error && <div className="alert alert-error"><Icon name="alert" size={14} />{error}</div>}
 
+          {fixedPositions && (
+            <div className="position-picker">
+              <label className="form-label label-required" htmlFor="c-position">
+                <Icon name="briefcase" size={14} />Poste {category.label}
+              </label>
+              <select id="c-position" className="form-input" value={form.position} onChange={set('position')} required autoFocus={!isEdit}>
+                <option value="">— Choisir le poste —</option>
+                {form.position && !positions.includes(form.position) && <option value={form.position}>{form.position}</option>}
+                {positions.map((p) => <option key={p} value={p}>{p}</option>)}
+              </select>
+            </div>
+          )}
+
           <div className="form-section-title"><Icon name="user" size={14} />Identité</div>
           <div className="form-grid-3">
             {field('matricule', 'Matricule', { mono: true, placeholder: 'ex : 10452' })}
@@ -110,7 +129,7 @@ function CandidateModal({ candidate, category, staff, readOnly, onClose, onSaved
 
           <div className="form-section-title"><Icon name="briefcase" size={14} />Poste</div>
           <div className="form-grid-3">
-            {field('position', 'Poste / fonction', { placeholder: 'ex : Opératrice couture' })}
+            {!fixedPositions && field('position', 'Poste / fonction', { placeholder: 'ex : Opératrice couture' })}
             {field('department', 'Département / ligne', { placeholder: 'ex : Couture L3' })}
             {field('hireDate', 'Date de recrutement', { type: 'date' })}
             {field('educationLevel', "Niveau d'étude / diplôme", { placeholder: 'ex : Bac, BTS…' })}
@@ -189,11 +208,18 @@ export default function RecruitmentPage() {
   const [modal, setModal] = useState(null);
   const [importOpen, setImportOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [positionsMap, setPositionsMap] = useState({});
+  const [positionFilter, setPositionFilter] = useState('');
+  const positions = positionsMap[category?.code] || [];
+
+  useEffect(() => {
+    recruitmentApi.positions().then(setPositionsMap).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!category) return;
     let cancelled = false;
-    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setModal(null); setImportOpen(false);
+    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setPositionFilter(''); setModal(null); setImportOpen(false);
     Promise.all([recruitmentApi.list(category.code), recruitmentApi.staff()])
       .then(([c, s]) => { if (!cancelled) { setCandidates(c); setStaff(s); } })
       .catch((err) => { if (!cancelled) setError(errorMessage(err)); })
@@ -205,9 +231,10 @@ export default function RecruitmentPage() {
     const q = search.trim().toLowerCase();
     return candidates.filter((c) =>
       (!statusFilter || c.status === statusFilter)
+      && (!positionFilter || c.position === positionFilter)
       && (!q || [c.fullName, c.cin, c.matricule, c.position, c.department, c.phone]
         .some((v) => (v || '').toLowerCase().includes(q))));
-  }, [candidates, search, statusFilter]);
+  }, [candidates, search, statusFilter, positionFilter]);
 
   const counts = useMemo(() => {
     const map = Object.fromEntries(CANDIDATE_STATUSES.map((s) => [s.code, 0]));
@@ -290,6 +317,12 @@ export default function RecruitmentPage() {
                 <option value="">Tous les statuts</option>
                 {CANDIDATE_STATUSES.map((s) => <option key={s.code} value={s.code}>{s.label}</option>)}
               </select>
+              {positions.length > 0 && (
+                <select className="filter-select" value={positionFilter} onChange={(e) => setPositionFilter(e.target.value)} aria-label="Filtrer par poste">
+                  <option value="">Tous les postes</option>
+                  {positions.map((p) => <option key={p} value={p}>{p}</option>)}
+                </select>
+              )}
               <button className="tool-btn" onClick={handleExport} disabled={exporting || loading} title="Exporter la liste en Excel">
                 {exporting ? <span className="btn-spinner dark" /> : <Icon name="download" size={14} />}Exporter
               </button>
@@ -368,7 +401,7 @@ export default function RecruitmentPage() {
       </div>
 
       {modal && (
-        <CandidateModal candidate={modal.candidate} category={category} staff={staff}
+        <CandidateModal candidate={modal.candidate} category={category} staff={staff} positions={positions}
           readOnly={modal.mode === 'view'} onClose={() => setModal(null)} onSaved={handleSaved} />
       )}
       {importOpen && (

@@ -7,6 +7,7 @@ export const recruitmentApi = {
   update: (id, data) => client.put(`/recruitment/candidates/${id}`, data).then((r) => r.data),
   setStatus: (id, status) => client.patch(`/recruitment/candidates/${id}/status`, { status }).then((r) => r.data),
   remove: (id) => client.delete(`/recruitment/candidates/${id}`),
+  positions: () => client.get('/recruitment/positions').then((r) => r.data),
   exportExcel: (category) => download('/recruitment/excel/export', category),
   template: (category) => download('/recruitment/excel/template', category),
   importExcel: (category, file) => {
