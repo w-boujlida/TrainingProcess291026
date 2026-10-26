@@ -1,12 +1,17 @@
 package com.adient.training.dto;
 
 import com.adient.training.entity.AppUser;
+import com.adient.training.entity.BookletAssessment;
 import com.adient.training.entity.Candidate;
 import com.adient.training.entity.CandidateStatus;
+import com.adient.training.entity.IntegrationBooklet;
+import com.adient.training.entity.IntegrationBookletObjective;
 import com.adient.training.entity.RecruitmentCategory;
 import com.adient.training.entity.TrainingLevel;
 import com.adient.training.entity.WorkShift;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -18,6 +23,30 @@ import java.time.LocalDateTime;
 public final class RecruitmentDtos {
 
     private RecruitmentDtos() {}
+
+    private static String objectiveLabelFr(String key) {
+        return switch (key) {
+            case "company" -> "Découvrir l’entreprise et les règles d’intégration";
+            case "safety" -> "Appliquer les règles de santé et de sécurité";
+            case "workstation" -> "Identifier le poste, les outils et les équipements";
+            case "quality" -> "Respecter les consignes et critères qualité";
+            case "operations" -> "Réaliser les opérations selon le mode opératoire";
+            case "autonomy" -> "Travailler en autonomie et demander de l’aide si nécessaire";
+            default -> throw new IllegalStateException("Objectif de livret inconnu : " + key);
+        };
+    }
+
+    private static String objectiveLabelAr(String key) {
+        return switch (key) {
+            case "company" -> "التعرف على الشركة وقواعد الاندماج";
+            case "safety" -> "تطبيق قواعد الصحة والسلامة";
+            case "workstation" -> "التعرف على المنصب والأدوات والمعدات";
+            case "quality" -> "احترام تعليمات ومعايير الجودة";
+            case "operations" -> "إنجاز العمليات حسب طريقة العمل";
+            case "autonomy" -> "العمل باستقلالية وطلب المساعدة عند الحاجة";
+            default -> throw new IllegalStateException("Objectif de livret inconnu : " + key);
+        };
+    }
 
     public record CandidateRequest(
             @NotNull(message = "La catégorie est obligatoire.") RecruitmentCategory category,
@@ -45,6 +74,57 @@ public final class RecruitmentDtos {
     public record CandidateStatusRequest(@NotNull(message = "Le statut est obligatoire.") CandidateStatus status,
                                          /** Direct position, required when validating a Formation employee. */
                                          String position) {}
+
+    public record BookletObjectiveUpdate(
+            @NotBlank String key,
+            @NotNull BookletAssessment assessment,
+            @Size(max = 1000) String comment) {}
+
+    public record IntegrationBookletUpdateRequest(
+            LocalDate trainingStartDate,
+            LocalDate trainingEndDate,
+            BookletAssessment evaluationOutcome,
+            @Size(max = 3000) String evaluationNotes,
+            @NotEmpty java.util.List<@Valid BookletObjectiveUpdate> objectives) {}
+
+    public record IntegrationBookletSignatureRequest(
+            @NotBlank(message = "La signature est obligatoire.")
+            @Size(max = 40000, message = "La signature est trop volumineuse.") String signature) {}
+
+    public record BookletObjectiveDto(String key, String labelFr, String labelAr,
+                                      BookletAssessment assessment, String comment) {}
+
+    public record IntegrationBookletDto(
+            Long candidateId, String fullName, String matricule, String cin, String category,
+            String position, String department, LocalDate hireDate, String trainingLevel,
+            Long trainerId, String trainerName, LocalDate trainingStartDate, LocalDate trainingEndDate,
+            BookletAssessment evaluationOutcome, String evaluationNotes,
+            java.util.List<BookletObjectiveDto> objectives, String candidateSignature,
+            String candidateSignedBy, LocalDateTime candidateSignedAt,
+            String trainerSignedBy, LocalDateTime trainerSignedAt, String status) {
+        public static IntegrationBookletDto of(IntegrationBooklet booklet) {
+            Candidate candidate = booklet.getCandidate();
+            return new IntegrationBookletDto(candidate.getId(), candidate.getFullName(), candidate.getMatricule(),
+                    candidate.getCin(), candidate.getCategory().getLabel(), candidate.getPosition(),
+                    candidate.getDepartment(), candidate.getHireDate(),
+                    candidate.getTrainingLevel() == null ? null : candidate.getTrainingLevel().getLabel(),
+                    candidate.getTrainer() == null ? null : candidate.getTrainer().getId(),
+                    candidate.getTrainer() == null ? null : candidate.getTrainer().getFullName(),
+                    booklet.getTrainingStartDate(), booklet.getTrainingEndDate(), booklet.getEvaluationOutcome(),
+                    booklet.getEvaluationNotes(),
+                    booklet.getObjectives().stream().map(o -> new BookletObjectiveDto(
+                            o.getObjectiveKey(), objectiveLabelFr(o.getObjectiveKey()),
+                            objectiveLabelAr(o.getObjectiveKey()),
+                            o.getAssessment(), o.getComment())).toList(),
+                    booklet.getCandidateSignature(),
+                    booklet.getCandidateSignedBy() == null ? null : booklet.getCandidateSignedBy().getFullName(),
+                    booklet.getCandidateSignedAt(),
+                    booklet.getTrainerSignedBy() == null ? null : booklet.getTrainerSignedBy().getFullName(),
+                    booklet.getTrainerSignedAt(),
+                    booklet.getTrainerSignedAt() != null ? "COMPLETED"
+                            : booklet.getCandidateSignedAt() != null ? "CANDIDATE_SIGNED" : "IN_PROGRESS");
+        }
+    }
 
     public record ImportError(int row, String message) {}
 

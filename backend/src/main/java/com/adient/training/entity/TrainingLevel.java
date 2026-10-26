@@ -7,7 +7,7 @@ import java.time.Period;
 public enum TrainingLevel {
     APPRENTIE("Apprentie", "1 mois et demi", Period.ofMonths(1).plusDays(15)),
     JUNIOR("Junior", "2 à 3 semaines", Period.ofWeeks(3)),
-    CONFIRMEE("Confirmée", "15 jours", Period.ofDays(15));
+    CONFIRMEE("Confirmée", "2 à 3 semaines", Period.ofWeeks(3));
 
     private final String label;
     private final String trialLabel;
@@ -23,7 +23,7 @@ public enum TrainingLevel {
 
     public String getTrialLabel() { return trialLabel; }
 
-    /** End of the trial period (upper bound for Junior), or null when the start date is unknown. */
+    /** End of the trial period (upper bound for levels with a range), or null when the start date is unknown. */
     public LocalDate trialEnd(LocalDate start) {
         return start == null ? null : start.plus(trial);
     }

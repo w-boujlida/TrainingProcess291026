@@ -617,3 +617,81 @@ fieldset:disabled .level-chip { cursor: default; }
 .transfer-box { background: #eff6ff; border-color: #bfdbfe; border-left-color: #1d4ed8; }
 .transfer-box .form-label { color: #1e3a8a; }
 .level-badge.from-formation { background: #ede9fe; color: #5b21b6; text-transform: none; }
+
+.booklet-action { color: #176b45; }
+.booklet-modal { width: min(1060px, 96vw); max-width: 1060px; max-height: 94vh; display: flex; flex-direction: column; }
+.booklet-head-actions { display: flex; align-items: center; gap: 9px; }
+.booklet-scroll { flex: 1; min-height: 0; overflow-y: auto; max-height: none; background: #f1f5f9; }
+.booklet-paper {
+  max-width: 900px; margin: 0 auto; padding: 28px 34px; background: #fff; color: #1e293b;
+  border: 1px solid #e2e8f0; box-shadow: 0 3px 14px rgba(15,23,42,.07);
+}
+.booklet-title { text-align: center; padding: 8px 0 20px; border-bottom: 3px solid #166534; }
+.booklet-kicker { color: #64748b; font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
+.booklet-title h1 { margin: 7px 0 2px; color: #166534; font-size: 24px; }
+.booklet-title h1 span, .booklet-title p span, .booklet-section h2 span, .booklet-objective-copy span,
+.booklet-signature h3 span { margin-inline-start: 8px; font-family: Tahoma, Arial, sans-serif; }
+.booklet-title p { color: #64748b; font-size: 12px; }
+.booklet-section { padding: 17px 0; border-bottom: 1px solid #dbe4e8; }
+.booklet-section h2 { margin: 0 0 12px; color: #14532d; font-size: 15px; }
+.booklet-section h2 span { color: #64748b; font-size: 13px; font-weight: 500; }
+.booklet-identity { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.booklet-identity > div { padding: 9px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 7px; min-width: 0; }
+.booklet-identity small { display: block; color: #64748b; font-size: 10px; }
+.booklet-identity strong { display: block; overflow-wrap: anywhere; font-size: 12px; }
+.booklet-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.booklet-reference-dates { margin-top: 8px; color: #64748b; font-size: 11px; }
+.booklet-objectives { display: flex; flex-direction: column; gap: 9px; }
+.booklet-objective { display: grid; grid-template-columns: 28px minmax(0, 1fr) 190px; align-items: center; gap: 10px; padding: 10px; border: 1px solid #dbe4e8; border-radius: 8px; }
+.booklet-objective-index { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: #e8f5ed; color: #166534; font-weight: 800; font-size: 12px; }
+.booklet-objective-copy { display: flex; flex-direction: column; gap: 3px; }
+.booklet-objective-copy strong { font-size: 12px; }
+.booklet-objective-copy > span { color: #64748b; font-size: 11px; text-align: right; }
+.booklet-objective-copy input { margin-top: 4px; }
+.booklet-assessment { font-size: 11px; }
+.booklet-notes { margin-top: 12px; }
+.booklet-signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.booklet-signature { min-width: 0; border: 1px solid #dbe4e8; border-radius: 8px; padding: 12px; }
+.booklet-signature h3 { margin-bottom: 8px; font-size: 12px; }
+.booklet-signature h3 span { color: #64748b; font-weight: 500; }
+.booklet-signature > p { margin-top: 7px; color: #64748b; font-size: 10px; }
+.signature-pad-wrap { position: relative; }
+.signature-pad { display: block; width: 100%; height: 116px; border: 1px dashed #94a3b8; border-radius: 6px; background: #fbfdff; touch-action: none; }
+.signature-clear { margin-top: 5px; font-size: 11px; }
+.booklet-signature-image { display: block; width: 100%; height: 116px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 6px; }
+.booklet-signature-empty { height: 116px; display: grid; place-items: center; padding: 12px; border: 1px dashed #94a3b8; border-radius: 6px; color: #64748b; text-align: center; font-size: 12px; }
+.booklet-electronic-seal { height: 116px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #166534; border: 1px solid #86efac; border-radius: 6px; background: #f0fdf4; }
+.booklet-electronic-seal strong { font-size: 12px; }
+.booklet-electronic-seal span { font-size: 13px; font-weight: 700; }
+.booklet-electronic-seal small { color: #64748b; font-size: 10px; }
+.booklet-footer { padding-top: 14px; color: #94a3b8; text-align: center; font-size: 10px; }
+.booklet-status { padding: 4px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.status-in_progress { color: #92400e; background: #fef3c7; }
+.status-candidate_signed { color: #1d4ed8; background: #dbeafe; }
+.status-completed { color: #166534; background: #dcfce7; }
+
+@media (max-width: 700px) {
+  .booklet-identity { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .booklet-objective { grid-template-columns: 28px minmax(0, 1fr); }
+  .booklet-assessment { grid-column: 2; width: 100%; }
+  .booklet-paper { padding: 18px 14px; }
+  .booklet-signature-grid, .booklet-dates { grid-template-columns: 1fr; }
+  .booklet-head-actions { gap: 5px; }
+  .booklet-head-actions .tool-btn { font-size: 0; padding: 8px; }
+  .booklet-status { display: none; }
+}
+
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body * { visibility: hidden !important; }
+  .booklet-backdrop, .booklet-backdrop * { visibility: visible !important; }
+  .booklet-backdrop { position: static !important; inset: auto !important; display: block !important; padding: 0 !important; background: #fff !important; }
+  .booklet-modal { position: static !important; width: 100% !important; max-width: none !important; max-height: none !important; overflow: visible !important; border: 0 !important; box-shadow: none !important; }
+  .booklet-controls { display: none !important; }
+  .booklet-scroll { max-height: none !important; overflow: visible !important; padding: 0 !important; background: #fff !important; }
+  .booklet-paper { max-width: none !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; }
+  .booklet-section { break-inside: avoid; }
+  .signature-clear, .booklet-objective-copy input { display: none !important; }
+  .booklet-objective { grid-template-columns: 28px minmax(0, 1fr) 190px; }
+  .form-input { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

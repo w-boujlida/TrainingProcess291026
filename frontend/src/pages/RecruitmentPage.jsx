@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Navigate, useParams } from 'react-router-dom';
 import { recruitmentApi } from '../api/recruitment.api';
 import { errorMessage } from '../api/client';
@@ -7,6 +8,7 @@ import { CANDIDATE_STATUSES, RECRUITMENT_CATEGORIES, RECRUITMENT_EDITORS, SHIFTS
 import PageHeader from '../components/PageHeader';
 import Icon from '../components/Icon';
 import ImportExcelModal from '../components/ImportExcelModal';
+import IntegrationBookletModal from '../components/IntegrationBookletModal';
 
 const EMPTY_FORM = {
   matricule: '', fullName: '', cin: '', birthDate: '', phone: '', email: '', address: '',
@@ -23,7 +25,7 @@ function trialEnd(hireDate, level) {
     const lastDay = new Date(y, m + 1, 0).getDate();
     date = new Date(y, m, Math.min(d, lastDay) + 15);
   } else {
-    date = new Date(y, m - 1, d + (level === 'JUNIOR' ? 21 : 15));
+    date = new Date(y, m - 1, d + 21);
   }
   return date.toLocaleDateString('fr-FR');
 }
@@ -348,6 +350,7 @@ export default function RecruitmentPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [modal, setModal] = useState(null);
+  const [bookletCandidate, setBookletCandidate] = useState(null);
   const [importOpen, setImportOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [positionsMap, setPositionsMap] = useState({});
@@ -364,7 +367,7 @@ export default function RecruitmentPage() {
   useEffect(() => {
     if (!category) return;
     let cancelled = false;
-    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setPositionFilter(''); setLevelFilter(''); setModal(null); setImportOpen(false);
+    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setPositionFilter(''); setLevelFilter(''); setModal(null); setBookletCandidate(null); setImportOpen(false);
     Promise.all([recruitmentApi.list(category.code), recruitmentApi.staff()])
       .then(([c, s]) => { if (!cancelled) { setCandidates(c); setStaff(s); } })
       .catch((err) => { if (!cancelled) setError(errorMessage(err)); })
@@ -567,6 +570,11 @@ export default function RecruitmentPage() {
                     </td>
                     <td>
                       <div className="row-actions">
+                        <button className="action-btn booklet-action" title="Livret d’intégration"
+                          aria-label={`Livret d’intégration de ${c.fullName}`}
+                          onClick={() => setBookletCandidate(c)}>
+                          <Icon name="book" size={13} />
+                        </button>
                         {canEdit ? (
                           <>
                             <button className="action-btn edit-btn" title="Modifier" onClick={() => setModal({ mode: 'edit', candidate: c })}><Icon name="edit" size={13} /></button>
@@ -600,6 +608,13 @@ export default function RecruitmentPage() {
       )}
       {importOpen && (
         <ImportExcelModal category={category} onClose={() => setImportOpen(false)} onImported={handleImported} />
+      )}
+      {bookletCandidate && (
+        createPortal(
+          <IntegrationBookletModal candidateId={bookletCandidate.id} canEdit={canEdit} user={me}
+            onClose={() => setBookletCandidate(null)} />,
+          document.body,
+        )
       )}
     </>
   );

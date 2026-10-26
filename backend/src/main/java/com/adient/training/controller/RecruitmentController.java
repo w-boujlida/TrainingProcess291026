@@ -5,6 +5,7 @@ import com.adient.training.entity.RecruitmentCategory;
 import com.adient.training.security.AuthUser;
 import com.adient.training.service.CandidateExcelService;
 import com.adient.training.service.CandidateService;
+import com.adient.training.service.IntegrationBookletService;
 import jakarta.validation.Valid;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -26,10 +27,13 @@ public class RecruitmentController {
 
     private final CandidateService service;
     private final CandidateExcelService excelService;
+    private final IntegrationBookletService bookletService;
 
-    public RecruitmentController(CandidateService service, CandidateExcelService excelService) {
+    public RecruitmentController(CandidateService service, CandidateExcelService excelService,
+                                 IntegrationBookletService bookletService) {
         this.service = service;
         this.excelService = excelService;
+        this.bookletService = bookletService;
     }
 
     @GetMapping("/candidates")
@@ -70,6 +74,30 @@ public class RecruitmentController {
     @PatchMapping("/candidates/{id}/status")
     public CandidateDto setStatus(@PathVariable Long id, @Valid @RequestBody CandidateStatusRequest req) {
         return service.setStatus(id, req.status(), req.position());
+    }
+
+    @GetMapping("/candidates/{id}/booklet")
+    public IntegrationBookletDto getBooklet(@PathVariable Long id) {
+        return bookletService.get(id);
+    }
+
+    @PutMapping("/candidates/{id}/booklet")
+    public IntegrationBookletDto updateBooklet(@PathVariable Long id,
+                                               @Valid @RequestBody IntegrationBookletUpdateRequest request) {
+        return bookletService.update(id, request);
+    }
+
+    @PostMapping("/candidates/{id}/booklet/candidate-signature")
+    public IntegrationBookletDto signCandidate(@PathVariable Long id,
+                                               @AuthenticationPrincipal AuthUser actor,
+                                               @Valid @RequestBody IntegrationBookletSignatureRequest request) {
+        return bookletService.signCandidate(id, actor, request.signature());
+    }
+
+    @PostMapping("/candidates/{id}/booklet/trainer-signature")
+    public IntegrationBookletDto signTrainer(@PathVariable Long id,
+                                             @AuthenticationPrincipal AuthUser actor) {
+        return bookletService.signTrainer(id, actor);
     }
 
     @DeleteMapping("/candidates/{id}")

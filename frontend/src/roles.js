@@ -29,7 +29,7 @@ export const RECRUITMENT_CATEGORIES = [
 export const TRAINING_LEVELS = [
   { code: 'APPRENTIE', label: 'Apprentie', trial: '1 mois et demi', hint: 'Débutante, découverte du poste', icon: 'graduation', color: 'level-apprentie' },
   { code: 'JUNIOR', label: 'Junior', trial: '2 à 3 semaines', hint: 'Notions acquises, montée en autonomie', icon: 'userCheck', color: 'level-junior' },
-  { code: 'CONFIRMEE', label: 'Confirmée', trial: '15 jours', hint: 'Expérimentée, autonome au poste', icon: 'checkCircle', color: 'level-confirmee' },
+  { code: 'CONFIRMEE', label: 'Confirmée', trial: '2 à 3 semaines', hint: 'Expérimentée, autonome au poste', icon: 'checkCircle', color: 'level-confirmee' },
 ];
 
 export const CANDIDATE_STATUSES = [
