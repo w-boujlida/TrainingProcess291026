@@ -30,10 +30,15 @@ public class JwtUtil {
     }
 
     public String generate(AppUser user) {
+        return generate(user, null);
+    }
+
+    public String generate(AppUser user, String deviceName) {
         return Jwts.builder()
                 .subject(String.valueOf(user.getId()))
                 .claim("username", user.getUsername())
                 .claim("role", user.getRole().name())
+                .claim("deviceName", deviceName)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(key)

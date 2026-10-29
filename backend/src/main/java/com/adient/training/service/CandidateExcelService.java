@@ -47,13 +47,15 @@ public class CandidateExcelService {
     private final UserRepository users;
     private final CandidateService candidateService;
     private final Validator validator;
+    private final I18nService i18n;
 
     public CandidateExcelService(CandidateRepository candidates, UserRepository users,
-                                 CandidateService candidateService, Validator validator) {
+                                 CandidateService candidateService, Validator validator, I18nService i18n) {
         this.candidates = candidates;
         this.users = users;
         this.candidateService = candidateService;
         this.validator = validator;
+        this.i18n = i18n;
     }
 
     // ---------------------------------------------------------------- export
@@ -83,7 +85,9 @@ public class CandidateExcelService {
                         cell.setCellValue(d);
                         cell.setCellStyle(dateStyle);
                     } else {
-                        cell.setCellValue(values[i].toString());
+                        String value = values[i].toString();
+                        cell.setCellValue((i == 7 && category.hasFixedPositions()) || i == 11 || i == 14 || i == 16
+                                ? i18n.translate(value) : value);
                     }
                 }
             }
@@ -100,31 +104,35 @@ public class CandidateExcelService {
             Sheet sheet = createDataSheet(wb, category);
             addValidations(sheet, category, 1000);
 
-            Sheet help = wb.createSheet("Instructions");
+            Sheet help = wb.createSheet(i18n.translate("Instructions"));
             String[] lines = {
-                    "Import en masse — " + category.getLabel(),
+                    i18n.translate("Import en masse —") + " " + i18n.translate(category.getLabel()),
                     "",
-                    "• Remplir une ligne par candidat dans la feuille « " + category.getLabel() + " » à partir de la ligne 2.",
-                    "• Colonnes obligatoires : Nom et prénom, CIN" + (category.hasFixedPositions() ? ", Poste." : "."),
+                    i18n.translate("Remplir une ligne par candidat à partir de la ligne 2."),
+                    i18n.translate("Colonnes obligatoires : Nom et prénom, CIN.")
+                            + (category.hasFixedPositions() ? " " + i18n.translate("Le poste est obligatoire.") : ""),
                     category.hasFixedPositions()
-                            ? "• Poste (liste déroulante) : " + String.join(", ", category.getPositions())
-                            : "• Poste : texte libre.",
+                            ? i18n.translate("Postes concernés :") + " " + category.getPositions().stream().map(i18n::translate).collect(Collectors.joining(", "))
+                            : i18n.translate("Poste : texte libre."),
                     category.requiresTrainingLevel()
-                            ? "• Niveau (obligatoire) : " + Arrays.stream(TrainingLevel.values())
-                                    .map(l -> l.getLabel() + " (" + l.getTrialLabel() + ")").collect(Collectors.joining(", "))
-                                    + ". La fin de période d'essai est calculée à partir de la date de recrutement (colonne ignorée à l'import)."
-                                    + " Statut « Validé » : la personne passe automatiquement en Direct ; le Poste doit alors être un poste Direct : " + String.join(", ", RecruitmentCategory.DIRECT.getPositions()) + "."
+                            ? i18n.translate("Le niveau (Apprentie, Junior ou Confirmée) est obligatoire.") + " "
+                                    + Arrays.stream(TrainingLevel.values())
+                                    .map(l -> i18n.translate(l.getLabel()) + " (" + i18n.translate(l.getTrialLabel()) + ")").collect(Collectors.joining(", "))
+                                    + " " + i18n.translate("La fin de période d'essai est calculée à partir de la date de recrutement (colonne ignorée à l'import).")
+                                    + " " + i18n.translate("Statut Validé : transfert automatique en Direct ; choisissez un poste Direct.")
+                                    + " " + RecruitmentCategory.DIRECT.getPositions().stream().map(i18n::translate).collect(Collectors.joining(", "))
                             : "",
                     "• Si le CIN existe déjà dans cette catégorie, la fiche est mise à jour (les cellules vides ne modifient rien).",
                     "• Dates : format JJ/MM/AAAA ou cellule de type date.",
-                    "• Shift : " + Arrays.stream(WorkShift.values()).map(WorkShift::getLabel).collect(Collectors.joining(", ")),
-                    "• Statut : " + Arrays.stream(CandidateStatus.values()).map(CandidateStatus::getLabel).collect(Collectors.joining(", "))
-                            + " (vide = Candidat pour un nouveau candidat).",
+                    i18n.translate("Shift") + " : " + Arrays.stream(WorkShift.values()).map(WorkShift::getLabel).map(i18n::translate).collect(Collectors.joining(", ")),
+                    i18n.translate("Statut") + " : " + Arrays.stream(CandidateStatus.values()).map(CandidateStatus::getLabel).map(i18n::translate).collect(Collectors.joining(", "))
+                            + " " + i18n.translate("(vide = Candidat pour un nouveau candidat)."),
                     "• Formatrice / Team leader : nom complet ou identifiant d'un compte existant.",
                     "• Les lignes valides sont importées ; les lignes en erreur sont listées avec leur motif.",
                     "• Maximum " + MAX_ROWS + " lignes par fichier.",
             };
-            for (int i = 0; i < lines.length; i++) help.createRow(i).createCell(0).setCellValue(lines[i]);
+            for (int i = 0; i < lines.length; i++) help.createRow(i).createCell(0).setCellValue(i18n.translate(lines[i]));
+            help.setRightToLeft(org.springframework.context.i18n.LocaleContextHolder.getLocale().getLanguage().equals("ar"));
             Font bold = wb.createFont();
             bold.setBold(true);
             bold.setFontHeightInPoints((short) 13);
@@ -177,7 +185,7 @@ public class CandidateExcelService {
                     }
                     Optional<Candidate> existing = d.cin == null ? Optional.empty() : candidates.findByCinIgnoreCase(d.cin);
                     if (existing.isPresent() && existing.get().getCategory() != category) {
-                        throw new RowException("Ce CIN existe déjà dans la catégorie " + existing.get().getCategory().getLabel() + ".");
+                        throw new RowException("Ce CIN existe déjà dans la catégorie " + i18n.translate(existing.get().getCategory().getLabel()) + ".");
                     }
                     CandidateRequest req = toRequest(d, category, existing.orElse(null), trainers, leaders);
                     validate(req);
@@ -208,14 +216,14 @@ public class CandidateExcelService {
         if (header == null) throw new ApiException(HttpStatus.BAD_REQUEST, "La ligne d'en-tête est manquante.");
         Map<String, Integer> expected = new HashMap<>();
         for (int i = 0; i < HEADERS.length; i++) {
-            expected.put(normalize(HEADERS[i]), i);
+            for (String alias : i18n.headerAliases(HEADERS[i])) expected.put(normalize(alias), i);
             // Also accept the short form of the header, e.g. "Poste" for "Poste / fonction".
             int slash = HEADERS[i].indexOf('/');
             if (slash > 0) expected.putIfAbsent(normalize(HEADERS[i].substring(0, slash)), i);
         }
         Map<Integer, Integer> map = new HashMap<>();
         for (Cell cell : header) {
-            Integer field = expected.get(normalize(fmt.formatCellValue(cell)));
+            Integer field = expected.get(normalize(fmt.formatCellValue(cell).trim()));
             if (field != null) map.put(field, cell.getColumnIndex());
         }
         if (!map.containsKey(1) || !map.containsKey(2)) {
@@ -252,6 +260,10 @@ public class CandidateExcelService {
         WorkShift shift = d.shift == null ? null : parseEnum(WorkShift.values(), d.shift, WorkShift::getLabel, "Shift");
         CandidateStatus status = d.status == null ? null
                 : parseEnum(CandidateStatus.values(), d.status, CandidateStatus::getLabel, "Statut");
+        if (d.position != null && (category.hasFixedPositions()
+                || (category.requiresTrainingLevel() && status == CandidateStatus.VALIDE))) {
+            d.position = i18n.frenchHeader(d.position);
+        }
         Long trainerId = d.trainer == null ? null : staffId(trainers, d.trainer, "Formatrice");
         Long leaderId = d.teamLeader == null ? null : staffId(leaders, d.teamLeader, "Team leader");
         TrainingLevel level = d.trainingLevel == null || !category.requiresTrainingLevel() ? null
@@ -279,7 +291,7 @@ public class CandidateExcelService {
         Set<ConstraintViolation<CandidateRequest>> violations = validator.validate(req);
         if (!violations.isEmpty()) {
             throw new RowException(violations.stream().map(ConstraintViolation::getMessage)
-                    .distinct().sorted().collect(Collectors.joining(" ")));
+                    .map(i18n::translate).distinct().sorted().collect(Collectors.joining(" ")));
         }
     }
 
@@ -294,16 +306,16 @@ public class CandidateExcelService {
 
     private Long staffId(Map<String, AppUser> index, String value, String label) {
         AppUser u = index.get(normalize(value));
-        if (u == null) throw new RowException(label + " introuvable : « " + value + " ».");
+        if (u == null) throw new RowException(i18n.translate(label) + " introuvable : « " + value + " ».");
         return u.getId();
     }
 
-    private static <E> E parseEnum(E[] values, String raw, java.util.function.Function<E, String> label, String field) {
-        String key = normalize(raw);
+    private <E> E parseEnum(E[] values, String raw, java.util.function.Function<E, String> label, String field) {
+        String key = normalize(i18n.frenchHeader(raw));
         for (E v : values) {
             if (normalize(label.apply(v)).equals(key) || normalize(((Enum<?>) v).name()).equals(key)) return v;
         }
-        throw new RowException(field + " invalide : « " + raw + " ».");
+        throw new RowException(i18n.translate(field) + " invalide : « " + raw + " ».");
     }
 
     // ---------------------------------------------------------------- helpers
@@ -314,7 +326,8 @@ public class CandidateExcelService {
 
     private Sheet createDataSheet(XSSFWorkbook wb, RecruitmentCategory category) {
         int count = columnCount(category);
-        Sheet sheet = wb.createSheet(category.getLabel());
+        Sheet sheet = wb.createSheet(i18n.translate(category.getLabel()));
+        sheet.setRightToLeft(org.springframework.context.i18n.LocaleContextHolder.getLocale().getLanguage().equals("ar"));
         CellStyle head = wb.createCellStyle();
         Font font = wb.createFont();
         font.setBold(true);
@@ -328,7 +341,7 @@ public class CandidateExcelService {
         header.setHeightInPoints(22);
         for (int i = 0; i < count; i++) {
             Cell c = header.createCell(i);
-            c.setCellValue(HEADERS[i]);
+            c.setCellValue(i18n.translate(HEADERS[i]));
             c.setCellStyle(head);
             sheet.setColumnWidth(i, WIDTHS[i] * 256);
         }
@@ -352,7 +365,7 @@ public class CandidateExcelService {
             Workbook wb = sheet.getWorkbook();
             Sheet lists = wb.createSheet("Postes");
             List<String> positions = category.getPositions();
-            for (int i = 0; i < positions.size(); i++) lists.createRow(i).createCell(0).setCellValue(positions.get(i));
+            for (int i = 0; i < positions.size(); i++) lists.createRow(i).createCell(0).setCellValue(i18n.translate(positions.get(i)));
             wb.setSheetHidden(wb.getSheetIndex(lists), true);
             DataValidation v = helper.createValidation(
                     helper.createFormulaListConstraint("Postes!$A$1:$A$" + positions.size()),
@@ -368,7 +381,8 @@ public class CandidateExcelService {
     }
 
     private void addList(Sheet sheet, DataValidationHelper helper, int col, int lastRow, String[] values) {
-        DataValidation v = helper.createValidation(helper.createExplicitListConstraint(values),
+        String[] translated = Arrays.stream(values).map(i18n::translate).toArray(String[]::new);
+        DataValidation v = helper.createValidation(helper.createExplicitListConstraint(translated),
                 new CellRangeAddressList(1, lastRow, col, col));
         v.setShowErrorBox(true);
         sheet.addValidationData(v);
@@ -402,7 +416,7 @@ public class CandidateExcelService {
         return v.isEmpty() ? null : v;
     }
 
-    private static LocalDate date(Row row, Integer col, DataFormatter fmt, String label) {
+    private LocalDate date(Row row, Integer col, DataFormatter fmt, String label) {
         if (col == null) return null;
         Cell c = row.getCell(col);
         if (c == null) return null;
@@ -417,7 +431,7 @@ public class CandidateExcelService {
         try {
             return v.contains("/") ? LocalDate.parse(v, FR_DATE) : LocalDate.parse(v);
         } catch (DateTimeParseException e) {
-            throw new RowException(label + " invalide : « " + v + " » (format JJ/MM/AAAA).");
+            throw new RowException(i18n.translate(label) + " invalide : « " + v + " » (format JJ/MM/AAAA).");
         }
     }
 

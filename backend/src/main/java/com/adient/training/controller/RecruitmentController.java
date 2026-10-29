@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.servlet.http.HttpServletRequest;
+import com.adient.training.security.AuditFilter;
 
 import java.time.LocalDate;
 import java.util.EnumMap;
@@ -120,8 +122,11 @@ public class RecruitmentController {
     @PostMapping(value = "/excel/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ImportResult importFile(@AuthenticationPrincipal AuthUser actor,
                                    @RequestParam RecruitmentCategory category,
-                                   @RequestParam("file") MultipartFile file) {
-        return excelService.importFile(actor, category, file);
+                                   @RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        ImportResult result = excelService.importFile(actor, category, file);
+        request.setAttribute(AuditFilter.AFFECTED, result.created() + result.updated());
+        request.setAttribute(AuditFilter.REJECTED, result.skipped());
+        return result;
     }
 
     private static ResponseEntity<byte[]> excel(byte[] body, String filename) {

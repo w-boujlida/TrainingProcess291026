@@ -1,7 +1,9 @@
+import { t, useLocale, getLocale } from '../i18n';
 import { useState } from 'react';
 import Icon from './Icon';
 
 export default function PasswordInput({ id, value, onChange, autoComplete, placeholder = '••••••••', autoFocus, hasError }) {
+  useLocale();
   const [visible, setVisible] = useState(false);
   return (
     <div className="input-icon-wrap">
@@ -18,7 +20,7 @@ export default function PasswordInput({ id, value, onChange, autoComplete, place
         required
       />
       <button type="button" className="input-toggle" onClick={() => setVisible((v) => !v)}
-        aria-label={visible ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}>
+        aria-label={visible ? t("Masquer le mot de passe") : t("Afficher le mot de passe")}>
         <Icon name={visible ? 'eyeOff' : 'eye'} />
       </button>
     </div>

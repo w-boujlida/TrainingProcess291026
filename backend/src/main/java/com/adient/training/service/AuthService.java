@@ -66,7 +66,8 @@ public class AuthService {
         user.setLockedUntil(null);
         user.setLastLoginAt(LocalDateTime.now());
         userRepository.save(user);
-        return new LoginResponse(jwtUtil.generate(user), jwtUtil.getExpirationMs(), UserDto.of(user));
+        return new LoginResponse(jwtUtil.generate(user, req.deviceName() == null ? null : req.deviceName().trim()),
+                jwtUtil.getExpirationMs(), UserDto.of(user));
     }
 
     @Transactional(readOnly = true)

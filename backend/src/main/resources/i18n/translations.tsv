@@ -1,0 +1,810 @@
+Langue	Language	Lingua	اللغة
+Le classeur RH dépasse les limites de décompression autorisées.	The HR workbook exceeds the permitted decompression limits.	Il file HR supera i limiti di decompressione consentiti.	يتجاوز ملف الموارد البشرية حدود فك الضغط المسموح بها.
+Afficher la liste	Show list	Mostra elenco	عرض القائمة
+Valeur numérique Excel invalide.	Invalid Excel numeric value.	Valore numerico Excel non valido.	قيمة رقمية غير صالحة في Excel.
+Importer les mises à jour RH	Import HR updates	Importa aggiornamenti HR	استيراد تحديثات الموارد البشرية
+Sélectionnez un fichier .xlsx de 10 Mo maximum.	Select an .xlsx file up to 10 MB.	Seleziona un file .xlsx di massimo 10 MB.	اختر ملف .xlsx بحجم 10 ميغابايت كحد أقصى.
+Actualisez l’aperçu pour vérifier le résultat avant de réessayer.	Refresh the preview to check the outcome before trying again.	Aggiorna l’anteprima per verificare il risultato prima di riprovare.	حدّث المعاينة للتحقق من النتيجة قبل إعادة المحاولة.
+Import enregistré, mais la liste n’a pas pu être actualisée.	Import saved, but the list could not be refreshed.	Importazione salvata, ma impossibile aggiornare l’elenco.	تم حفظ الاستيراد ولكن تعذر تحديث القائمة.
+Feuille RH, 62 colonnes sélectionnées. Les cellules vides conservent les valeurs existantes. Aucun compte supprimé, aucun rôle ni mot de passe existant modifié.	RH sheet, 62 selected columns. Empty cells keep existing values. No accounts deleted, no existing roles or passwords changed.	Foglio RH, 62 colonne selezionate. Le celle vuote mantengono i valori esistenti. Nessun account eliminato, nessun ruolo o password esistente modificato.	ورقة RH، 62 عموداً محدداً. الخلايا الفارغة تحتفظ بالقيم الحالية. لا تُحذف حسابات ولا تتغير الأدوار أو كلمات المرور الحالية.
+Les comptes de gestion et de validation sont protégés et ne seront pas modifiés.	Management and approval accounts are protected and will not be changed.	Gli account di gestione e approvazione sono protetti e non saranno modificati.	حسابات الإدارة والمصادقة محمية ولن تتغير.
+Fichier RH mensuel (.xlsx)	Monthly HR file (.xlsx)	File HR mensile (.xlsx)	ملف الموارد البشرية الشهري (.xlsx)
+Afficher l’aperçu	Show preview	Mostra anteprima	عرض المعاينة
+Traitement en cours. Ne fermez pas cette fenêtre.	Processing. Do not close this window.	Elaborazione in corso. Non chiudere questa finestra.	جارٍ المعالجة. لا تغلق هذه النافذة.
+Nouveaux comptes	New accounts	Nuovi account	حسابات جديدة
+Comptes protégés ignorés	Protected accounts skipped	Account protetti ignorati	حسابات محمية تم تخطيها
+Erreurs Excel conservées : {0}. Formules sans résultat : {1} (Non calculé dans Excel).	Excel errors preserved: {0}. Formulas without a result: {1} (Non calculé dans Excel).	Errori Excel conservati: {0}. Formule senza risultato: {1} (Non calculé dans Excel).	أخطاء Excel المحفوظة: {0}. صيغ بلا نتيجة: {1} (Non calculé dans Excel).
+Corrigez les lignes en erreur avant de confirmer l’import.	Fix invalid rows before confirming the import.	Correggi le righe non valide prima di confermare l’importazione.	صحح الصفوف الخاطئة قبل تأكيد الاستيراد.
+Import enregistré. Les comptes existants non présents dans le fichier sont conservés.	Import saved. Existing accounts missing from the file are retained.	Importazione salvata. Gli account esistenti assenti dal file vengono conservati.	تم حفظ الاستيراد. تبقى الحسابات الحالية غير الموجودة في الملف محفوظة.
+Nouvelles recrues à traiter dans Recrutement	New recruits to process in Recruitment	Nuovi assunti da gestire in Reclutamento	موظفون جدد للمعالجة في التوظيف
+Aucun dossier ni workflow créé automatiquement. Les nouveaux comptes Employé n’ont pas accès aux modules.	No records or workflows created automatically. New Employee accounts have no module access.	Nessuna pratica o workflow creato automaticamente. I nuovi account Dipendente non hanno accesso ai moduli.	لا تُنشأ ملفات أو مسارات عمل تلقائياً. حسابات الموظفين الجديدة لا تملك صلاحية الوصول للوحدات.
+Téléchargez les mots de passe temporaires avant de fermer. Ils ne seront plus affichés après cette opération. Conservez ce fichier dans un emplacement privé.	Download temporary passwords before closing. They will not be available again after this operation. Keep this file in a private location.	Scarica le password temporanee prima di chiudere. Non saranno più disponibili dopo questa operazione. Conserva il file in un luogo privato.	نزّل كلمات المرور المؤقتة قبل الإغلاق. لن تتوفر مجدداً بعد هذه العملية. احفظ الملف في مكان خاص.
+Télécharger les accès des nouvelles recrues	Download new recruits’ credentials	Scarica le credenziali dei nuovi assunti	تنزيل بيانات دخول الموظفين الجدد
+Ouvrir Recrutement	Open Recruitment	Apri Reclutamento	فتح التوظيف
+Confirmer la mise à jour et les créations	Confirm updates and new accounts	Conferma aggiornamenti e nuovi account	تأكيد التحديث والحسابات الجديدة
+Fichier Excel vide.	Empty Excel file.	File Excel vuoto.	ملف Excel فارغ.
+La feuille RH et ses en-têtes sont obligatoires.	The RH sheet and its headers are required.	Il foglio RH e le sue intestazioni sono obbligatori.	ورقة RH وعناوينها مطلوبة.
+Maximum 10000 lignes par fichier RH.	Maximum 10000 rows per HR file.	Massimo 10000 righe per file HR.	الحد الأقصى 10000 صف لكل ملف موارد بشرية.
+En-tête RH incorrect en colonne {0}.	Incorrect HR header in column {0}.	Intestazione HR non corretta nella colonna {0}.	عنوان غير صحيح في العمود {0}.
+Matricule manquant ou invalide.	Missing or invalid employee number.	Matricola mancante o non valida.	الرقم الوظيفي مفقود أو غير صالح.
+Matricule en double dans le fichier.	Duplicate employee number in the file.	Matricola duplicata nel file.	رقم وظيفي مكرر في الملف.
+Nom ou matricule invalide.	Invalid name or employee number.	Nome o matricola non validi.	الاسم أو الرقم الوظيفي غير صالح.
+Statut actif/inactif invalide.	Invalid active/inactive status.	Stato attivo/inattivo non valido.	حالة نشط/غير نشط غير صالحة.
+Une cellule RH dépasse 10000 caractères.	An HR cell exceeds 10000 characters.	Una cella HR supera 10000 caratteri.	إحدى خلايا الموارد البشرية تتجاوز 10000 حرف.
+Aucun salarié dans la feuille RH.	No employees in the RH sheet.	Nessun dipendente nel foglio RH.	لا يوجد موظفون في ورقة RH.
+Les données ont changé. Recommencez l’aperçu avant de confirmer.	Data has changed. Generate a new preview before confirming.	I dati sono cambiati. Genera una nuova anteprima prima di confermare.	تغيرت البيانات. أعد المعاينة قبل التأكيد.
+Une mise à jour est en cours. Recommencez l’aperçu dans quelques instants.	An update is in progress. Try the preview again shortly.	Un aggiornamento è in corso. Riprova l’anteprima tra poco.	يوجد تحديث قيد التنفيذ. أعد المعاينة بعد لحظات.
+Un nouveau compte exige nom, statut actif/inactif et type de travail.	A new account requires a name, active/inactive status and work type.	Un nuovo account richiede nome, stato attivo/inattivo e tipo di lavoro.	يتطلب الحساب الجديد اسماً وحالة نشط/غير نشط ونوع العمل.
+Employé	Employee	Dipendente	موظف
+Fiche RH	HR profile	Scheda HR	الملف الوظيفي
+Données confidentielles — Super Admin uniquement.	Confidential data — Super Admin only.	Dati riservati — solo Super Admin.	بيانات سرية — للمسؤول الأعلى فقط.
+Importé le	Imported on	Importato il	تاريخ الاستيراد
+Source	Source	Fonte	المصدر
+Aucune fiche RH importée pour cet utilisateur.	No HR profile imported for this user.	Nessuna scheda HR importata per questo utente.	لا يوجد ملف وظيفي مستورد لهذا المستخدم.
+Tout sélectionner	Select all	Seleziona tutto	تحديد الكل
+Tout désélectionner	Deselect all	Deseleziona tutto	إلغاء تحديد الكل
+{0} sélectionné(s)	{0} selected	{0} selezionati	تم تحديد {0}
+Sélectionner {0}	Select {0}	Seleziona {0}	تحديد {0}
+Type de travail de la sélection	Selected users' work type	Tipo di lavoro della selezione	نوع عمل المستخدمين المحددين
+Appliquer le type	Apply work type	Applica tipo di lavoro	تطبيق نوع العمل
+Exporter la sélection	Export selected	Esporta selezione	تصدير المحددين
+Retirez votre compte et les comptes non modifiables pour appliquer une action.	Remove your own account and accounts you cannot manage before applying an action.	Rimuovi il tuo account e gli account non modificabili prima di applicare un'azione.	أزل حسابك والحسابات التي لا يمكنك تعديلها قبل تطبيق الإجراء.
+Appliquer {0} à {1} utilisateur(s) sélectionné(s) ?	Apply {0} to {1} selected user(s)?	Applicare {0} a {1} utenti selezionati?	تطبيق {0} على {1} مستخدمين محددين؟
+{0} utilisateur(s) modifié(s).	{0} user(s) updated.	{0} utenti modificati.	تم تعديل {0} مستخدمين.
+Sélection ou action invalide.	Invalid selection or action.	Selezione o azione non valida.	تحديد أو إجراء غير صالح.
+Vous ne pouvez pas modifier votre propre compte en lot.	You cannot bulk-edit your own account.	Non puoi modificare il tuo account in blocco.	لا يمكنك تعديل حسابك ضمن عملية جماعية.
+Type de travail	Work type	Tipo di lavoro	نوع العمل
+Type de travail invalide.	Invalid work type.	Tipo di lavoro non valido.	نوع العمل غير صالح.
+Connexion	Sign in	Accesso	تسجيل الدخول
+Se connecter	Sign in	Accedi	تسجيل الدخول
+Se déconnecter	Sign out	Esci	تسجيل الخروج
+Déconnexion	Sign out	Disconnessione	تسجيل الخروج
+Identifiant	Username	Nome utente	اسم المستخدم
+Identifiant exact	Exact username	Nome utente esatto	اسم المستخدم المطابق
+Votre identifiant	Your username	Il tuo nome utente	اسم المستخدم
+Mot de passe	Password	Password	كلمة المرور
+Mot de passe actuel	Current password	Password attuale	كلمة المرور الحالية
+Nouveau mot de passe	New password	Nuova password	كلمة المرور الجديدة
+Mot de passe temporaire	Temporary password	Password temporanea	كلمة المرور المؤقتة
+Confirmer le mot de passe	Confirm password	Conferma password	تأكيد كلمة المرور
+Afficher le mot de passe	Show password	Mostra password	إظهار كلمة المرور
+Masquer le mot de passe	Hide password	Nascondi password	إخفاء كلمة المرور
+Nom du poste (facultatif)	Device name (optional)	Nome dispositivo (facoltativo)	اسم الجهاز (اختياري)
+Entrez vos identifiants pour accéder au système	Enter your credentials to access the system	Inserisci le credenziali per accedere al sistema	أدخل بياناتك للوصول إلى النظام
+Mot de passe oublié ? Contactez votre administrateur.	Forgot your password? Contact your administrator.	Password dimenticata? Contatta l’amministratore.	نسيت كلمة المرور؟ اتصل بالمسؤول.
+Veuillez remplir tous les champs.	Please fill in all fields.	Compila tutti i campi.	يرجى ملء جميع الحقول.
+Connexion impossible.	Unable to sign in.	Impossibile accedere.	تعذر تسجيل الدخول.
+Déconnexion impossible. Réessayez.	Unable to sign out. Please try again.	Impossibile uscire. Riprova.	تعذر تسجيل الخروج. حاول مجدداً.
+Les connexions, consultations et actions sont journalisées pendant 90 jours avec l’adresse IP, le navigateur et le nom de poste déclaré. Journal accessible uniquement au Super Admin.	Logins, views and actions are logged for 90 days with the IP address, browser and declared device name. Only the Super Admin can access the log.	Accessi, consultazioni e azioni sono registrati per 90 giorni con IP, browser e nome dispositivo dichiarato. Registro accessibile solo al Super Admin.	تُسجّل الاتصالات والاطلاعات والإجراءات لمدة 90 يوماً مع عنوان IP والمتصفح واسم الجهاز المصرّح به. السجل متاح للمسؤول الأعلى فقط.
+Gestion des sessions de formation	Training session management	Gestione delle sessioni di formazione	إدارة دورات التدريب
+Suivi des formatrices et team leaders	Trainer and team leader tracking	Monitoraggio di formatrici e capisquadra	متابعة المدربات وقادة الفرق
+Suivi des formations	Training tracking	Monitoraggio della formazione	متابعة التدريب
+Tableaux de bord de formation	Training dashboards	Cruscotti di formazione	لوحات متابعة التدريب
+Plateforme de gestion et de suivi des formations du personnel de production.	Platform for managing and tracking production staff training.	Piattaforma per gestire e monitorare la formazione del personale di produzione.	منصة لإدارة ومتابعة تدريب موظفي الإنتاج.
+Bienvenue	Welcome	Benvenuto	مرحباً
+Changer mon mot de passe	Change my password	Cambia la mia password	تغيير كلمة المرور
+Modifier votre mot de passe de connexion	Change your sign-in password	Modifica la password di accesso	تعديل كلمة مرور الدخول
+Le nouveau mot de passe s'appliquera à votre prochaine connexion.	The new password will apply to your next sign-in.	La nuova password sarà valida dal prossimo accesso.	ستُستخدم كلمة المرور الجديدة عند تسجيل الدخول القادم.
+. Pour des raisons de sécurité, remplacez votre mot de passe temporaire.	. For security, please replace your temporary password.	. Per sicurezza, sostituisci la password temporanea.	. لأسباب أمنية، غيّر كلمة المرور المؤقتة.
+8 caractères minimum	At least 8 characters	Almeno 8 caratteri	8 أحرف على الأقل
+Une majuscule	One uppercase letter	Una lettera maiuscola	حرف كبير
+Une minuscule	One lowercase letter	Una lettera minuscola	حرف صغير
+Un chiffre	One digit	Una cifra	رقم
+Un caractère spécial	One special character	Un carattere speciale	رمز خاص
+Le nouveau mot de passe ne respecte pas les règles.	The new password does not meet the requirements.	La nuova password non rispetta i requisiti.	كلمة المرور الجديدة لا تستوفي الشروط.
+La confirmation ne correspond pas.	The confirmation does not match.	La conferma non corrisponde.	التأكيد غير مطابق.
+Les mots de passe ne correspondent pas.	The passwords do not match.	Le password non corrispondono.	كلمتا المرور غير متطابقتين.
+Mot de passe modifié avec succès.	Password changed successfully.	Password modificata correttamente.	تم تغيير كلمة المرور بنجاح.
+Vue d'ensemble	Overview	Panoramica	نظرة عامة
+Principal	Main	Principale	الرئيسية
+Recrutement	Recruitment	Assunzioni	التوظيف
+Employés	Employees	Dipendenti	الموظفون
+Formation	Training	Formazione	التدريب
+Direct	Direct	Diretto	مباشر
+Indirect	Indirect	Indiretto	غير مباشر
+Cadre	Management	Quadri	الإطارات
+Gestion	Management	Gestione	الإدارة
+Utilisateurs	Users	Utenti	المستخدمون
+Utilisateur	User	Utente	المستخدم
+Super Admin	Super Admin	Super Admin	المسؤول الأعلى
+Admin	Admin	Amministratore	مسؤول
+Superviseur	Supervisor	Supervisore	مشرف
+Formatrice	Trainer	Formatrice	مدربة
+Team Leader	Team Leader	Caposquadra	قائد فريق
+Qualité	Quality	Qualità	الجودة
+Administration	Administration	Amministrazione	الإدارة
+Vous disposez de tous les droits, y compris la gestion des administrateurs.	You have full access, including administrator management.	Hai tutti i diritti, inclusa la gestione degli amministratori.	لديك جميع الصلاحيات، بما فيها إدارة المسؤولين.
+Vous gérez les comptes Superviseur, Formatrice et Team Leader.	You manage supervisor, trainer and team leader accounts.	Gestisci gli account di supervisori, formatrici e capisquadra.	تدير حسابات المشرفين والمدربات وقادة الفرق.
+Vous supervisez les sessions de formation et leurs résultats.	You supervise training sessions and their results.	Supervisioni le sessioni di formazione e i risultati.	تشرف على دورات التدريب ونتائجها.
+Vous animez et évaluez les sessions de formation.	You deliver and assess training sessions.	Conduci e valuti le sessioni di formazione.	تقدم وتقيّم دورات التدريب.
+Vous suivez la formation des membres de votre équipe.	You track the training of your team members.	Segui la formazione dei membri della tua squadra.	تتابع تدريب أعضاء فريقك.
+Vous validez la conformité finale des parcours de formation.	You validate the final compliance of training paths.	Convalidi la conformità finale dei percorsi formativi.	تعتمد المطابقة النهائية لمسارات التدريب.
+Formations	Training courses	Formazioni	الدورات التدريبية
+Bientôt disponible	Coming soon	Prossimamente	قريباً
+Gérer les utilisateurs →	Manage users →	Gestisci utenti →	إدارة المستخدمين ←
+Accès refusé	Access denied	Accesso negato	الوصول مرفوض
+403 — Accès refusé	403 — Access denied	403 — Accesso negato	403 — الوصول مرفوض
+Vous n'avez pas les droits nécessaires pour accéder à cette page.	You do not have permission to access this page.	Non hai i permessi per accedere a questa pagina.	لا تملك صلاحية الوصول إلى هذه الصفحة.
+Retour à l'accueil	Back to home	Torna alla home	العودة إلى الرئيسية
+Shift	Shift	Turno	الوردية
+Shift Matin	Morning shift	Turno mattutino	وردية صباحية
+Shift Après-midi	Afternoon shift	Turno pomeridiano	وردية بعد الظهر
+Shift Nuit	Night shift	Turno notturno	وردية ليلية
+Matin	Morning	Mattina	الصباح
+Après-midi	Afternoon	Pomeriggio	بعد الظهر
+Nuit	Night	Notte	الليل
+Normal	Regular	Normale	عادية
+Gestion des comptes et des rôles	Account and role management	Gestione di account e ruoli	إدارة الحسابات والأدوار
+Total comptes	Total accounts	Account totali	إجمالي الحسابات
+Actifs	Active	Attivi	النشطون
+Inactifs	Inactive	Inattivi	غير النشطين
+Actif	Active	Attivo	نشط
+Inactif	Inactive	Inattivo	غير نشط
+MDP à changer	Password change required	Password da cambiare	يجب تغيير كلمة المرور
+Liste des utilisateurs	User list	Elenco utenti	قائمة المستخدمين
+Tous les rôles	All roles	Tutti i ruoli	جميع الأدوار
+Nouvel utilisateur	New user	Nuovo utente	مستخدم جديد
+Modifier l'utilisateur	Edit user	Modifica utente	تعديل المستخدم
+Nom complet	Full name	Nome completo	الاسم الكامل
+E-mail	Email	E-mail	البريد الإلكتروني
+Rôle	Role	Ruolo	الدور
+Statut	Status	Stato	الحالة
+Dernière connexion	Last sign-in	Ultimo accesso	آخر اتصال
+Actions	Actions	Azioni	الإجراءات
+Aucun utilisateur trouvé.	No users found.	Nessun utente trovato.	لم يتم العثور على مستخدمين.
+Modifier	Edit	Modifica	تعديل
+Supprimer	Delete	Elimina	حذف
+Activer	Activate	Attiva	تفعيل
+Désactiver	Deactivate	Disattiva	تعطيل
+activé	activated	attivato	مفعّل
+désactivé	deactivated	disattivato	معطّل
+Réinitialiser le mot de passe	Reset password	Reimposta password	إعادة تعيين كلمة المرور
+Réinitialiser le mot de passe de {0} ?	Reset {0}'s password?	Reimpostare la password di {0}?	إعادة تعيين كلمة مرور {0}؟
+Supprimer définitivement le compte de {0} ?	Permanently delete {0}'s account?	Eliminare definitivamente l’account di {0}?	حذف حساب {0} نهائياً؟
+Compte {0} : {1}	Account {0}: {1}	Account {0}: {1}	الحساب {0}: {1}
+Compte supprimé : {0}	Account deleted: {0}	Account eliminato: {0}	تم حذف الحساب: {0}
+Utilisateur créé : {0}	User created: {0}	Utente creato: {0}	تم إنشاء المستخدم: {0}
+Utilisateur modifié : {0}	User updated: {0}	Utente modificato: {0}	تم تعديل المستخدم: {0}
+Mot de passe temporaire de {0} : {1} — à communiquer à l'utilisateur, il ne sera plus affiché.	Temporary password for {0}: {1} — share it with the user; it will not be shown again.	Password temporanea per {0}: {1} — comunicala all’utente; non sarà più visualizzata.	كلمة المرور المؤقتة لـ {0}: {1} — أبلغها للمستخدم؛ لن تظهر مجدداً.
+8 caractères min., majuscule, minuscule, chiffre et caractère spécial. L'utilisateur devra le changer à sa première connexion.	At least 8 characters, uppercase, lowercase, digit and special character. The user must change it at first sign-in.	Almeno 8 caratteri, maiuscola, minuscola, cifra e simbolo. L’utente dovrà cambiarla al primo accesso.	8 أحرف على الأقل وحرف كبير وصغير ورقم ورمز خاص. يجب تغييرها عند أول دخول.
+Annuler	Cancel	Annulla	إلغاء
+Enregistrer	Save	Salva	حفظ
+Fermer	Close	Chiudi	إغلاق
+Continuer	Continue	Continua	متابعة
+Précédent	Previous	Precedente	السابق
+Suivant	Next	Successivo	التالي
+Total	Total	Totale	الإجمالي
+Exporter	Export	Esporta	تصدير
+Importer	Import	Importa	استيراد
+Modèle .xlsx	.xlsx template	Modello .xlsx	نموذج .xlsx
+Télécharger le modèle	Download template	Scarica modello	تنزيل النموذج
+Import Excel	Excel import	Importazione Excel	استيراد Excel
+Import Excel —	Excel import —	Importazione Excel —	استيراد Excel —
+Import en masse depuis Excel	Bulk import from Excel	Importazione massiva da Excel	استيراد جماعي من Excel
+Exporter la liste en Excel	Export list to Excel	Esporta elenco in Excel	تصدير القائمة إلى Excel
+Exporter tous les comptes, sans mot de passe	Export all accounts without passwords	Esporta tutti gli account senza password	تصدير جميع الحسابات دون كلمات المرور
+Déposer le fichier rempli	Upload the completed file	Carica il file compilato	رفع الملف المعبأ
+Glisser-déposer le fichier Excel ici	Drag and drop the Excel file here	Trascina qui il file Excel	اسحب ملف Excel وأفلته هنا
+ou cliquer pour parcourir (.xlsx, 10 Mo max.)	or click to browse (.xlsx, max. 10 MB)	o fai clic per sfogliare (.xlsx, max 10 MB)	أو انقر لاختيار الملف (.xlsx، حتى 10 ميغابايت)
+Ko — cliquer pour changer	KB — click to change	KB — clic per cambiare	كيلوبايت — انقر للتغيير
+Les lignes valides sont importées, les autres sont listées avec le motif.	Valid rows are imported; other rows are listed with the reason.	Le righe valide vengono importate; le altre sono elencate con il motivo.	تُستورد الصفوف الصالحة وتُعرض الصفوف الأخرى مع السبب.
+Colonnes obligatoires : Nom et prénom, CIN. Un CIN existant dans {0} met à jour la fiche.	Required columns: Full name, National ID. An existing ID in {0} updates the record.	Colonne obbligatorie: Nome completo, CIN. Un CIN esistente in {0} aggiorna la scheda.	الأعمدة المطلوبة: الاسم واللقب ورقم الهوية. رقم موجود في {0} يحدّث الملف.
+Identifiant, nom complet, rôle et mot de passe temporaire obligatoires. Nouveaux comptes uniquement : les identifiants existants sont refusés. Changement de mot de passe obligatoire à la première connexion. Conservez le fichier de mots de passe de façon sécurisée puis supprimez-le après utilisation.	Username, full name, role and temporary password are required. New accounts only: existing usernames are rejected. Password change is required at first sign-in. Keep this file secure and delete it after use.	Nome utente, nome completo, ruolo e password temporanea obbligatori. Solo nuovi account: i nomi esistenti sono rifiutati. Cambio password al primo accesso. Proteggi il file e cancellalo dopo l’uso.	اسم المستخدم والاسم الكامل والدور وكلمة المرور المؤقتة مطلوبة. حسابات جديدة فقط؛ تُرفض الأسماء الموجودة. تغيير كلمة المرور إلزامي عند أول دخول. احفظ الملف بأمان واحذفه بعد الاستخدام.
+Créés	Created	Creati	تم إنشاؤها
+Mis à jour	Updated	Aggiornati	تم تحديثها
+En erreur	Errors	Errori	أخطاء
+Lignes non importées	Rows not imported	Righe non importate	الصفوف غير المستوردة
+Ligne	Row	Riga	الصف
+Motif	Reason	Motivo	السبب
+Toutes les lignes ont été importées.	All rows were imported.	Tutte le righe sono state importate.	تم استيراد جميع الصفوف.
+Nouvel import	New import	Nuova importazione	استيراد جديد
+Terminer	Done	Fine	إنهاء
+{0} compte(s) créé(s), {1} ligne(s) en erreur. Aucun compte existant modifié.	{0} account(s) created, {1} row(s) with errors. No existing accounts changed.	{0} account creati, {1} righe in errore. Nessun account esistente modificato.	تم إنشاء {0} حساب، و{1} صف به أخطاء. لم تُعدّل الحسابات الموجودة.
+Fichier trop volumineux (10 Mo maximum).	File too large (10 MB maximum).	File troppo grande (massimo 10 MB).	الملف كبير جداً (10 ميغابايت كحد أقصى).
+Format non supporté : sélectionnez un fichier .xlsx.	Unsupported format: select an .xlsx file.	Formato non supportato: seleziona un file .xlsx.	صيغة غير مدعومة: اختر ملف .xlsx.
+Serveur injoignable. Vérifiez votre connexion.	Server unreachable. Check your connection.	Server non raggiungibile. Verifica la connessione.	الخادم غير متاح. تحقق من الاتصال.
+Une erreur est survenue.	An error occurred.	Si è verificato un errore.	حدث خطأ.
+Rechercher…	Search…	Cerca…	بحث…
+vous	you	tu	أنت
+(optionnel)	(optional)	(facoltativo)	(اختياري)
+ex : j.dupont	e.g. j.smith	es. m.rossi	مثال: a.ali
+ex : a.dupont	e.g. a.smith	es. a.rossi	مثال: a.ali
+ex : PC-Formation-01	e.g. PC-Training-01	es. PC-Formazione-01	مثال: PC-Training-01
+Prénom Nom	First name Last name	Nome Cognome	الاسم واللقب
+Recrutement · suivi des candidats et des recrutements	Recruitment · candidate and employee tracking	Assunzioni · monitoraggio candidati e assunti	التوظيف · متابعة المترشحين والمنتدبين
+Employés — {0}	Employees — {0}	Dipendenti — {0}	الموظفون — {0}
+Candidat	Candidate	Candidato	مترشح
+Candidats	Candidates	Candidati	المترشحون
+Recruté	Hired	Assunto	منتدب
+Recrutés	Hired	Assunti	المنتدبون
+En formation	In training	In formazione	قيد التدريب
+Validé	Approved	Convalidato	معتمد
+Validés	Approved	Convalidati	المعتمدون
+Rejeté	Rejected	Rifiutato	مرفوض
+Rejetés	Rejected	Rifiutati	المرفوضون
+Tous les statuts	All statuses	Tutti gli stati	جميع الحالات
+Tous les postes	All positions	Tutte le mansioni	جميع الوظائف
+Tous les niveaux	All levels	Tutti i livelli	جميع المستويات
+Filtrer par poste	Filter by position	Filtra per mansione	تصفية حسب الوظيفة
+Filtrer par niveau	Filter by level	Filtra per livello	تصفية حسب المستوى
+Nouveau candidat	New candidate	Nuovo candidato	مترشح جديد
+Nouveau candidat — {0}	New candidate — {0}	Nuovo candidato — {0}	مترشح جديد — {0}
+Nouveau candidat — {0}{1}	New candidate — {0}{1}	Nuovo candidato — {0}{1}	مترشح جديد — {0}{1}
+Modifier le candidat	Edit candidate	Modifica candidato	تعديل المترشح
+Fiche candidat	Candidate record	Scheda candidato	ملف المترشح
+Voir la fiche	View record	Visualizza scheda	عرض الملف
+Candidat ajouté : {0}	Candidate added: {0}	Candidato aggiunto: {0}	تمت إضافة المترشح: {0}
+Candidat modifié : {0}	Candidate updated: {0}	Candidato modificato: {0}	تم تعديل المترشح: {0}
+Candidat supprimé : {0}	Candidate deleted: {0}	Candidato eliminato: {0}	تم حذف المترشح: {0}
+Supprimer définitivement le candidat {0} ?	Permanently delete candidate {0}?	Eliminare definitivamente il candidato {0}?	حذف المترشح {0} نهائياً؟
+Statut de {0} : {1}	Status of {0}: {1}	Stato di {0}: {1}	حالة {0}: {1}
+Import {0} : {1} créé(s), {2} mis à jour, {3} en erreur.	Import {0}: {1} created, {2} updated, {3} errors.	Importazione {0}: {1} creati, {2} aggiornati, {3} errori.	استيراد {0}: إنشاء {1} وتحديث {2} وأخطاء {3}.
+Aucun candidat trouvé.	No candidates found.	Nessun candidato trovato.	لم يتم العثور على مترشحين.
+Nom, CIN, matricule…	Name, ID, employee number…	Nome, CIN, matricola…	الاسم، الهوية، الرقم الوظيفي…
+Matricule	Employee number	Matricola	الرقم الوظيفي
+Nom et prénom	Full name	Nome e cognome	الاسم واللقب
+CIN	National ID	CIN	رقم بطاقة التعريف
+Date de naissance	Date of birth	Data di nascita	تاريخ الميلاد
+Téléphone	Phone	Telefono	الهاتف
+Adresse	Address	Indirizzo	العنوان
+Adresse complète	Full address	Indirizzo completo	العنوان الكامل
+Poste	Position	Mansione	الوظيفة
+Poste / fonction	Position / function	Mansione / funzione	الوظيفة
+Poste / Département	Position / Department	Mansione / Reparto	الوظيفة / القسم
+Département / ligne	Department / line	Reparto / linea	القسم / الخط
+Date de recrutement	Hire date	Data di assunzione	تاريخ الانتداب
+Date recrut.	Hire date	Data assunzione	تاريخ الانتداب
+Niveau d'étude / diplôme	Education / qualification	Istruzione / diploma	المستوى الدراسي / الشهادة
+Affectation & suivi	Assignment & tracking	Assegnazione e monitoraggio	التعيين والمتابعة
+Identité	Identity	Identità	الهوية
+Formatrice affectée	Assigned trainer	Formatrice assegnata	المدربة المعيّنة
+Team leader affecté	Assigned team leader	Caposquadra assegnato	قائد الفريق المعيّن
+Formatrice / TL	Trainer / Team Leader	Formatrice / Caposquadra	المدربة / قائد الفريق
+Remarques	Remarks	Note	ملاحظات
+Apprentie	Apprentice	Apprendista	متدربة مبتدئة
+Junior	Junior	Junior	مبتدئة
+Confirmée	Experienced	Esperta	متمرسة
+Niveau	Level	Livello	المستوى
+1 mois et demi	1.5 months	Un mese e mezzo	شهر ونصف
+2 à 3 semaines	2 to 3 weeks	Da 2 a 3 settimane	من أسبوعين إلى ثلاثة
+Débutante, découverte du poste	Beginner, discovering the position	Principiante, scoperta della mansione	مبتدئة، اكتشاف الوظيفة
+Notions acquises, montée en autonomie	Basic skills acquired, gaining independence	Nozioni acquisite, crescita dell’autonomia	اكتساب الأساسيات والتدرج نحو الاستقلالية
+Expérimentée, autonome au poste	Experienced, independent at the workstation	Esperta, autonoma nella mansione	متمرسة ومستقلة في العمل
+Choisir le niveau	Choose level	Scegli livello	اختيار المستوى
+Choisir le poste	Choose position	Scegli mansione	اختيار الوظيفة
+Choisir le poste Direct	Choose Direct position	Scegli mansione diretta	اختيار الوظيفة المباشرة
+Choisissez le niveau : Apprentie, Junior ou Confirmée.	Choose a level: Apprentice, Junior or Experienced.	Scegli un livello: Apprendista, Junior o Esperta.	اختر المستوى: مبتدئة أو متوسطة أو متمرسة.
+Le niveau détermine la durée de la période d'essai.	The level determines the trial period length.	Il livello determina la durata del periodo di prova.	يحدد المستوى مدة فترة التجربة.
+Sélectionnez le poste avant de remplir la fiche.	Select the position before completing the record.	Seleziona la mansione prima di compilare la scheda.	اختر الوظيفة قبل ملء الملف.
+Rechercher un poste…	Search positions…	Cerca una mansione…	بحث عن وظيفة…
+Aucun poste ne correspond.	No matching positions.	Nessuna mansione corrispondente.	لا توجد وظيفة مطابقة.
+Période d'essai :	Trial period:	Periodo di prova:	فترة التجربة:
+Fin de période d'essai	End of trial period	Fine del periodo di prova	نهاية فترة التجربة
+fin essai	trial ends	fine prova	نهاية التجربة
+· fin prévue le	· expected end	· fine prevista il	· النهاية المتوقعة في
+· renseignez la date de recrutement pour calculer la fin	· enter the hire date to calculate the end	· inserisci la data di assunzione per calcolare la fine	· أدخل تاريخ الانتداب لحساب النهاية
+Étape 1 / 2	Step 1 / 2	Fase 1 / 2	الخطوة 1 / 2
+ · Étape 2 / 2	 · Step 2 / 2	 · Fase 2 / 2	 · الخطوة 2 / 2
+Formation → Direct	Training → Direct	Formazione → Diretto	التدريب ← المباشر
+Valider → Direct	Approve → Direct	Convalida → Diretto	اعتماد ← المباشر
+Valider et passer en Direct — {0}	Approve and transfer to Direct — {0}	Convalida e trasferisci a Diretto — {0}	اعتماد ونقل إلى المباشر — {0}
+{0} est validée en Formation et sera transférée automatiquement en Direct.	{0} is approved in Training and will be transferred automatically to Direct.	{0} è convalidata in Formazione e sarà trasferita automaticamente a Diretto.	تم اعتماد {0} في التدريب وستُنقل آلياً إلى المباشر.
+{0} validée en Formation → transférée en Direct (poste : {1}).	{0} approved in Training → transferred to Direct (position: {1}).	{0} convalidata in Formazione → trasferita a Diretto (mansione: {1}).	اعتماد {0} في التدريب ← النقل إلى المباشر (الوظيفة: {1}).
+Validée → transfert automatique en Direct : poste Direct	Approved → automatic transfer to Direct: Direct position	Convalidata → trasferimento automatico a Diretto: mansione diretta	معتمدة ← نقل آلي إلى المباشر: الوظيفة المباشرة
+Issue de Formation	Transferred from Training	Proveniente da Formazione	قادمة من التدريب
+Validée en Formation le {0}	Approved in Training on {0}	Convalidata in Formazione il {0}	اعتمدت في التدريب بتاريخ {0}
+— Choisir le poste —	— Choose position —	— Scegli mansione —	— اختر الوظيفة —
+— Choisir le poste Direct —	— Choose Direct position —	— Scegli mansione diretta —	— اختر الوظيفة المباشرة —
+Nom Prénom	Last name First name	Cognome Nome	الاسم واللقب
+ex : Bac, BTS…	e.g. high school, diploma…	es. maturità, diploma…	مثال: بكالوريا، شهادة تقنية…
+ex : Couture L3	e.g. Sewing L3	es. Cucitura L3	مثال: خياطة L3
+ex : Opératrice couture	e.g. Sewing operator	es. Operatrice di cucitura	مثال: عاملة خياطة
+Fiche de formation	Training sheet	Scheda di formazione	بطاقة التدريب
+Fiche d’intégration	Workstation integration form	Scheda di inserimento	بطاقة الإدماج
+Livret d’intégration	Integration booklet	Libretto di inserimento	كتيب الإدماج
+Fiche de formation de {0}	Training sheet for {0}	Scheda di formazione di {0}	بطاقة تدريب {0}
+Fiche d’intégration de {0}	Integration form for {0}	Scheda di inserimento di {0}	بطاقة إدماج {0}
+Livret d’intégration de {0}	Integration booklet for {0}	Libretto di inserimento di {0}	كتيب إدماج {0}
+Fiche de formation —	Training sheet —	Scheda di formazione —	بطاقة التدريب —
+Fiche d’intégration —	Integration form —	Scheda di inserimento —	بطاقة الإدماج —
+Livret d’intégration ·	Integration booklet ·	Libretto di inserimento ·	كتيب الإدماج ·
+Fiche formation Nouveau recrue	New recruit training sheet	Scheda di formazione nuova assunta	بطاقة تدريب المنتدبة الجديدة
+Fiche d’intégration et de formation au poste	Workstation integration and training form	Scheda di inserimento e formazione alla mansione	بطاقة الإدماج والتدريب في الوظيفة
+Imprimer / PDF	Print / PDF	Stampa / PDF	طباعة / PDF
+Enregistrer la fiche	Save sheet	Salva scheda	حفظ البطاقة
+Fiche enregistrée.	Sheet saved.	Scheda salvata.	تم حفظ البطاقة.
+Fiche d’intégration enregistrée.	Integration form saved.	Scheda di inserimento salvata.	تم حفظ بطاقة الإدماج.
+Livret enregistré.	Booklet saved.	Libretto salvato.	تم حفظ الكتيب.
+Modifications non enregistrées	Unsaved changes	Modifiche non salvate	تغييرات غير محفوظة
+Modifications non enregistrées.	Unsaved changes.	Modifiche non salvate.	تغييرات غير محفوظة.
+Fermer sans enregistrer les modifications ?	Close without saving changes?	Chiudere senza salvare le modifiche?	إغلاق دون حفظ التغييرات؟
+Les modifications annuleront les validations des semaines modifiées et suivantes, ainsi que les validations finales. 	Changes will invalidate approvals for changed and subsequent weeks, as well as final approvals. 	Le modifiche annulleranno le convalide delle settimane modificate e successive, oltre alle convalide finali. 	ستلغي التغييرات اعتماد الأسابيع المعدّلة واللاحقة والاعتمادات النهائية. 
+Une modification des avis seuls annule uniquement les validations finales. Continuer ?	Changing only the opinions invalidates final approvals only. Continue?	Modificare solo i pareri annulla soltanto le convalide finali. Continuare?	تعديل الآراء وحدها يلغي الاعتمادات النهائية فقط. متابعة؟
+Les modifications annulent les signatures des étapes concernées et l’émargement du cycle modifié. Continuer ?	Changes cancel signatures of affected steps and the modified cycle’s operator signature. Continue?	Le modifiche annullano le firme delle fasi interessate e la firma dell’operatore del ciclo modificato. Continuare?	تلغي التغييرات توقيعات الخطوات المعنية وإمضاء الدورة المعدلة. متابعة؟
+Modifier le livret annulera les signatures existantes. Le candidat et la formatrice devront signer à nouveau. Continuer ?	Editing the booklet cancels existing signatures. The candidate and trainer must sign again. Continue?	Modificare il libretto annullerà le firme esistenti. Il candidato e la formatrice dovranno firmare di nuovo. Continuare?	تعديل الكتيب يلغي التوقيعات الحالية. يجب على المترشح والمدربة التوقيع مجدداً. متابعة؟
+Modifications enregistrées. Les signatures ont été annulées ; veuillez signer à nouveau.	Changes saved. Signatures cancelled; please sign again.	Modifiche salvate. Firme annullate; firmare nuovamente.	تم حفظ التغييرات وإلغاء التوقيعات؛ يرجى التوقيع مجدداً.
+POSTE	POSITION	MANSIONE	الوظيفة
+MATRICULE :	EMPLOYEE NUMBER:	MATRICOLA:	الرقم الوظيفي:
+NOM ET PRÉNOM :	FULL NAME:	NOME E COGNOME:	الاسم واللقب:
+PROJET / LIGNE :	PROJECT / LINE:	PROGETTO / LINEA:	المشروع / الخط:
+DATE DÉBUT :	START DATE:	DATA INIZIO:	تاريخ البداية:
+DATE FIN :	END DATE:	DATA FINE:	تاريخ النهاية:
+FORMATRICE :	TRAINER:	FORMATRICE:	المدربة:
+Révision : 00	Revision: 00	Revisione: 00	المراجعة: 00
+Révision : 01	Revision: 01	Revisione: 01	المراجعة: 01
+Date : 10/07/2023	Date: 10/07/2023	Data: 10/07/2023	التاريخ: 10/07/2023
+Date : 24/05/2022	Date: 24/05/2022	Data: 24/05/2022	التاريخ: 24/05/2022
+Semaines de formation	Training weeks	Settimane di formazione	أسابيع التدريب
+Semaine 1	Week 1	Settimana 1	الأسبوع 1
+Semaine 2	Week 2	Settimana 2	الأسبوع 2
+Semaine 3	Week 3	Settimana 3	الأسبوع 3
+Semaine 4	Week 4	Settimana 4	الأسبوع 4
+Semaine 5	Week 5	Settimana 5	الأسبوع 5
+Faible	Poor	Scarso	ضعيف
+Moyen	Fair	Medio	متوسط
+Satisfaisant	Satisfactory	Soddisfacente	مُرضٍ
+Bien	Good	Buono	جيد
+Excellent	Excellent	Eccellente	ممتاز
+COMPORTEMENT	BEHAVIOUR	COMPORTAMENTO	السلوك
+CONNAISSANCE	KNOWLEDGE	CONOSCENZE	المعرفة
+MACHINE	MACHINE	MACCHINA	الآلة
+COUTURE	SEWING	CUCITURA	الخياطة
+Avis et validations	Opinions and approvals	Pareri e convalide	الآراء والاعتمادات
+Avis de transfert et validations finales	Transfer opinions and final approvals	Pareri di trasferimento e convalide finali	آراء النقل والاعتمادات النهائية
+Avis / observations	Opinion / observations	Parere / osservazioni	رأي / ملاحظات
+Avis de transfert — {0}	Transfer opinion — {0}	Parere di trasferimento — {0}	رأي النقل — {0}
+{0} / 5 semaines validées	{0} / 5 weeks approved	{0} / 5 settimane convalidate	اعتماد {0} / 5 أسابيع
+{0} / {1} notes	{0} / {1} ratings	{0} / {1} valutazioni	{0} / {1} درجات
+critères évalués	criteria assessed	criteri valutati	معايير مقيّمة
+Progression {0}	Progress {0}	Avanzamento {0}	تقدم {0}
+Sélectionnez une semaine. Vos saisies sont conservées en changeant d’étape ; enregistrez avant de valider ou d’imprimer.	Select a week. Entries are kept when switching steps; save before approving or printing.	Seleziona una settimana. I dati sono mantenuti cambiando fase; salva prima di convalidare o stampare.	اختر أسبوعاً. تبقى المدخلات عند تغيير الخطوة؛ احفظ قبل الاعتماد أو الطباعة.
+Évaluation et validation hebdomadaires : formatrice	Weekly assessment and approval: trainer	Valutazione e convalida settimanale: formatrice	التقييم والاعتماد الأسبوعي: المدربة
+ou	or	o	أو
+Team Leader affecté.	assigned Team Leader.	caposquadra assegnato.	قائد الفريق المعيّن.
+Début	Start	Inizio	البداية
+Fin	End	Fine	النهاية
+Début {0}	Start {0}	Inizio {0}	بداية {0}
+Fin {0}	End {0}	Fine {0}	نهاية {0}
+Commentaire	Comment	Commento	تعليق
+Commentaire {0} — {1}	Comment {0} — {1}	Commento {0} — {1}	تعليق {0} — {1}
+Observation facultative	Optional observation	Osservazione facoltativa	ملاحظة اختيارية
+Non évalué	Not assessed	Non valutato	غير مقيّم
+Validation — Formatrice ou Team Leader	Approval — Trainer or Team Leader	Convalida — Formatrice o Caposquadra	الاعتماد — المدربة أو قائد الفريق
+En attente. Complétez les dates et toutes les notes, enregistrez, puis validez dans l’ordre des semaines.	Pending. Complete dates and all ratings, save, then approve weeks in order.	In attesa. Completa date e valutazioni, salva, poi convalida le settimane in ordine.	قيد الانتظار. أكمل التواريخ والدرجات واحفظ ثم اعتمد الأسابيع بالترتيب.
+Valider	Approve	Convalida	اعتماد
+Validée	Approved	Convalidata	معتمدة
+{0} validée.	{0} approved.	{0} convalidata.	تم اعتماد {0}.
+Validation enregistrée ; une correction peut l’annuler après sauvegarde.	Approval saved; corrections may cancel it after saving.	Convalida registrata; una correzione può annullarla dopo il salvataggio.	تم حفظ الاعتماد؛ قد يلغيه التصحيح بعد الحفظ.
+Validations hebdomadaires nominatives ci-dessus	Named weekly approvals above	Convalide settimanali nominative sopra	الاعتمادات الأسبوعية الاسمية أعلاه
+Signature Formatrice / Team Leader	Trainer / Team Leader signature	Firma Formatrice / Caposquadra	توقيع المدربة / قائد الفريق
+Signature Superviseur	Supervisor signature	Firma Supervisore	توقيع المشرف
+Signature Qualité	Quality signature	Firma Qualità	توقيع الجودة
+En attente des cinq validations hebdomadaires	Awaiting five weekly approvals	In attesa delle cinque convalide settimanali	في انتظار اعتماد الأسابيع الخمسة
+En attente du Superviseur	Awaiting Supervisor	In attesa del Supervisore	في انتظار المشرف
+En attente de la validation du Superviseur	Awaiting Supervisor approval	In attesa della convalida del Supervisore	في انتظار اعتماد المشرف
+En attente de Qualité	Awaiting Quality	In attesa della Qualità	في انتظار الجودة
+Validée par Qualité	Approved by Quality	Convalidata dalla Qualità	معتمدة من الجودة
+Valider la fiche	Approve sheet	Convalida scheda	اعتماد البطاقة
+Valider la conformité	Approve compliance	Convalida conformità	اعتماد المطابقة
+Fiche validée par le Superviseur.	Sheet approved by the Supervisor.	Scheda convalidata dal Supervisore.	اعتمد المشرف البطاقة.
+Fiche validée par Qualité.	Sheet approved by Quality.	Scheda convalidata dalla Qualità.	اعتمدت الجودة البطاقة.
+Compte supprimé	Deleted account	Account eliminato	حساب محذوف
+Non affectée	Not assigned	Non assegnata	غير معيّنة
+Formation initiale	Initial training	Formazione iniziale	التدريب الأولي
+Recyclage	Refresher training	Aggiornamento	إعادة التدريب
+Accueil et sécurité	Welcome and safety	Accoglienza e sicurezza	الاستقبال والسلامة
+Projet et organisation	Project and organisation	Progetto e organizzazione	المشروع والتنظيم
+Production et qualité	Production and quality	Produzione e qualità	الإنتاج والجودة
+Logistique	Logistics	Logistica	اللوجستية
+À compléter	To complete	Da completare	للإكمال
+Non applicable	Not applicable	Non applicabile	غير منطبق
+Qualifié	Qualified	Qualificato	مؤهل
+Non qualifié	Not qualified	Non qualificato	غير مؤهل
+5. Bilan et signature	5. Summary and signature	5. Riepilogo e firma	5. الحصيلة والتوقيع
+Bilan et signature —	Summary and signature —	Riepilogo e firma —	الحصيلة والتوقيع —
+Formation : X = réalisée, NA = non applicable. Évaluation : OK / NOK. Qualification à partir de 80 %.	Training: X = completed, NA = not applicable. Assessment: OK / NOK. Qualified from 80%.	Formazione: X = svolta, NA = non applicabile. Valutazione: OK / NOK. Qualifica dall’80%.	التدريب: X = منجز، NA = غير منطبق. التقييم: OK / NOK. التأهيل ابتداءً من 80٪.
+Cycles de formation	Training cycles	Cicli di formazione	دورات التدريب
+Cycle indépendant	Independent cycle	Ciclo indipendente	دورة مستقلة
+Rubriques — {0}	Sections — {0}	Sezioni — {0}	الأقسام — {0}
+Rubrique	Section	Sezione	القسم
+Nom et prénom de l’opérateur :	Operator’s full name:	Nome e cognome dell’operatore:	اسم ولقب العامل:
+Matricule :	Employee number:	Matricola:	الرقم الوظيفي:
+Poste :	Position:	Mansione:	الوظيفة:
+Projet / ligne :	Project / line:	Progetto / linea:	المشروع / الخط:
+étapes renseignées	steps completed	fasi compilate	خطوات مكتملة
+Évaluation le	Assessment on	Valutazione il	التقييم بتاريخ
+Formation {0} — {1}	Training {0} — {1}	Formazione {0} — {1}	تدريب {0} — {1}
+Évaluation {0} — {1}	Assessment {0} — {1}	Valutazione {0} — {1}	تقييم {0} — {1}
+Délai	Deadline	Scadenza	الأجل
+Délai {0} — {1}	Deadline {0} — {1}	Scadenza {0} — {1}	أجل {0} — {1}
+X — Réalisée	X — Completed	X — Svolta	X — منجز
+NA — Non applicable	NA — Not applicable	NA — Non applicabile	NA — غير منطبق
+OK — Satisfaisant	OK — Satisfactory	OK — Soddisfacente	OK — مُرضٍ
+NOK — Non satisfaisant	NOK — Unsatisfactory	NOK — Non soddisfacente	NOK — غير مُرضٍ
+Étape non signée	Step not signed	Fase non firmata	خطوة غير موقّعة
+Signer l’étape	Sign step	Firma fase	توقيع الخطوة
+Signer {0} — {1}	Sign {0} — {1}	Firma {0} — {1}	توقيع {0} — {1}
+Note :	Score:	Punteggio:	النتيجة:
+OK /	OK /	OK /	OK /
+évaluées · seuil de qualification : 80 %	assessed · qualification threshold: 80%	valutate · soglia di qualifica: 80%	مقيّمة · عتبة التأهيل: 80٪
+Mesures à prendre	Measures to take	Misure da adottare	الإجراءات المطلوبة
+Mesures à prendre — {0}	Measures to take — {0}	Misure da adottare — {0}	الإجراءات المطلوبة — {0}
+Émargement de l’opérateur	Operator signature	Firma dell’operatore	إمضاء العامل
+Émargement de	Signature of	Firma di	إمضاء
+Signé le {0} · recueilli par {1}	Signed on {0} · collected by {1}	Firmato il {0} · raccolto da {1}	وُقّع في {0} · جمعه {1}
+Non signé. Complétez les dates et les évaluations, faites signer toutes les étapes X puis enregistrez avant de recueillir l’émargement.	Not signed. Complete dates and assessments, have all X steps signed, then save before collecting the operator signature.	Non firmato. Completa date e valutazioni, fai firmare tutte le fasi X e salva prima di raccogliere la firma.	غير موقّع. أكمل التواريخ والتقييمات ووقّع جميع خطوات X ثم احفظ قبل جمع الإمضاء.
+Faire signer l’opérateur —	Collect operator signature —	Fai firmare l’operatore —	طلب إمضاء العامل —
+Signature de l’opérateur — {0}	Operator signature — {0}	Firma dell’operatore — {0}	إمضاء العامل — {0}
+L’opérateur dessine sa signature ci-dessous ; votre compte enregistre son recueil.	The operator draws their signature below; your account records its collection.	L’operatore disegna la firma qui sotto; il tuo account ne registra la raccolta.	يرسم العامل توقيعه أدناه ويسجل حسابك جمعه.
+Dessinez la signature de l’opérateur avant de confirmer.	Draw the operator’s signature before confirming.	Disegna la firma dell’operatore prima di confermare.	ارسم توقيع العامل قبل التأكيد.
+Émargement de l’opérateur enregistré.	Operator signature saved.	Firma dell’operatore registrata.	تم تسجيل إمضاء العامل.
+Confirmer l’émargement	Confirm signature	Conferma firma	تأكيد الإمضاء
+Résultat enregistré. Enregistrez vos modifications pour actualiser le bilan.	Result recorded. Save changes to update the summary.	Risultato registrato. Salva le modifiche per aggiornare il riepilogo.	تم تسجيل النتيجة. احفظ التغييرات لتحديث الحصيلة.
+I : initiale · R : recyclage · E : évaluation. X : formation réalisée · NA : non applicable (exclue de la note). OK : satisfaisant · NOK : non satisfaisant. Une décision définitive exige l’évaluation de toutes les étapes applicables.	I: initial · R: refresher · E: assessment. X: training completed · NA: not applicable (excluded from score). OK: satisfactory · NOK: unsatisfactory. A final decision requires assessment of all applicable steps.	I: iniziale · R: aggiornamento · E: valutazione. X: formazione svolta · NA: non applicabile (esclusa dal punteggio). OK: soddisfacente · NOK: non soddisfacente. La decisione finale richiede la valutazione di tutte le fasi applicabili.	I: أولي · R: إعادة تدريب · E: تقييم. X: تدريب منجز · NA: غير منطبق (مستبعد من النتيجة). OK: مُرضٍ · NOK: غير مُرضٍ. يتطلب القرار النهائي تقييم جميع الخطوات المنطبقة.
+Informations du salarié	Employee information	Informazioni del dipendente	معلومات الموظف
+Salarié et dates	Employee and dates	Dipendente e date	الموظف والتواريخ
+Objectifs	Objectives	Obiettivi	الأهداف
+Suivi des objectifs	Objective tracking	Monitoraggio degli obiettivi	متابعة الأهداف
+Évaluation finale	Final assessment	Valutazione finale	التقييم النهائي
+Signatures	Signatures	Firme	التوقيعات
+SAGE TUNISIA · RESSOURCES HUMAINES	SAGE TUNISIA · HUMAN RESOURCES	SAGE TUNISIA · RISORSE UMANE	SAGE TUNISIA · الموارد البشرية
+Plan de formation	Training plan	Piano di formazione	خطة التدريب
+Plan de formation et suivi des compétences ·	Training plan and skills tracking ·	Piano di formazione e monitoraggio competenze ·	خطة التدريب ومتابعة المهارات ·
+Sections du livret	Booklet sections	Sezioni del libretto	أقسام الكتيب
+Les sections restent accessibles librement. Enregistrez avant d’imprimer ; les signatures suivent l’ordre candidat puis formatrice.	Sections remain freely accessible. Save before printing; signatures follow the order candidate then trainer.	Le sezioni restano liberamente accessibili. Salva prima di stampare; firma prima il candidato, poi la formatrice.	تبقى الأقسام متاحة بحرية. احفظ قبل الطباعة؛ يوقّع المترشح أولاً ثم المدربة.
+objectifs évalués	objectives assessed	obiettivi valutati	أهداف مقيّمة
+Catégorie	Category	Categoria	الفئة
+Projet / ligne	Project / line	Progetto / linea	المشروع / الخط
+Date de début	Start date	Data di inizio	تاريخ البداية
+Date de fin prévue	Expected end date	Data di fine prevista	تاريخ النهاية المتوقع
+Date de recrutement :	Hire date:	Data di assunzione:	تاريخ الانتداب:
+Commentaire : {0}	Comment: {0}	Commento: {0}	تعليق: {0}
+Évaluation : {0}	Assessment: {0}	Valutazione: {0}	تقييم: {0}
+À évaluer	To assess	Da valutare	قيد التقييم
+Acquis	Acquired	Acquisito	مكتسب
+À renforcer	Needs reinforcement	Da rafforzare	يحتاج إلى تعزيز
+Résultat	Result	Risultato	النتيجة
+Observations	Observations	Osservazioni	ملاحظات
+En attente formatrice	Awaiting trainer	In attesa della formatrice	في انتظار المدربة
+À affecter	To assign	Da assegnare	للتعيين
+À renseigner	To complete	Da compilare	للإدخال
+Effacer	Clear	Cancella	مسح
+Complétez les dates, les six objectifs et l’évaluation finale, puis faites dessiner la signature du candidat sur cet appareil.	Complete dates, six objectives and final assessment, then have the candidate draw their signature on this device.	Completa date, sei obiettivi e valutazione finale, poi fai disegnare la firma del candidato su questo dispositivo.	أكمل التواريخ والأهداف الستة والتقييم النهائي ثم اطلب من المترشح رسم توقيعه على هذا الجهاز.
+Dessinez ici la signature du candidat	Draw the candidate’s signature here	Disegna qui la firma del candidato	ارسم توقيع المترشح هنا
+Dessinez la signature du candidat avant de confirmer.	Draw the candidate’s signature before confirming.	Disegna la firma del candidato prima di confermare.	ارسم توقيع المترشح قبل التأكيد.
+Signature du candidat	Candidate signature	Firma del candidato	توقيع المترشح
+Signature dessinée du candidat	Drawn candidate signature	Firma disegnata del candidato	التوقيع المرسوم للمترشح
+Confirmer la signature du candidat	Confirm candidate signature	Conferma firma del candidato	تأكيد توقيع المترشح
+Signature du candidat enregistrée.	Candidate signature saved.	Firma del candidato registrata.	تم حفظ توقيع المترشح.
+Signature de la formatrice	Trainer signature	Firma della formatrice	توقيع المدربة
+Signature depuis le compte de la formatrice affectée.	Sign from the assigned trainer’s account.	Firma dall’account della formatrice assegnata.	التوقيع من حساب المدربة المعيّنة.
+Signer en tant que formatrice	Sign as trainer	Firma come formatrice	التوقيع بصفتك المدربة
+Signature numérique de la formatrice enregistrée.	Trainer’s electronic signature saved.	Firma elettronica della formatrice registrata.	تم حفظ التوقيع الإلكتروني للمدربة.
+Signé	Signed	Firmato	موقّع
+Signé électroniquement	Electronically signed	Firmato elettronicamente	موقّع إلكترونياً
+Signé par	Signed by	Firmato da	وقّعه
+Formatrice : {0}	Trainer: {0}	Formatrice: {0}	المدربة: {0}
+Formatrice affectée : {0}	Assigned trainer: {0}	Formatrice assegnata: {0}	المدربة المعيّنة: {0}
+· recueillie par	· collected by	· raccolta da	· جمعها
+Document généré par Training Process · Livret individuel du salarié	Document generated by Training Process · Individual employee booklet	Documento generato da Training Process · Libretto individuale del dipendente	وثيقة أُنشئت بواسطة Training Process · كتيب الموظف الفردي
+Impossible de charger le livret.	Unable to load booklet.	Impossibile caricare il libretto.	تعذر تحميل الكتيب.
+Impossible d’enregistrer le livret.	Unable to save booklet.	Impossibile salvare il libretto.	تعذر حفظ الكتيب.
+Impossible d’enregistrer la signature du candidat.	Unable to save candidate signature.	Impossibile salvare la firma del candidato.	تعذر حفظ توقيع المترشح.
+Impossible d’enregistrer la signature de la formatrice.	Unable to save trainer signature.	Impossibile salvare la firma della formatrice.	تعذر حفظ توقيع المدربة.
+Poste non renseigné	Position not specified	Mansione non specificata	الوظيفة غير محددة
+Postes concernés :	Applicable positions:	Mansioni interessate:	الوظائف المعنية:
+Journal d’audit	Audit log	Registro di audit	سجل التدقيق
+Connexions, consultations et actions · Super Admin uniquement	Logins, views and actions · Super Admin only	Accessi, consultazioni e azioni · Solo Super Admin	الاتصالات والاطلاعات والإجراءات · للمسؤول الأعلى فقط
+Historique conservé 90 jours, à partir de l’activation du journal. Le nom du poste est déclaré par l’utilisateur. L’adresse MAC n’est pas accessible depuis le navigateur. Les mots de passe et le contenu des signatures ne sont pas enregistrés.	History retained for 90 days from log activation. The device name is declared by the user. MAC addresses cannot be accessed from the browser. Passwords and signature content are not recorded.	Cronologia conservata per 90 giorni dall’attivazione del registro. Il nome dispositivo è dichiarato dall’utente. Il MAC non è accessibile dal browser. Password e firme non vengono registrate.	يُحتفظ بالسجل 90 يوماً منذ تفعيله. يصرح المستخدم باسم الجهاز. لا يمكن الوصول إلى عنوان MAC من المتصفح. لا تُسجّل كلمات المرور أو محتويات التوقيعات.
+Une opération n’a pas pu être inscrite au journal d’audit. Son résultat reste celui affiché ; ne la répétez pas sans vérifier. Contactez l’administrateur pour contrôler la journalisation.	An operation could not be recorded in the audit log. Its result remains as displayed; do not repeat it without checking. Contact the administrator to check logging.	Un’operazione non è stata registrata nel registro di audit. Il risultato resta quello visualizzato; non ripeterla senza verifica. Contatta l’amministratore per controllare il registro.	تعذر تسجيل عملية في سجل التدقيق. تبقى نتيجتها كما تظهر؛ لا تكررها دون تحقق. اتصل بالمسؤول للتحقق من التسجيل.
+Actualiser	Refresh	Aggiorna	تحديث
+Action	Action	Azione	الإجراء
+Action / tâche	Action / task	Azione / attività	الإجراء / المهمة
+Authentification	Authentication	Autenticazione	المصادقة
+Comptes utilisateurs	User accounts	Account utenti	حسابات المستخدمين
+Autre requête	Other request	Altra richiesta	طلب آخر
+Toutes les actions	All actions	Tutte le azioni	جميع الإجراءات
+Tous	All	Tutti	الكل
+Réussi	Successful	Riuscito	ناجح
+Échoué / refusé	Failed / denied	Fallito / negato	فاشل / مرفوض
+Date / heure	Date / time	Data / ora	التاريخ / الوقت
+Du	From	Dal	من
+Au	To	Al	إلى
+Du (heure locale)	From (local time)	Dal (ora locale)	من (التوقيت المحلي)
+Au (exclu, heure locale)	To (exclusive, local time)	Al (escluso, ora locale)	إلى (غير مشمول، التوقيت المحلي)
+Adresse IP exacte	Exact IP address	Indirizzo IP esatto	عنوان IP المطابق
+IP / poste	IP / device	IP / dispositivo	عنوان IP / الجهاز
+Détails réseau / navigateur	Network / browser details	Dettagli rete / browser	تفاصيل الشبكة / المتصفح
+Filtrer	Filter	Filtra	تصفية
+Réinitialiser	Reset	Reimposta	إعادة تعيين
+Événements	Events	Eventi	الأحداث
+Page	Page	Pagina	الصفحة
+Aucun événement pour ces filtres.	No events match these filters.	Nessun evento per questi filtri.	لا توجد أحداث تطابق هذه المرشحات.
+Non identifié	Unidentified	Non identificato	غير محدد
+Non renseigné	Not provided	Non indicato	غير مدخل
+Autre navigateur	Other browser	Altro browser	متصفح آخر
+Système non identifié	Unidentified operating system	Sistema non identificato	نظام غير محدد
+Tentative non authentifiée	Unauthenticated attempt	Tentativo non autenticato	محاولة غير مصادق عليها
+Source IP :	IP source:	Origine IP:	مصدر IP:
+Proxy de confiance	Trusted proxy	Proxy attendibile	وكيل موثوق
+Connexion directe	Direct connection	Connessione diretta	اتصال مباشر
+· pair :	· peer:	· peer:	· الطرف:
+· nom déclaré	· declared name	· nome dichiarato	· اسم مصرح به
+traité(s),	processed,	elaborati,	معالَج،
+rejeté(s)	rejected	rifiutati	مرفوض
+Oui	Yes	Sì	نعم
+Non	No	No	لا
+Accès refusé.	Access denied.	Accesso negato.	الوصول مرفوض.
+Adresse e-mail invalide.	Invalid email address.	Indirizzo e-mail non valido.	عنوان البريد الإلكتروني غير صالح.
+Aucun fichier reçu.	No file received.	Nessun file ricevuto.	لم يُستلم ملف.
+CIN en double dans le fichier.	Duplicate national ID in file.	CIN duplicato nel file.	رقم هوية مكرر في الملف.
+Candidat introuvable.	Candidate not found.	Candidato non trovato.	المترشح غير موجود.
+Ce compte est désactivé. Contactez un administrateur.	This account is disabled. Contact an administrator.	Account disattivato. Contatta un amministratore.	هذا الحساب معطل. اتصل بالمسؤول.
+Ce matricule est déjà attribué.	This employee number is already assigned.	Questa matricola è già assegnata.	هذا الرقم الوظيفي مستخدم.
+Cet identifiant est déjà utilisé.	This username is already in use.	Questo nome utente è già utilizzato.	اسم المستخدم مستعمل.
+Cette semaine est déjà validée par la formatrice ou le Team Leader.	This week is already approved by the trainer or Team Leader.	Questa settimana è già convalidata dalla formatrice o dal caposquadra.	هذا الأسبوع معتمد من المدربة أو قائد الفريق.
+Cette étape est déjà signée.	This step is already signed.	Questa fase è già firmata.	هذه الخطوة موقّعة.
+Chaque cycle doit être fourni une seule fois.	Each cycle must be provided only once.	Ogni ciclo deve essere fornito una sola volta.	يجب تقديم كل دورة مرة واحدة.
+Chaque note doit être comprise entre 1 et 5.	Each rating must be between 1 and 5.	Ogni valutazione deve essere tra 1 e 5.	كل درجة يجب أن تكون بين 1 و5.
+Complétez les dates, évaluations et signatures des formations réalisées avant l'émargement.	Complete dates, assessments and signatures of completed training before the operator signs.	Completa date, valutazioni e firme delle formazioni svolte prima della firma dell’operatore.	أكمل التواريخ والتقييمات وتوقيعات التدريبات المنجزة قبل الإمضاء.
+Compte temporairement verrouillé suite à plusieurs échecs. Réessayez plus tard.	Account temporarily locked after multiple failures. Try again later.	Account temporaneamente bloccato dopo diversi tentativi falliti. Riprova più tardi.	الحساب مقفل مؤقتاً بعد عدة محاولات فاشلة. حاول لاحقاً.
+Conflit : cet identifiant existe déjà.	Conflict: this username already exists.	Conflitto: questo nome utente esiste già.	تعارض: اسم المستخدم موجود.
+Conflit : cette donnée existe déjà.	Conflict: this data already exists.	Conflitto: questo dato esiste già.	تعارض: هذه البيانات موجودة.
+Créé le	Created on	Creato il	تاريخ الإنشاء
+Cycle de formation invalide.	Invalid training cycle.	Ciclo di formazione non valido.	دورة تدريب غير صالحة.
+Enregistrez les dates de la semaine avant sa validation.	Save the week’s dates before approving it.	Salva le date della settimana prima di convalidarla.	احفظ تواريخ الأسبوع قبل اعتماده.
+Erreur lors de la génération du fichier Excel.	Error generating Excel file.	Errore nella generazione del file Excel.	خطأ في إنشاء ملف Excel.
+Fiche d'intégration et de formation au poste introuvable.	Workstation integration and training form not found.	Scheda di inserimento e formazione alla mansione non trovata.	بطاقة الإدماج والتدريب في الوظيفة غير موجودة.
+Fiche de formation introuvable.	Training sheet not found.	Scheda di formazione non trovata.	بطاقة التدريب غير موجودة.
+Format non supporté : utilisez un fichier Excel .xlsx.	Unsupported format: use an Excel .xlsx file.	Formato non supportato: usa un file Excel .xlsx.	صيغة غير مدعومة: استخدم ملف Excel .xlsx.
+Identifiant en double dans le fichier.	Duplicate username in file.	Nome utente duplicato nel file.	اسم مستخدم مكرر في الملف.
+Identifiant ou mot de passe incorrect.	Incorrect username or password.	Nome utente o password errati.	اسم المستخدم أو كلمة المرور غير صحيحة.
+Impossible : il doit rester au moins un Super Admin actif.	At least one active Super Admin must remain.	Deve rimanere almeno un Super Admin attivo.	يجب الإبقاء على مسؤول أعلى نشط واحد على الأقل.
+Impossible de générer le modèle utilisateurs.	Unable to generate user template.	Impossibile generare il modello utenti.	تعذر إنشاء نموذج المستخدمين.
+Impossible de lire le fichier Excel : utilisez un modèle .xlsx valide, non chiffré.	Unable to read Excel file: use a valid unencrypted .xlsx template.	Impossibile leggere il file Excel: usa un modello .xlsx valido e non cifrato.	تعذر قراءة ملف Excel: استخدم نموذج .xlsx صالحاً وغير مشفر.
+Impossible de lire le fichier Excel.	Unable to read Excel file.	Impossibile leggere il file Excel.	تعذر قراءة ملف Excel.
+Impossible d’exporter les utilisateurs.	Unable to export users.	Impossibile esportare gli utenti.	تعذر تصدير المستخدمين.
+L'adresse e-mail est trop longue.	Email address is too long.	L’indirizzo e-mail è troppo lungo.	عنوان البريد الإلكتروني طويل جداً.
+L'adresse est trop longue.	Address is too long.	L’indirizzo è troppo lungo.	العنوان طويل جداً.
+L'identifiant doit contenir entre 1 et 50 caractères.	Username must contain 1 to 50 characters.	Il nome utente deve contenere da 1 a 50 caratteri.	اسم المستخدم يجب أن يتكون من 1 إلى 50 حرفاً.
+L'identifiant est obligatoire.	Username is required.	Il nome utente è obbligatorio.	اسم المستخدم مطلوب.
+L'identifiant ne peut contenir que lettres, chiffres, '.', '_' ou '-'.	Username may only contain letters, digits, '.', '_' or '-'.	Il nome utente può contenere solo lettere, cifre, '.', '_' o '-'.	اسم المستخدم يقبل الحروف والأرقام و'.' و'_' و'-' فقط.
+L'opérateur a déjà émargé ce cycle.	The operator has already signed this cycle.	L’operatore ha già firmato questo ciclo.	أمضى العامل هذه الدورة.
+L'étape n'appartient pas à ce cycle.	The step does not belong to this cycle.	La fase non appartiene a questo ciclo.	الخطوة لا تنتمي إلى هذه الدورة.
+La catégorie est obligatoire.	Category is required.	La categoria è obbligatoria.	الفئة مطلوبة.
+La date d'évaluation doit être postérieure ou égale à la fin de formation.	Assessment date must be on or after training end.	La data di valutazione deve essere successiva o uguale alla fine formazione.	تاريخ التقييم يجب ألا يسبق نهاية التدريب.
+La date de fin doit être après la date de début.	End date must be after start date.	La data di fine deve essere successiva alla data di inizio.	تاريخ النهاية يجب أن يكون بعد تاريخ البداية.
+La date de fin doit être postérieure ou égale à la date de début.	End date must be on or after start date.	La data di fine deve essere successiva o uguale alla data di inizio.	تاريخ النهاية يجب ألا يسبق تاريخ البداية.
+La date de naissance doit être dans le passé.	Date of birth must be in the past.	La data di nascita deve essere nel passato.	تاريخ الميلاد يجب أن يكون في الماضي.
+La feuille Utilisateurs est manquante.	Users sheet is missing.	Il foglio Utenti è mancante.	ورقة المستخدمين مفقودة.
+La fiche a été modifiée. Rechargez-la avant de continuer.	The sheet was modified. Reload it before continuing.	La scheda è stata modificata. Ricaricala prima di continuare.	تم تعديل البطاقة. أعد تحميلها قبل المتابعة.
+La fiche doit contenir les cinq semaines du modèle SAGE.	The sheet must contain the five weeks of the SAGE template.	La scheda deve contenere le cinque settimane del modello SAGE.	يجب أن تتضمن البطاقة الأسابيع الخمسة لنموذج SAGE.
+La fiche est déjà validée par Qualité.	The sheet is already approved by Quality.	La scheda è già convalidata dalla Qualità.	البطاقة معتمدة من الجودة.
+La fiche est déjà validée par le Superviseur.	The sheet is already approved by the Supervisor.	La scheda è già convalidata dal Supervisore.	البطاقة معتمدة من المشرف.
+La formatrice a déjà signé ce livret.	The trainer has already signed this booklet.	La formatrice ha già firmato questo libretto.	وقّعت المدربة هذا الكتيب.
+La formatrice ou le Team Leader doit valider chacune des cinq semaines avant le Superviseur.	The trainer or Team Leader must approve each of the five weeks before the Supervisor.	La formatrice o il caposquadra deve convalidare ciascuna delle cinque settimane prima del Supervisore.	يجب أن تعتمد المدربة أو قائد الفريق الأسابيع الخمسة قبل المشرف.
+La formatrice sélectionnée est invalide.	The selected trainer is invalid.	La formatrice selezionata non è valida.	المدربة المختارة غير صالحة.
+La ligne d'en-tête est manquante.	Header row is missing.	La riga di intestazione è mancante.	صف العناوين مفقود.
+La signature PNG est invalide.	The PNG signature is invalid.	La firma PNG non è valida.	توقيع PNG غير صالح.
+La signature doit être une image PNG valide.	Signature must be a valid PNG image.	La firma deve essere un’immagine PNG valida.	يجب أن يكون التوقيع صورة PNG صالحة.
+La signature doit être une image de moins de 30 Ko.	Signature image must be smaller than 30 KB.	L’immagine della firma deve essere inferiore a 30 KB.	حجم صورة التوقيع يجب أن يكون أقل من 30 كيلوبايت.
+La signature est obligatoire.	Signature is required.	La firma è obbligatoria.	التوقيع مطلوب.
+La signature est trop volumineuse.	Signature is too large.	La firma è troppo grande.	حجم التوقيع كبير جداً.
+Le CIN est obligatoire.	National ID is required.	Il CIN è obbligatorio.	رقم بطاقة التعريف مطلوب.
+Le CIN est trop long.	National ID is too long.	Il CIN è troppo lungo.	رقم بطاقة التعريف طويل جداً.
+Le Superviseur doit valider la fiche avant Qualité.	The Supervisor must approve the sheet before Quality.	Il Supervisore deve convalidare la scheda prima della Qualità.	يجب أن يعتمد المشرف البطاقة قبل الجودة.
+Le candidat a déjà signé ce livret.	The candidate has already signed this booklet.	Il candidato ha già firmato questo libretto.	وقّع المترشح هذا الكتيب.
+Le candidat doit signer avant la formatrice.	The candidate must sign before the trainer.	Il candidato deve firmare prima della formatrice.	يجب أن يوقّع المترشح قبل المدربة.
+Le département est trop long.	Department is too long.	Il reparto è troppo lungo.	اسم القسم طويل جداً.
+Le matricule est trop long.	Employee number is too long.	La matricola è troppo lunga.	الرقم الوظيفي طويل جداً.
+Le mot de passe actuel est incorrect.	Current password is incorrect.	La password attuale è errata.	كلمة المرور الحالية غير صحيحة.
+Le mot de passe actuel est obligatoire.	Current password is required.	La password attuale è obbligatoria.	كلمة المرور الحالية مطلوبة.
+Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.	Password must contain at least 8 characters, an uppercase letter, a lowercase letter, a digit and a special character.	La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, una cifra e un simbolo.	يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل وحرف كبير وصغير ورقم ورمز خاص.
+Le mot de passe est obligatoire.	Password is required.	La password è obbligatoria.	كلمة المرور مطلوبة.
+Le mot de passe temporaire est obligatoire.	Temporary password is required.	La password temporanea è obbligatoria.	كلمة المرور المؤقتة مطلوبة.
+Le niveau (Apprentie, Junior ou Confirmée) est obligatoire.	Level (Apprentice, Junior or Experienced) is required.	Il livello (Apprendista, Junior o Esperta) è obbligatorio.	المستوى (مبتدئة أو متوسطة أو متمرسة) مطلوب.
+Le niveau d'étude est trop long.	Education level is too long.	Il livello di istruzione è troppo lungo.	المستوى الدراسي طويل جداً.
+Le nom complet est obligatoire.	Full name is required.	Il nome completo è obbligatorio.	الاسم الكامل مطلوب.
+Le nom complet est trop long.	Full name is too long.	Il nome completo è troppo lungo.	الاسم الكامل طويل جداً.
+Le nom du poste ne doit pas dépasser 100 caractères.	Device name must not exceed 100 characters.	Il nome dispositivo non deve superare 100 caratteri.	اسم الجهاز يجب ألا يتجاوز 100 حرف.
+Le nom est trop long.	Name is too long.	Il nome è troppo lungo.	الاسم طويل جداً.
+Le nom et prénom sont obligatoires.	Full name is required.	Nome e cognome sono obbligatori.	الاسم واللقب مطلوبان.
+Le nouveau mot de passe doit être différent de l'actuel.	New password must differ from the current password.	La nuova password deve essere diversa da quella attuale.	كلمة المرور الجديدة يجب أن تختلف عن الحالية.
+Le nouveau mot de passe est obligatoire.	New password is required.	La nuova password è obbligatoria.	كلمة المرور الجديدة مطلوبة.
+Le poste est trop long.	Position is too long.	La mansione è troppo lunga.	الوظيفة طويلة جداً.
+Le rôle est obligatoire.	Role is required.	Il ruolo è obbligatorio.	الدور مطلوب.
+Le statut est obligatoire.	Status is required.	Lo stato è obbligatorio.	الحالة مطلوبة.
+Le team leader sélectionné est invalide.	The selected team leader is invalid.	Il caposquadra selezionato non è valido.	قائد الفريق المختار غير صالح.
+Le téléphone est trop long.	Phone number is too long.	Il telefono è troppo lungo.	رقم الهاتف طويل جداً.
+Les 26 critères doivent être évalués avant la validation de la semaine.	All 26 criteria must be assessed before approving the week.	I 26 criteri devono essere valutati prima di convalidare la settimana.	يجب تقييم المعايير الستة والعشرين قبل اعتماد الأسبوع.
+Les cycles initial et recyclage sont obligatoires.	Initial and refresher cycles are required.	I cicli iniziale e di aggiornamento sono obbligatori.	الدورة الأولية وإعادة التدريب مطلوبتان.
+Les formules et cellules en erreur ne sont pas acceptées.	Formulas and error cells are not accepted.	Formule e celle in errore non sono accettate.	الصيغ والخلايا ذات الأخطاء غير مقبولة.
+Les formules ne sont pas acceptées. Saisissez uniquement des valeurs dans les cellules.	Formulas are not accepted. Enter only values in cells.	Le formule non sono accettate. Inserisci solo valori nelle celle.	الصيغ غير مقبولة. أدخل قيماً فقط في الخلايا.
+Les objectifs du livret sont incomplets ; contactez l’administrateur.	Booklet objectives are incomplete; contact the administrator.	Gli obiettivi del libretto sono incompleti; contatta l’amministratore.	أهداف الكتيب غير مكتملة؛ اتصل بالمسؤول.
+Les objectifs du livret sont invalides.	Booklet objectives are invalid.	Gli obiettivi del libretto non sono validi.	أهداف الكتيب غير صالحة.
+Les remarques sont trop longues.	Remarks are too long.	Le note sono troppo lunghe.	الملاحظات طويلة جداً.
+Les semaines doivent être ordonnées et ne pas se chevaucher.	Weeks must be ordered and must not overlap.	Le settimane devono essere ordinate e non sovrapporsi.	يجب ترتيب الأسابيع دون تداخل.
+Les semaines et critères doivent correspondre au modèle de cette fiche.	Weeks and criteria must match this sheet’s template.	Settimane e criteri devono corrispondere al modello della scheda.	يجب أن تطابق الأسابيع والمعايير نموذج البطاقة.
+Ligne invalide.	Invalid row.	Riga non valida.	صف غير صالح.
+Livret d’intégration introuvable.	Integration booklet not found.	Libretto di inserimento non trovato.	كتيب الإدماج غير موجود.
+Paramètre manquant ou invalide.	Missing or invalid parameter.	Parametro mancante o non valido.	معامل مفقود أو غير صالح.
+Pour valider et passer en Direct, choisissez le poste Direct.	Choose a Direct position to approve and transfer to Direct.	Scegli la mansione diretta per convalidare e trasferire a Diretto.	اختر الوظيفة المباشرة للاعتماد والنقل إلى المباشر.
+Renseignez la date de début et de fin de la semaine, ou laissez les deux vides.	Enter the week’s start and end dates, or leave both empty.	Inserisci le date di inizio e fine settimana o lasciale entrambe vuote.	أدخل تاريخي بداية ونهاية الأسبوع أو اتركهما فارغين.
+Renseignez les dates du cycle et marquez la formation réalisée (X) avant de signer.	Enter cycle dates and mark training completed (X) before signing.	Inserisci le date del ciclo e indica formazione svolta (X) prima di firmare.	أدخل تواريخ الدورة وحدد التدريب المنجز (X) قبل التوقيع.
+Renseignez les dates et l’évaluation finale avant la signature du candidat.	Enter dates and final assessment before the candidate signs.	Inserisci date e valutazione finale prima della firma del candidato.	أدخل التواريخ والتقييم النهائي قبل توقيع المترشح.
+Renseignez les deux dates de formation, ou laissez-les vides.	Enter both training dates or leave both empty.	Inserisci entrambe le date di formazione o lasciale vuote.	أدخل تاريخي التدريب أو اتركهما فارغين.
+Requête invalide.	Invalid request.	Richiesta non valida.	طلب غير صالح.
+Résultat invalide.	Invalid result.	Risultato non valido.	نتيجة غير صالحة.
+Rôle manquant ou inconnu. Utilisez la liste du modèle.	Missing or unknown role. Use the template list.	Ruolo mancante o sconosciuto. Usa l’elenco del modello.	دور مفقود أو غير معروف. استخدم قائمة النموذج.
+Semaine de formation introuvable.	Training week not found.	Settimana di formazione non trovata.	أسبوع التدريب غير موجود.
+Session invalide.	Invalid session.	Sessione non valida.	جلسة غير صالحة.
+Session utilisateur invalide.	Invalid user session.	Sessione utente non valida.	جلسة المستخدم غير صالحة.
+Seul le Team Leader affecté peut évaluer et valider cette fiche.	Only the assigned Team Leader can assess and approve this sheet.	Solo il caposquadra assegnato può valutare e convalidare questa scheda.	قائد الفريق المعيّن وحده يستطيع تقييم واعتماد البطاقة.
+Seule la formatrice affectée peut évaluer et valider cette fiche.	Only the assigned trainer can assess and approve this sheet.	Solo la formatrice assegnata può valutare e convalidare questa scheda.	المدربة المعيّنة وحدها تستطيع تقييم واعتماد البطاقة.
+Seule la formatrice affectée à ce candidat peut signer.	Only the trainer assigned to this candidate can sign.	Solo la formatrice assegnata a questo candidato può firmare.	المدربة المعيّنة لهذا المترشح وحدها تستطيع التوقيع.
+Seule la formatrice ou le Team Leader affecté peut effectuer cette action.	Only the assigned trainer or Team Leader can perform this action.	Solo la formatrice o il caposquadra assegnato può eseguire questa azione.	المدربة أو قائد الفريق المعيّن وحده يستطيع تنفيذ هذا الإجراء.
+Tous les objectifs du livret doivent être fournis.	All booklet objectives must be provided.	Devono essere forniti tutti gli obiettivi del libretto.	يجب تقديم جميع أهداف الكتيب.
+Toutes les étapes doivent être fournies.	All steps must be provided.	Devono essere fornite tutte le fasi.	يجب تقديم جميع الخطوات.
+Un candidat avec ce CIN existe déjà.	A candidate with this national ID already exists.	Esiste già un candidato con questo CIN.	يوجد مترشح برقم الهوية هذا.
+Un critère n'appartient pas à la semaine indiquée.	A criterion does not belong to the specified week.	Un criterio non appartiene alla settimana indicata.	أحد المعايير لا ينتمي إلى الأسبوع المحدد.
+Une étape est fournie plusieurs fois.	A step was provided more than once.	Una fase è fornita più volte.	قُدمت خطوة أكثر من مرة.
+Utilisateur introuvable.	User not found.	Utente non trovato.	المستخدم غير موجود.
+Validez la semaine précédente avant de continuer.	Approve the previous week before continuing.	Convalida la settimana precedente prima di continuare.	اعتمد الأسبوع السابق قبل المتابعة.
+Vous n'avez pas le rôle requis pour cette action.	You do not have the required role for this action.	Non hai il ruolo richiesto per questa azione.	ليس لديك الدور المطلوب لهذا الإجراء.
+Vous ne pouvez pas désactiver votre propre compte.	You cannot disable your own account.	Non puoi disattivare il tuo account.	لا يمكنك تعطيل حسابك.
+Vous ne pouvez pas modifier votre propre rôle.	You cannot change your own role.	Non puoi modificare il tuo ruolo.	لا يمكنك تغيير دورك.
+Vous ne pouvez pas supprimer votre propre compte.	You cannot delete your own account.	Non puoi eliminare il tuo account.	لا يمكنك حذف حسابك.
+Vous devez changer votre mot de passe.	You must change your password.	Devi cambiare la password.	يجب تغيير كلمة المرور.
+Évaluez chaque objectif avant la signature du candidat.	Assess every objective before the candidate signs.	Valuta ogni obiettivo prima della firma del candidato.	قيّم كل هدف قبل توقيع المترشح.
+Découvrir l’entreprise et les règles d’intégration	Discover the company and integration rules	Conoscere l’azienda e le regole di inserimento	التعرف على الشركة وقواعد الاندماج
+Appliquer les règles de santé et de sécurité	Apply health and safety rules	Applicare le regole di salute e sicurezza	تطبيق قواعد الصحة والسلامة
+Identifier le poste, les outils et les équipements	Identify the workstation, tools and equipment	Identificare la postazione, gli strumenti e le attrezzature	التعرف على المنصب والأدوات والمعدات
+Réaliser les opérations selon le mode opératoire	Perform operations according to work instructions	Eseguire le operazioni secondo le istruzioni operative	إنجاز العمليات حسب طريقة العمل
+Respecter les consignes et critères qualité	Follow quality instructions and criteria	Rispettare le istruzioni e i criteri di qualità	احترام تعليمات ومعايير الجودة
+Travailler en autonomie et demander de l’aide si nécessaire	Work independently and ask for help when needed	Lavorare in autonomia e chiedere aiuto se necessario	العمل باستقلالية وطلب المساعدة عند الحاجة
+Ponctualité	Punctuality	Puntualità	الالتزام بالمواعيد
+Présence	Attendance	Presenza	الحضور
+Engagement / Responsabilité	Commitment / Responsibility	Impegno / Responsabilità	الالتزام / المسؤولية
+Relation avec les autres collègues	Relationship with colleagues	Rapporti con i colleghi	العلاقة مع الزملاء
+Propreté du poste de travail	Workstation cleanliness	Pulizia della postazione	نظافة مكان العمل
+Application du règlement de travail	Compliance with work regulations	Rispetto del regolamento di lavoro	تطبيق نظام العمل
+Capacité d’apprendre	Ability to learn	Capacità di apprendere	القدرة على التعلم
+Lignes de couture droites et parallèles, à moins de 5 mm d’espace	Straight parallel seams spaced less than 5 mm	Cuciture dritte e parallele distanti meno di 5 mm	خطوط خياطة مستقيمة ومتوازية بمسافة أقل من 5 مم
+Lignes de couture courbes	Curved seams	Cuciture curve	خطوط خياطة منحنية
+Maîtrise de soi	Self-control	Autocontrollo	التحكم في النفس
+Manipulation correcte des pièces	Correct handling of parts	Corretta manipolazione dei pezzi	التعامل الصحيح مع القطع
+Enfilage de machines à coudre	Threading sewing machines	Infilatura delle macchine da cucire	تركيب الخيط بآلات الخياطة
+Placement des bobines de fils	Placement of thread spools	Posizionamento delle bobine di filo	وضع بكرات الخيط
+Reconnaissance et placement de l’aiguille	Needle identification and fitting	Riconoscimento e montaggio dell’ago	التعرف على الإبرة وتركيبها
+Coordination mains et pieds	Hand and foot coordination	Coordinazione mani e piedi	التنسيق بين اليدين والقدمين
+Alignement des crans	Notch alignment	Allineamento delle tacche	محاذاة علامات القطع
+Aspect des lignes de couture	Seam appearance	Aspetto delle cuciture	مظهر خطوط الخياطة
+Bord à bord	Edge to edge	Bordo a bordo	حافة إلى حافة
+Exécution du point arrière	Backstitch execution	Esecuzione del punto indietro	تنفيذ الغرزة الخلفية
+Coudre le non-tissé sur le tissu	Sewing nonwoven onto fabric	Cucitura del non tessuto sul tessuto	خياطة القماش غير المنسوج على النسيج
+Couture poche	Pocket sewing	Cucitura tasca	خياطة الجيب
+Couture de bande velcro	Velcro strip sewing	Cucitura del nastro velcro	خياطة شريط الفيلكرو
+Validation de la couture de reprise	Repair seam validation	Convalida della cucitura di ripresa	اعتماد خياطة الإصلاح
+Exécution du rempli	Folded hem execution	Esecuzione del ripiego	تنفيذ الثنية
+Application de fermeture Zip	Zipper attachment	Applicazione della cerniera	تركيب السحاب
+Couture du profil	Profile sewing	Cucitura del profilo	خياطة الحاشية
+1. Présentation générale de l’entreprise	1. Company overview	1. Presentazione generale dell’azienda	1. تقديم عام للشركة
+2. Sécurité — Signes et sigles de sécurité / identification des produits	2. Safety — Safety signs and symbols / product identification	2. Sicurezza — Segnali e simboli di sicurezza / identificazione dei prodotti	2. السلامة — علامات ورموز السلامة / التعرف على المنتجات
+2. Sécurité — Les EPI / L’hygiène dans le travail	2. Safety — PPE / hygiene at work	2. Sicurezza — DPI / igiene sul lavoro	2. السلامة — معدات الحماية الفردية / نظافة العمل
+2. Sécurité — Gestes et postures et règles de manutention	2. Safety — Movements, posture and handling rules	2. Sicurezza — Gesti, posture e regole di movimentazione	2. السلامة — الحركات والوضعيات وقواعد المناولة
+2. Sécurité — Règles de circulation interne (flux, traçage, plan d’évacuation et issues de secours)	2. Safety — Internal traffic rules (flows, markings, evacuation plan and emergency exits)	2. Sicurezza — Regole di circolazione interna (flussi, segnaletica, piano di evacuazione e uscite di emergenza)	2. السلامة — قواعد الحركة الداخلية (التدفق والعلامات وخطة الإخلاء ومخارج النجدة)
+3. Formation règlement intérieur « Code of conduct »	3. Internal rules and code of conduct training	3. Formazione sul regolamento interno e codice di condotta	3. التدريب على النظام الداخلي ومدونة السلوك
+4. Formation Politique Qualité	4. Quality policy training	4. Formazione sulla politica della qualità	4. التدريب على سياسة الجودة
+5. Formation Politique anti-corruption, Politique d’escalation	5. Anti-corruption and escalation policy training	5. Formazione sulle politiche anticorruzione e di escalation	5. التدريب على سياسة مكافحة الفساد وسياسة التصعيد
+6. Présentation du projet, produit et client	6. Project, product and customer introduction	6. Presentazione del progetto, prodotto e cliente	6. تقديم المشروع والمنتج والعميل
+7. Formation sur les exigences réglementaires produit / client (SC / CC au plan client)	7. Product / customer regulatory requirements training (SC / CC on customer drawing)	7. Formazione sui requisiti normativi prodotto / cliente (SC / CC sul disegno cliente)	7. التدريب على المتطلبات التنظيمية للمنتج / العميل (SC / CC في مخطط العميل)
+8. Formation sur les exigences clients CSR	8. Customer-specific requirements (CSR) training	8. Formazione sui requisiti specifici del cliente CSR	8. التدريب على متطلبات العملاء CSR
+9. Formation sur le processus de fabrication	9. Manufacturing process training	9. Formazione sul processo di fabbricazione	9. التدريب على عملية التصنيع
+10. Formation 5S poste (rangement, nettoyage, matériels)	10. Workstation 5S training (organisation, cleaning, equipment)	10. Formazione 5S della postazione (ordine, pulizia, attrezzature)	10. التدريب على 5S بالوظيفة (الترتيب والتنظيف والمعدات)
+11. Présentation et formation sur les chemins de contrôle	11. Inspection paths presentation and training	11. Presentazione e formazione sui percorsi di controllo	11. تقديم مسارات المراقبة والتدريب عليها
+12. Présentation des défauts produits connus	12. Known product defects presentation	12. Presentazione dei difetti noti del prodotto	12. تقديم عيوب المنتجات المعروفة
+13. Formation sur les coiffes types et leur mode d’utilisation	13. Reference seat covers and usage training	13. Formazione sulle fodere campione e il loro utilizzo	13. التدريب على الأغطية النموذجية وطريقة استخدامها
+14. Formation sur les paramètres de couture du projet	14. Project sewing parameters training	14. Formazione sui parametri di cucitura del progetto	14. التدريب على إعدادات خياطة المشروع
+15. Formation sur les instructions de travail	15. Work instructions training	15. Formazione sulle istruzioni di lavoro	15. التدريب على تعليمات العمل
+16. Formation sur la maintenance premier niveau	16. First-level maintenance training	16. Formazione sulla manutenzione di primo livello	16. التدريب على الصيانة الأولية
+17. Formation sur l’OK démarrage / OK première pièce	17. Start-up approval / first-piece approval training	17. Formazione sull’OK avvio / OK primo pezzo	17. التدريب على اعتماد الانطلاق / القطعة الأولى
+18. Formation sur l’instruction de l’emballage	18. Packaging instructions training	18. Formazione sulle istruzioni di imballaggio	18. التدريب على تعليمات التغليف
+19. Présentation des méthodes de livraison, de stockage et de gerbage	19. Delivery, storage and stacking methods	19. Presentazione dei metodi di consegna, stoccaggio e accatastamento	19. تقديم طرق التسليم والتخزين والتكديس
+20. Présentation du layout de l’atelier de production (flux de produit et méthodes d’alimentation des lignes)	20. Production workshop layout (product flow and line supply methods)	20. Layout dell’officina di produzione (flusso prodotto e metodi di alimentazione linee)	20. تقديم تخطيط ورشة الإنتاج (تدفق المنتجات وطرق تزويد الخطوط)
+21. Présentation de la méthode FIFO (tableau de gestion visuel du FIFO)	21. FIFO method (FIFO visual management board)	21. Metodo FIFO (tabellone di gestione visiva FIFO)	21. تقديم طريقة FIFO (لوحة الإدارة المرئية)
+22. Déclaration de la production en temps réel (douchage)	22. Real-time production reporting (scanning)	22. Dichiarazione della produzione in tempo reale (scansione)	22. التصريح بالإنتاج في الوقت الفعلي (المسح)
+23. Formation sur la conduite des chariots élévateurs et ses circuits	23. Forklift operation and routes training	23. Formazione sulla guida dei carrelli elevatori e i percorsi	23. التدريب على قيادة الرافعات الشوكية ومساراتها
+Opérateurs	Operators	Operatori	العمال
+Contrôleurs	Inspectors	Controllori	المراقبون
+Contrôleurs + opérateurs	Inspectors + operators	Controllori + operatori	المراقبون + العمال
+Magasinier	Warehouse operator	Magazziniere	أمين المخزن
+Préparation	Preparation	Preparazione	التحضير
+Assemblage	Assembly	Assemblaggio	التجميع
+Retouche / Reprise	Touch-up / Repair	Ritocco / Ripresa	التعديل / الإصلاح
+Campo	Campo	Campo	كامبو
+Préparation Campo	Campo preparation	Preparazione Campo	تحضير كامبو
+Fermeture Invisible	Concealed closure	Chiusura invisibile	الإغلاق المخفي
+Tresse / Ba2	Braid / Ba2	Treccia / Ba2	الضفيرة / Ba2
+Profil	Profile	Profilo	الحاشية
+Airbag	Airbag	Airbag	الوسادة الهوائية
+Surpiqure simple joue	Single side-panel topstitching	Impuntura singola fianco	خياطة ظاهرة مفردة للجانب
+Surpiqure double joue	Double side-panel topstitching	Impuntura doppia fianco	خياطة ظاهرة مزدوجة للجانب
+Surpiqure simple coiffe	Single cover topstitching	Impuntura singola fodera	خياطة ظاهرة مفردة للغطاء
+Surpiqure double coiffe	Double cover topstitching	Impuntura doppia fodera	خياطة ظاهرة مزدوجة للغطاء
+Finition Poche / Joue	Pocket / side-panel finishing	Finitura tasca / fianco	تشطيب الجيب / الجانب
+Finition coiffe	Cover finishing	Finitura fodera	تشطيب الغطاء
+TIEDAWN	Tiedown	Tiedown	رباط التثبيت
+GLASSAGE TOILLE AIRBAG	Airbag fabric pressing	Stiratura tela airbag	كيّ نسيج الوسادة الهوائية
+ASSEMBLAGE NON AIRBAG + RENFORT AIRBAG	Non-airbag assembly + airbag reinforcement	Assemblaggio non airbag + rinforzo airbag	تجميع غير الوسادة الهوائية + تعزيزها
+FERMETURE SAC AIRBAG	Airbag bag closure	Chiusura sacco airbag	إغلاق كيس الوسادة الهوائية
+Wire	Wire	Filo	السلك
+Alimentatrice	Line feeder	Addetta alimentazione	عاملة تزويد الخط
+Contrôle Qualité	Quality control	Controllo qualità	مراقبة الجودة
+Étape	Step	Fase	الخطوة
+Évaluation	Assessment	Valutazione	التقييم
+/ 5 semaines validées	/ 5 weeks approved	/ 5 settimane convalidate	/ 5 أسابيع معتمدة
+ex : 09876543	e.g. 09876543	es. 09876543	مثال: 09876543
+ex : 10452	e.g. 10452	es. 10452	مثال: 10452
+ex : 22 123 456	e.g. 22 123 456	es. 22 123 456	مثال: 22 123 456
+Étape signée.	Step signed.	Fase firmata.	تم توقيع الخطوة.
+Identifiant *	Username *	Nome utente *	اسم المستخدم *
+Nom complet *	Full name *	Nome completo *	الاسم الكامل *
+Rôle *	Role *	Ruolo *	الدور *
+Mot de passe temporaire *	Temporary password *	Password temporanea *	كلمة المرور المؤقتة *
+Nom et prénom *	Full name *	Nome e cognome *	الاسم واللقب *
+CIN *	National ID *	CIN *	رقم بطاقة التعريف *
+Team leader	Team leader	Caposquadra	قائد الفريق
+Fin période d'essai	End of trial period	Fine periodo di prova	نهاية فترة التجربة
+Mot de passe à changer	Password change required	Password da cambiare	يجب تغيير كلمة المرور
+Instructions	Instructions	Istruzioni	تعليمات
+Import en masse —	Bulk import —	Importazione massiva —	استيراد جماعي —
+Remplir une ligne par candidat à partir de la ligne 2.	Fill in one row per candidate starting at row 2.	Compila una riga per candidato a partire dalla riga 2.	املأ صفاً لكل مترشح ابتداءً من الصف 2.
+Colonnes obligatoires : Nom et prénom, CIN.	Required columns: Full name, National ID.	Colonne obbligatorie: Nome completo, CIN.	الأعمدة المطلوبة: الاسم واللقب ورقم الهوية.
+Le poste est obligatoire.	Position is required.	La mansione è obbligatoria.	الوظيفة مطلوبة.
+Poste : texte libre.	Position: free text.	Mansione: testo libero.	الوظيفة: نص حر.
+La fin de période d'essai est calculée à partir de la date de recrutement (colonne ignorée à l'import).	The trial end date is calculated from the hire date (column ignored on import).	La fine del periodo di prova è calcolata dalla data di assunzione (colonna ignorata nell’importazione).	تُحسب نهاية فترة التجربة من تاريخ الانتداب (العمود يُتجاهل عند الاستيراد).
+Statut Validé : transfert automatique en Direct ; choisissez un poste Direct.	Approved status: automatic transfer to Direct; choose a Direct position.	Stato Convalidato: trasferimento automatico a Diretto; scegli una mansione diretta.	حالة معتمد: نقل آلي إلى المباشر؛ اختر وظيفة مباشرة.
+• Si le CIN existe déjà dans cette catégorie, la fiche est mise à jour (les cellules vides ne modifient rien).	• Existing national IDs in this category update the record (empty cells make no changes).	• Se il CIN esiste già in questa categoria, la scheda è aggiornata (le celle vuote non modificano nulla).	• إذا وجد رقم الهوية في هذه الفئة يُحدّث الملف (الخلايا الفارغة لا تغيّر شيئاً).
+• Dates : format JJ/MM/AAAA ou cellule de type date.	• Dates: DD/MM/YYYY format or a date cell.	• Date: formato GG/MM/AAAA o cella di tipo data.	• التواريخ: يوم/شهر/سنة أو خلية تاريخ.
+(vide = Candidat pour un nouveau candidat).	(empty = Candidate for a new candidate).	(vuoto = Candidato per un nuovo candidato).	(فارغ = مترشح للمترشح الجديد).
+• Formatrice / Team leader : nom complet ou identifiant d'un compte existant.	• Trainer / Team leader: full name or username of an existing account.	• Formatrice / Caposquadra: nome completo o nome utente di un account esistente.	• المدربة / قائد الفريق: الاسم الكامل أو اسم مستخدم لحساب موجود.
+• Les lignes valides sont importées ; les lignes en erreur sont listées avec leur motif.	• Valid rows are imported; invalid rows are listed with the reason.	• Le righe valide sono importate; quelle in errore sono elencate con il motivo.	• تُستورد الصفوف الصالحة وتُعرض الصفوف الخاطئة مع السبب.
+• Maximum {0} lignes par fichier.	• Maximum {0} rows per file.	• Massimo {0} righe per file.	• بحد أقصى {0} صف لكل ملف.
+Import de nouveaux comptes utilisateurs	Import new user accounts	Importazione nuovi account utenti	استيراد حسابات مستخدمين جديدة
+Remplir la feuille Utilisateurs à partir de la ligne 2. Maximum : {0} lignes, 10 Mo.	Fill in the Users sheet starting at row 2. Maximum: {0} rows, 10 MB.	Compila il foglio Utenti dalla riga 2. Massimo: {0} righe, 10 MB.	املأ ورقة المستخدمين ابتداءً من الصف 2. الحد الأقصى: {0} صف و10 ميغابايت.
+Obligatoires : Identifiant, Nom complet, Rôle, Mot de passe temporaire. E-mail facultatif.	Required: Username, Full name, Role, Temporary password. Email optional.	Obbligatori: Nome utente, Nome completo, Ruolo, Password temporanea. E-mail facoltativa.	المطلوب: اسم المستخدم والاسم الكامل والدور وكلمة المرور المؤقتة. البريد الإلكتروني اختياري.
+Identifiant : 1 à 50 caractères, lettres, chiffres, point, tiret ou underscore.	Username: 1 to 50 characters, letters, digits, dot, hyphen or underscore.	Nome utente: da 1 a 50 caratteri, lettere, cifre, punto, trattino o underscore.	اسم المستخدم: من 1 إلى 50 حرفاً، حروف وأرقام ونقطة وشرطة وشرطة سفلية.
+Rôle non autorisé	Role not allowed	Ruolo non consentito	دور غير مسموح
+Choisissez un rôle dans la liste.	Choose a role from the list.	Scegli un ruolo dall’elenco.	اختر دوراً من القائمة.
+Rôles autorisés :	Allowed roles:	Ruoli consentiti:	الأدوار المسموح بها:
+Les noms d’utilisateur existants sont refusés, sans distinction de casse. Aucun compte n’est modifié.	Existing usernames are rejected, regardless of case. No accounts are modified.	I nomi utente esistenti sono rifiutati senza distinzione di maiuscole. Nessun account è modificato.	تُرفض أسماء المستخدمين الموجودة دون اعتبار حالة الأحرف. لا يُعدّل أي حساب.
+Mot de passe : 8 à 72 caractères, majuscule, minuscule, chiffre et caractère spécial.	Password: 8 to 72 characters, uppercase, lowercase, digit and special character.	Password: da 8 a 72 caratteri, maiuscola, minuscola, cifra e simbolo.	كلمة المرور: من 8 إلى 72 حرفاً وحرف كبير وصغير ورقم ورمز خاص.
+Chaque nouveau compte est actif et doit changer son mot de passe à la première connexion.	Each new account is active and must change its password at first sign-in.	Ogni nuovo account è attivo e deve cambiare password al primo accesso.	كل حساب جديد نشط ويجب تغيير كلمة مروره عند أول دخول.
+Les lignes valides sont créées ; chaque erreur indique le numéro de ligne Excel et son motif.	Valid rows are created; each error shows the Excel row number and reason.	Le righe valide sono create; ogni errore indica il numero di riga Excel e il motivo.	تُنشأ الصفوف الصالحة؛ كل خطأ يحدد رقم صف Excel والسبب.
+Ce fichier contient des mots de passe temporaires : conservez-le de façon sécurisée puis supprimez-le après utilisation.	This file contains temporary passwords: store it securely and delete it after use.	Questo file contiene password temporanee: conservalo in modo sicuro e cancellalo dopo l’uso.	يحتوي هذا الملف على كلمات مرور مؤقتة؛ احفظه بأمان واحذفه بعد الاستخدام.
+L’export ne contient aucun mot de passe et ne permet pas de modifier les comptes existants.	The export contains no passwords and cannot modify existing accounts.	L’esportazione non contiene password e non permette di modificare account esistenti.	التصدير لا يحتوي كلمات مرور ولا يسمح بتعديل الحسابات الموجودة.
+En-têtes invalides : les colonnes « Nom et prénom » et « CIN » sont obligatoires. Utilisez le modèle.	Invalid headers: Full name and National ID columns are required. Use the template.	Intestazioni non valide: Nome completo e CIN sono obbligatori. Usa il modello.	عناوين غير صالحة: عمودا الاسم واللقب ورقم الهوية مطلوبان. استخدم النموذج.
+En-têtes manquants. Utilisez le modèle utilisateurs.	Missing headers. Use the user template.	Intestazioni mancanti. Usa il modello utenti.	عناوين مفقودة. استخدم نموذج المستخدمين.
+Colonne en double : {0}	Duplicate column: {0}	Colonna duplicata: {0}	عمود مكرر: {0}
+Colonne manquante : {0}. Utilisez le modèle utilisateurs.	Missing column: {0}. Use the user template.	Colonna mancante: {0}. Usa il modello utenti.	عمود مفقود: {0}. استخدم نموذج المستخدمين.
+Maximum {0} lignes par fichier.	Maximum {0} rows per file.	Massimo {0} righe per file.	بحد أقصى {0} صف لكل ملف.
+Fichier trop volumineux : {0} lignes maximum.	File too large: maximum {0} rows.	File troppo grande: massimo {0} righe.	الملف كبير جداً: الحد الأقصى {0} صف.
+Ce CIN existe déjà dans la catégorie {0}.	This national ID already exists in category {0}.	Questo CIN esiste già nella categoria {0}.	رقم الهوية موجود في الفئة {0}.
+{0} introuvable : « {1} ».	{0} not found: “{1}”.	{0} non trovato: « {1} ».	{0} غير موجود: « {1} ».
+{0} invalide : « {1} ».	Invalid {0}: “{1}”.	{0} non valido: « {1} ».	{0} غير صالح: « {1} ».
+Le poste est obligatoire pour la catégorie {0}.	Position is required for category {0}.	La mansione è obbligatoria per la categoria {0}.	الوظيفة مطلوبة للفئة {0}.
+Poste invalide pour la catégorie {0} : « {1} ».	Invalid position for category {0}: “{1}”.	Mansione non valida per la categoria {0}: « {1} ».	وظيفة غير صالحة للفئة {0}: « {1} ».
+Pour valider et passer en Direct, choisissez un poste Direct (« {0} » n'en fait pas partie).	Choose a Direct position to approve and transfer to Direct (“{0}” is not one).	Scegli una mansione diretta per convalidare e trasferire a Diretto (« {0} » non è una di esse).	اختر وظيفة مباشرة للاعتماد والنقل إلى المباشر (« {0} » ليست منها).
+Vous n'avez pas les droits pour gérer un compte « {0} ».	You do not have permission to manage a “{0}” account.	Non hai i permessi per gestire un account « {0} ».	لا تملك صلاحية إدارة حساب « {0} ».
+Objectif de livret inconnu : {0}	Unknown booklet objective: {0}	Obiettivo del libretto sconosciuto: {0}	هدف كتيب غير معروف: {0}
+Consultation	View	Consultazione	اطلاع
+Création	Creation	Creazione	إنشاء
+Modification	Update	Modifica	تعديل
+Suppression	Deletion	Eliminazione	حذف
+Signature	Signature	Firma	توقيع
+Export Excel	Excel export	Esportazione Excel	تصدير Excel
+Modèle Excel	Excel template	Modello Excel	نموذج Excel
+Changement du mot de passe	Password change	Cambio password	تغيير كلمة المرور
+Réinitialisation du mot de passe	Password reset	Reimpostazione password	إعادة تعيين كلمة المرور
+Requête	Request	Richiesta	طلب
+{0} invalide : « {1} » (format JJ/MM/AAAA).	Invalid {0}: “{1}” (DD/MM/YYYY format).	{0} non valido: « {1} » (formato GG/MM/AAAA).	{0} غير صالح: « {1} » (الصيغة يوم/شهر/سنة).

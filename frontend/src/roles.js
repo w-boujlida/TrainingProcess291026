@@ -4,6 +4,7 @@ export const ROLES = {
   SUPERVISEUR: 'SUPERVISEUR',
   FORMATRICE: 'FORMATRICE',
   TEAM_LEADER: 'TEAM_LEADER',
+  QUALITY: 'QUALITY',
 };
 
 export const ROLE_LABELS = {
@@ -12,6 +13,7 @@ export const ROLE_LABELS = {
   SUPERVISEUR: 'Superviseur',
   FORMATRICE: 'Formatrice',
   TEAM_LEADER: 'Team Leader',
+  QUALITY: 'Qualité',
 };
 
 export const USER_MANAGERS = [ROLES.SUPER_ADMIN, ROLES.ADMIN];
@@ -51,7 +53,7 @@ export const SHIFTS = [
 export function canManage(actorRole, targetRole) {
   if (actorRole === ROLES.SUPER_ADMIN) return true;
   if (actorRole === ROLES.ADMIN) {
-    return [ROLES.SUPERVISEUR, ROLES.FORMATRICE, ROLES.TEAM_LEADER].includes(targetRole);
+    return [ROLES.SUPERVISEUR, ROLES.FORMATRICE, ROLES.TEAM_LEADER, ROLES.QUALITY].includes(targetRole);
   }
   return false;
 }

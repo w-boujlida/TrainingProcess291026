@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -52,6 +54,7 @@ public class UserService {
         user.setFullName(req.fullName().trim());
         user.setEmail(blankToNull(req.email()));
         user.setRole(req.role());
+        user.setWorkType(blankToNull(req.workType()));
         user.setPasswordHash(passwordEncoder.encode(req.password()));
         user.setMustChangePassword(true);
         return UserDto.of(userRepository.save(user));
@@ -70,6 +73,7 @@ public class UserService {
         user.setFullName(req.fullName().trim());
         user.setEmail(blankToNull(req.email()));
         user.setRole(req.role());
+        user.setWorkType(blankToNull(req.workType()));
         return UserDto.of(userRepository.save(user));
     }
 
@@ -79,6 +83,7 @@ public class UserService {
         if (user.getId().equals(actor.id())) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Vous ne pouvez pas désactiver votre propre compte.");
         }
+
         if (!active) ensureNotLastSuperAdmin(user);
         user.setActive(active);
         if (active) {
@@ -86,6 +91,42 @@ public class UserService {
             user.setLockedUntil(null);
         }
         return UserDto.of(userRepository.save(user));
+    }
+
+    @Transactional
+    public List<UserDto> applySelection(AuthUser actor, UserSelectionRequest req) {
+        if (req == null || req.ids() == null || req.ids().isEmpty() || req.ids().size() > 10000
+                || req.ids().stream().anyMatch(id -> id == null || id <= 0)
+                || req.action() == null || !Set.of("WORK_TYPE", "ACTIVATE", "DEACTIVATE").contains(req.action())
+                || ("WORK_TYPE".equals(req.action()) && !Set.of("CADRE", "DIRECT", "INDIRECT")
+                        .contains(req.workType() == null ? "" : req.workType()))) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Sélection ou action invalide.");
+        }
+        var targets = new LinkedHashSet<>(req.ids()).stream().map(id -> {
+            if (id.equals(actor.id())) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Vous ne pouvez pas modifier votre propre compte en lot.");
+            }
+            return loadManageable(actor, id);
+        }).toList();
+        if ("DEACTIVATE".equals(req.action())) {
+            long removing = targets.stream().filter(u -> u.getRole() == Role.SUPER_ADMIN && u.isActive()).count();
+            if (removing > 0 && userRepository.countByRoleAndActiveTrue(Role.SUPER_ADMIN) <= removing) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Impossible : il doit rester au moins un Super Admin actif.");
+            }
+        }
+        for (var user : targets) {
+            if ("WORK_TYPE".equals(req.action())) {
+                user.setWorkType(req.workType());
+            } else {
+                boolean active = "ACTIVATE".equals(req.action());
+                user.setActive(active);
+                if (active) {
+                    user.setFailedAttempts(0);
+                    user.setLockedUntil(null);
+                }
+            }
+        }
+        return userRepository.saveAll(targets).stream().map(UserDto::of).toList();
     }
 
     @Transactional

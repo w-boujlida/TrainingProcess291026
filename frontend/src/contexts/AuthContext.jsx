@@ -19,14 +19,15 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = useCallback(async (username, password) => {
-    const res = await authApi.login(username, password);
+  const login = useCallback(async (username, password, deviceName) => {
+    const res = await authApi.login(username, password, deviceName);
     localStorage.setItem(TOKEN_KEY, res.token);
     setUser(res.user);
     return res.user;
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    await authApi.logout();
     localStorage.removeItem(TOKEN_KEY);
     setUser(null);
   }, []);

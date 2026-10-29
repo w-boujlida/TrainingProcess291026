@@ -1,9 +1,13 @@
+import { t, useLocale, getLocale } from '../i18n';
+import LanguageSelector from './LanguageSelector';
+
 export default function AuthShell({ children }) {
+  useLocale();
   const features = [
-    'Gestion des sessions de formation',
-    'Suivi des formatrices et team leaders',
-    'Habilitations et polyvalence',
-    'Tableaux de bord de formation',
+    t("Gestion des sessions de formation"),
+    t("Suivi des formatrices et team leaders"),
+    t("Suivi des formations"),
+    t("Tableaux de bord de formation"),
   ];
 
   return (
@@ -25,19 +29,18 @@ export default function AuthShell({ children }) {
 
           <div className="auth-left-block">
             <h1 className="auth-title">Training<br /><span>Process</span><br />System</h1>
-            <p className="auth-desc">
-              Plateforme de gestion et de suivi des formations du personnel de production.
-            </p>
+            <p className="auth-desc"> {t("Plateforme de gestion et de suivi des formations du personnel de production.")} </p>
           </div>
 
           <div className="auth-left-block auth-features">
             {features.map((f) => (
-              <div key={f} className="auth-feature"><span className="auth-feature-dot" />{f}</div>
+              <div key={f} className="auth-feature"><span className="auth-feature-dot" />{t(f)}</div>
             ))}
           </div>
         </div>
 
         <div className="auth-right">
+          <LanguageSelector />
           {children}
           <div className="auth-version">SAGE Training Process — v1.0</div>
         </div>

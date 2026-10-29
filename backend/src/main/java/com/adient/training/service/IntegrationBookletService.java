@@ -11,15 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -103,7 +96,7 @@ public class IntegrationBookletService {
             throw new ApiException(HttpStatus.CONFLICT, "Le candidat a déjà signé ce livret.");
         }
         validateReadyForSignature(booklet);
-        validatePngSignature(signature);
+        SignatureValidator.validatePng(signature);
         AppUser signer = users.findById(actor.id())
                 .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED, "Session utilisateur invalide."));
         booklet.setCandidateSignature(signature);
@@ -143,44 +136,6 @@ public class IntegrationBookletService {
         if (booklet.getObjectives().stream().anyMatch(o -> o.getAssessment() == BookletAssessment.PENDING)) {
             throw new ApiException(HttpStatus.BAD_REQUEST,
                     "Évaluez chaque objectif avant la signature du candidat.");
-        }
-    }
-
-    private static void validatePngSignature(String signature) {
-        String prefix = "data:image/png;base64,";
-        if (signature == null || !signature.startsWith(prefix)) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "La signature doit être une image PNG valide.");
-        }
-        try {
-            byte[] image = Base64.getDecoder().decode(signature.substring(prefix.length()));
-            byte[] png = {(byte) 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a};
-            if (image.length < png.length || image.length > 30_000) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "La signature doit être une image de moins de 30 Ko.");
-            }
-            for (int i = 0; i < png.length; i++) {
-                if (image[i] != png[i]) {
-                    throw new ApiException(HttpStatus.BAD_REQUEST, "La signature PNG est invalide.");
-                }
-            }
-            try (ImageInputStream input = ImageIO.createImageInputStream(new ByteArrayInputStream(image))) {
-                Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
-                if (!readers.hasNext()) {
-                    throw new ApiException(HttpStatus.BAD_REQUEST, "La signature PNG est invalide.");
-                }
-                ImageReader reader = readers.next();
-                try {
-                    reader.setInput(input, true, true);
-                    if (!"png".equalsIgnoreCase(reader.getFormatName())
-                            || reader.getWidth(0) > 1500 || reader.getHeight(0) > 400
-                            || reader.read(0) == null) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST, "La signature PNG est invalide.");
-                    }
-                } finally {
-                    reader.dispose();
-                }
-            }
-        } catch (IllegalArgumentException | IOException e) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "La signature PNG est invalide.");
         }
     }
 

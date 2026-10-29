@@ -1,9 +1,11 @@
+import { t, useLocale, getLocale } from '../i18n';
 import { useRef, useState } from 'react';
 import { recruitmentApi } from '../api/recruitment.api';
 import { errorMessage } from '../api/client';
 import Icon from './Icon';
 
-export default function ImportExcelModal({ category, onClose, onImported }) {
+export default function ImportExcelModal({ category, onClose, onImported, importFile, template, instructions }) {
+  useLocale();
   const inputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [dragOver, setDragOver] = useState(false);
@@ -13,18 +15,19 @@ export default function ImportExcelModal({ category, onClose, onImported }) {
 
   const pick = (f) => {
     setError(''); setResult(null);
+    setFile(null);
     if (!f) return;
-    if (!f.name.toLowerCase().endsWith('.xlsx')) { setError('Format non supporté : sélectionnez un fichier .xlsx.'); return; }
-    if (f.size > 10 * 1024 * 1024) { setError('Fichier trop volumineux (10 Mo maximum).'); return; }
+    if (!f.name.toLowerCase().endsWith('.xlsx')) { setError(t("Format non supporté : sélectionnez un fichier .xlsx.")); return; }
+    if (f.size > 10 * 1024 * 1024) { setError(t("Fichier trop volumineux (10 Mo maximum).")); return; }
     setFile(f);
   };
 
   const handleImport = async () => {
     setBusy(true); setError('');
     try {
-      const res = await recruitmentApi.importExcel(category.code, file);
+      const res = await (importFile ? importFile(file) : recruitmentApi.importExcel(category.code, file));
       setResult(res);
-      if (res.created || res.updated) onImported(res);
+      if (res.created || res.updated) await onImported(res);
     } catch (err) {
       setError(errorMessage(err));
     } finally {
@@ -34,19 +37,19 @@ export default function ImportExcelModal({ category, onClose, onImported }) {
 
   const downloadTemplate = async () => {
     setError('');
-    try { await recruitmentApi.template(category.code); } catch (err) { setError(errorMessage(err)); }
+    try { await (template ? template() : recruitmentApi.template(category.code)); } catch (err) { setError(errorMessage(err)); }
   };
 
   return (
     <div className="modal-backdrop" onMouseDown={busy ? undefined : onClose}>
-      <div className="modal-card" onMouseDown={(e) => e.stopPropagation()}>
+      <div className="modal-card" role="dialog" aria-modal="true" aria-labelledby="excel-import-title" onMouseDown={(e) => e.stopPropagation()}>
         <div className="modal-head">
-          <div className="modal-head-title"><Icon name="upload" size={17} />Import Excel — {category.label}</div>
-          <button type="button" className="modal-close" onClick={onClose} disabled={busy} aria-label="Fermer"><Icon name="x" size={18} /></button>
+          <div className="modal-head-title" id="excel-import-title"><Icon name="upload" size={17} />{t("Import Excel —")} {t(category.label)}</div>
+          <button type="button" className="modal-close" onClick={onClose} disabled={busy} aria-label={t("Fermer")}><Icon name="x" size={18} /></button>
         </div>
 
         <div className="modal-body-pad modal-scroll">
-          {error && <div className="alert alert-error"><Icon name="alert" size={14} />{error}</div>}
+          {error && <div className="alert alert-error" role="alert"><Icon name="alert" size={14} />{error}</div>}
 
           {!result && (
             <>
@@ -54,18 +57,17 @@ export default function ImportExcelModal({ category, onClose, onImported }) {
                 <div className="import-step">
                   <span className="import-step-num">1</span>
                   <div>
-                    <div className="import-step-title">Télécharger le modèle</div>
-                    <div className="import-step-text">Colonnes obligatoires : Nom et prénom, CIN. Un CIN existant dans {category.label} met à jour la fiche.</div>
+                    <div className="import-step-title">{t("Télécharger le modèle")}</div>
+                    <div className="import-step-text">{instructions || t("Colonnes obligatoires : Nom et prénom, CIN. Un CIN existant dans {0} met à jour la fiche.", { 0: t(category.label) })}</div>
                   </div>
                   <button type="button" className="btn btn-secondary btn-sm" onClick={downloadTemplate}>
-                    <Icon name="fileSheet" size={14} />Modèle .xlsx
-                  </button>
+                    <Icon name="fileSheet" size={14} />{t("Modèle .xlsx")} </button>
                 </div>
                 <div className="import-step">
                   <span className="import-step-num">2</span>
                   <div>
-                    <div className="import-step-title">Déposer le fichier rempli</div>
-                    <div className="import-step-text">Les lignes valides sont importées, les autres sont listées avec le motif.</div>
+                    <div className="import-step-title">{t("Déposer le fichier rempli")}</div>
+                    <div className="import-step-text">{t("Les lignes valides sont importées, les autres sont listées avec le motif.")}</div>
                   </div>
                 </div>
               </div>
@@ -83,12 +85,12 @@ export default function ImportExcelModal({ category, onClose, onImported }) {
                 {file ? (
                   <>
                     <div className="dropzone-title">{file.name}</div>
-                    <div className="dropzone-sub">{(file.size / 1024).toFixed(1)} Ko — cliquer pour changer</div>
+                    <div className="dropzone-sub">{(file.size / 1024).toFixed(1)} {t("Ko — cliquer pour changer")}</div>
                   </>
                 ) : (
                   <>
-                    <div className="dropzone-title">Glisser-déposer le fichier Excel ici</div>
-                    <div className="dropzone-sub">ou cliquer pour parcourir (.xlsx, 10 Mo max.)</div>
+                    <div className="dropzone-title">{t("Glisser-déposer le fichier Excel ici")}</div>
+                    <div className="dropzone-sub">{t("ou cliquer pour parcourir (.xlsx, 10 Mo max.)")}</div>
                   </>
                 )}
                 <input ref={inputRef} id="import-file" type="file" hidden
@@ -101,15 +103,15 @@ export default function ImportExcelModal({ category, onClose, onImported }) {
           {result && (
             <>
               <div className="import-summary">
-                <div className="import-sum sum-green"><span>{result.created}</span>Créés</div>
-                <div className="import-sum sum-blue"><span>{result.updated}</span>Mis à jour</div>
-                <div className={`import-sum ${result.skipped ? 'sum-red' : 'sum-grey'}`}><span>{result.skipped}</span>En erreur</div>
+                <div className="import-sum sum-green"><span>{result.created}</span>{t("Créés")}</div>
+                <div className="import-sum sum-blue"><span>{result.updated}</span>{t("Mis à jour")}</div>
+                <div className={`import-sum ${result.skipped ? 'sum-red' : 'sum-grey'}`}><span>{result.skipped}</span>{t("En erreur")}</div>
               </div>
               {result.errors.length > 0 ? (
                 <div className="import-errors">
-                  <div className="import-errors-title"><Icon name="alert" size={14} />Lignes non importées</div>
+                  <div className="import-errors-title"><Icon name="alert" size={14} />{t("Lignes non importées")}</div>
                   <table className="data-table compact">
-                    <thead><tr><th>Ligne</th><th className="left">Motif</th></tr></thead>
+                    <thead><tr><th>{t("Ligne")}</th><th className="left">{t("Motif")}</th></tr></thead>
                     <tbody>
                       {result.errors.map((e) => (
                         <tr key={e.row}><td className="mono">{e.row}</td><td className="left wrap">{e.message}</td></tr>
@@ -118,7 +120,7 @@ export default function ImportExcelModal({ category, onClose, onImported }) {
                   </table>
                 </div>
               ) : (
-                <div className="alert alert-success"><Icon name="checkCircle" size={14} />Toutes les lignes ont été importées.</div>
+                <div className="alert alert-success"><Icon name="checkCircle" size={14} />{t("Toutes les lignes ont été importées.")}</div>
               )}
             </>
           )}
@@ -127,16 +129,14 @@ export default function ImportExcelModal({ category, onClose, onImported }) {
         <div className="modal-foot">
           {result ? (
             <>
-              <button type="button" className="btn btn-secondary" onClick={() => { setResult(null); setFile(null); }}>Nouvel import</button>
-              <button type="button" className="btn btn-primary" onClick={onClose}><Icon name="check" strokeWidth={2.5} />Terminer</button>
+              <button type="button" className="btn btn-secondary" onClick={() => { setResult(null); setFile(null); }}>{t("Nouvel import")}</button>
+              <button type="button" className="btn btn-primary" onClick={onClose}><Icon name="check" strokeWidth={2.5} />{t("Terminer")}</button>
             </>
           ) : (
             <>
-              <button type="button" className="btn btn-secondary" onClick={onClose} disabled={busy}>Annuler</button>
+              <button type="button" className="btn btn-secondary" onClick={onClose} disabled={busy}>{t("Annuler")}</button>
               <button type="button" className="btn btn-primary" onClick={handleImport} disabled={!file || busy}>
-                {busy ? <span className="btn-spinner" /> : <Icon name="upload" size={14} strokeWidth={2.5} />}
-                Importer
-              </button>
+                {busy ? <span className="btn-spinner" /> : <Icon name="upload" size={14} strokeWidth={2.5} />} {t("Importer")} </button>
             </>
           )}
         </div>

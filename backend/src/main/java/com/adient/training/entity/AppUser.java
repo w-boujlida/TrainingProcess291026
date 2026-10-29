@@ -28,6 +28,9 @@ public class AppUser {
     @Column(nullable = false, length = 30)
     private Role role;
 
+    @Column(name = "work_type", length = 10)
+    private String workType;
+
     @Column(nullable = false)
     private boolean active = true;
 
@@ -70,6 +73,8 @@ public class AppUser {
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+    public String getWorkType() { return workType; }
+    public void setWorkType(String workType) { this.workType = workType; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
     public boolean isMustChangePassword() { return mustChangePassword; }

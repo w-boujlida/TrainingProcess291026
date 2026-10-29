@@ -1,6 +1,8 @@
 package com.adient.training.config;
 
 import com.adient.training.security.JwtAuthFilter;
+import com.adient.training.security.AuditFilter;
+import com.adient.training.service.AuditService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,24 +33,30 @@ public class SecurityConfig {
     @Value("${app.cors-allowed-origins}")
     private String allowedOrigins;
 
+    @Value("${app.audit.trusted-proxy-host:}")
+    private String trustedProxyHost;
+
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuditService auditService) throws Exception {
         return http
                 .cors(c -> c.configurationSource(corsSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login", "/error").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/i18n", "/error").permitAll()
+                        .requestMatchers("/api/audit-events/**").hasRole("SUPER_ADMIN")
                         .requestMatchers("/api/users/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                        .requestMatchers("/api/training-sheets/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/recruitment/**").authenticated()
                         .requestMatchers("/api/recruitment/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "FORMATRICE")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AuditFilter(auditService, trustedProxyHost), JwtAuthFilter.class)
                 .build();
     }
 
@@ -62,7 +70,7 @@ public class SecurityConfig {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOrigins(Arrays.stream(allowedOrigins.split(",")).map(String::trim).toList());
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        cfg.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        cfg.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept-Language"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cfg);
         return source;

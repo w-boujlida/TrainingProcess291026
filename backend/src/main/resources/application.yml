@@ -25,6 +25,8 @@ jwt:
   expiration-ms: ${JWT_EXPIRATION_MS:28800000}
 
 app:
+  audit:
+    trusted-proxy-host: ${AUDIT_TRUSTED_PROXY_HOST:}
   super-admin:
     username: ${SUPERADMIN_USERNAME:superadmin}
     password: ${SUPERADMIN_PASSWORD:ChangeMe@2026}

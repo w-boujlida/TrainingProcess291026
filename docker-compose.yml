@@ -37,6 +37,7 @@ services:
       SUPERADMIN_USERNAME: ${SUPERADMIN_USERNAME:-superadmin}
       SUPERADMIN_PASSWORD: ${SUPERADMIN_PASSWORD}
       CORS_ALLOWED_ORIGINS: "http://${SERVER_HOST:-localhost}:${FRONTEND_PORT:-3002},http://localhost:5173"
+      AUDIT_TRUSTED_PROXY_HOST: frontend
     depends_on:
       postgres:
         condition: service_healthy

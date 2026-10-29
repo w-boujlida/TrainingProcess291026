@@ -13,6 +13,18 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private final com.adient.training.service.I18nService i18n;
+
+    public GlobalExceptionHandler(com.adient.training.service.I18nService i18n) {
+        this.i18n = i18n;
+    }
+
+    @ExceptionHandler(org.springframework.dao.OptimisticLockingFailureException.class)
+    public ResponseEntity<Map<String, Object>> handleConcurrentUpdate(
+            org.springframework.dao.OptimisticLockingFailureException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("message", "La fiche a été modifiée. Rechargez-la avant de continuer."));
+    }
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<Map<String, Object>> handleApi(ApiException ex) {
@@ -22,7 +34,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
         String msg = ex.getBindingResult().getFieldErrors().stream()
-                .map(e -> e.getDefaultMessage())
+                .map(e -> i18n.translate(e.getDefaultMessage()))
                 .distinct()
                 .collect(Collectors.joining(" "));
         return ResponseEntity.badRequest().body(Map.of("message", msg));
@@ -39,6 +51,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({org.springframework.web.multipart.support.MissingServletRequestPartException.class,
+            jakarta.validation.ConstraintViolationException.class,
+            org.springframework.web.method.annotation.HandlerMethodValidationException.class,
             org.springframework.web.bind.MissingServletRequestParameterException.class,
             org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class})
     public ResponseEntity<Map<String, Object>> handleBadParam(Exception ex) {
