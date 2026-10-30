@@ -55,9 +55,49 @@ décompressés au total. Leur compression est normalisée en mémoire pour accep
 les longues plages de mise en forme répétées du classeur RH initial, sans
 désactiver les protections Excel globales.
 
-Après l'import, une alerte liste les nouvelles recrues. **Aucun dossier ni
-workflow Recrutement n'est créé automatiquement** : utilisez **Ouvrir
-Recrutement** pour lancer le parcours manuellement. Téléchargez le CSV privé
+Après l'import, une alerte liste les nouvelles recrues. Le Recrutement est
+synchronisé selon le **TYPE DE TRAVAIL** (colonne K) :
+
+- les dossiers Cadre / Direct / Indirect liés par matricule sont déplacés vers
+  l'onglet du type RH (les dossiers **Formation** ne sont pas déplacés) ;
+- chaque salarié **actif** sans dossier reçoit un dossier **En formation**
+  (matricule, nom, CIN, naissance, embauche, téléphone, adresse, poste,
+  département, niveau scolaire ; fiche formation, livret et fiche poste créés) ;
+- CIN vide ou en erreur : pas de dossier ; CIN en double : seule l'embauche la
+  plus récente reçoit un dossier. Le nombre de salariés actifs sans dossier est
+  affiché ; aucun dossier existant n'est supprimé ni changé de statut.
+
+La migration `V16` applique cette synchronisation une fois aux données déjà
+importées.
+
+Chaque import met aussi à jour la **hiérarchie** des dossiers Cadre / Direct /
+Indirect (migration `V17` pour les données existantes) :
+
+- **Shift** depuis la colonne J « Poste » : A → **Équipe A**, B → **Équipe B** ;
+  un Cadre sans équipe reçoit **Normal** s'il n'a pas de shift ; sinon le shift
+  existant est conservé ;
+- **Team leader** : regroupement par superviseur (I), ligne (H) et équipe (J).
+  Si le groupe contient exactement un team leader actif (poste G « Team
+  leader » et rôle Team Leader / Job Team Leader), il est lié automatiquement ;
+  ces liens automatiques sont recalculés à chaque import. Un team leader choisi
+  manuellement n'est jamais remplacé par l'import.
+
+L'écran **Recrutement › Employés › Hiérarchie** (`GET /api/recruitment/hierarchy`)
+affiche Superviseur → Team leaders → lignes → employés, avec filtres « Sans team
+leader » / « Sans shift », sélection d'une branche, d'une ligne ou d'employés et
+affectation en masse du shift et/ou du team leader
+(`PATCH /api/recruitment/candidates/assignment`, Super Admin / Admin /
+Formatrice). Un compte Job Team Leader peut être lié mais doit passer au rôle
+Team Leader pour signer les fiches.
+
+La **Vue d'ensemble** comporte un onglet **Couturières & postes** (tous les
+utilisateurs du module) : nombre de dossiers Direct par poste (variantes
+d'orthographe fusionnées), couturières par projet, matrice postes × projet —
+les lignes RH (colonne H) sont regroupées en projets (P6 AV + P6 AR → P6,
+Skoda 336 / linge renfort Skoda → SKODA) avec le détail par ligne — et les
+nouvelles recrues du mois en cours (date d'embauche) par catégorie.
+
+Téléchargez le CSV privé
 des accès temporaires avant de fermer la fenêtre ; les mots de passe ne sont
 retournés qu'à la création, jamais affichés dans la liste ni journalisés.
 L'alerte reste visible sur la page courante jusqu'à sa fermeture/navigation.

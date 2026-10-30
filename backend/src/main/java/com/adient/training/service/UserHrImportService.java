@@ -27,7 +27,8 @@ public class UserHrImportService {
     public record Recruit(long id, String username, String fullName, boolean active, String temporaryPassword) {}
     public record Preview(String confirmation, int rows, int updates, int creates, int protectedAccounts,
                           int excelErrors, int uncalculated, List<Issue> errors, List<Recruit> newRecruits) {}
-    public record Result(int updated, int created, int protectedAccounts, List<Recruit> newRecruits) {}
+    public record Result(int updated, int created, int protectedAccounts, List<Recruit> newRecruits,
+                         RecruitmentHrSync.Summary recruitment) {}
     private record Account(long id, String username, Role role) {}
     private final JdbcTemplate db;
     private final HrWorkbookReader reader;
@@ -58,7 +59,7 @@ public class UserHrImportService {
         // Serialize imports and ordinary account/profile writes between preview validation and commit.
         db.execute("SET LOCAL lock_timeout = '10s'");
         try {
-            db.execute("LOCK TABLE app_user,user_hr_profile IN SHARE ROW EXCLUSIVE MODE");
+            db.execute("LOCK TABLE app_user,user_hr_profile,candidate IN SHARE ROW EXCLUSIVE MODE");
         } catch (CannotAcquireLockException e) {
             throw new ApiException(HttpStatus.CONFLICT, "Une mise à jour est en cours. Recommencez l’aperçu dans quelques instants.");
         }
@@ -99,7 +100,7 @@ public class UserHrImportService {
                 throw new IllegalStateException("Impossible d’enregistrer la fiche RH.", e);
             }
         }
-        return new Result(updated, recruits.size(), preview.protectedAccounts(), recruits);
+        return new Result(updated, recruits.size(), preview.protectedAccounts(), recruits, new RecruitmentHrSync(db).sync());
     }
 
     private Preview preview(WorkbookData data, Map<String, Account> accounts) {

@@ -75,6 +75,27 @@ public final class RecruitmentDtos {
                                          /** Direct position, required when validating a Formation employee. */
                                          String position) {}
 
+    /** Bulk assignment; each field is applied only when its change flag is set (a null value clears it). */
+    public record AssignmentRequest(@NotEmpty(message = "Sélectionnez au moins un dossier.")
+                                    @Size(max = 5000, message = "Trop de dossiers sélectionnés.") java.util.List<@NotNull Long> ids,
+                                    boolean changeShift, WorkShift shift,
+                                    boolean changeTeamLeader, Long teamLeaderId) {}
+
+    public record HierarchyMember(Long candidateId, String matricule, String fullName, String category, String position,
+                                  String team, String shift, String shiftLabel, Long teamLeaderId, String teamLeaderName,
+                                  boolean teamLeaderAuto, Long suggestedTeamLeaderId) {}
+
+    public record HierarchyLeader(Long userId, String fullName, String matricule, String line, String team,
+                                  Long candidateId, String shift, String shiftLabel, int members, boolean assignable) {}
+
+    public record HierarchyLine(String line, java.util.List<HierarchyMember> members) {}
+
+    public record HierarchySupervisor(String name, java.util.List<HierarchyLeader> teamLeaders,
+                                      java.util.List<HierarchyLine> lines, int members, int withoutTeamLeader) {}
+
+    public record Hierarchy(java.util.List<HierarchySupervisor> supervisors, java.util.List<StaffDto> teamLeaders,
+                            int members, int withoutTeamLeader, int withoutShift) {}
+
     public record BookletObjectiveUpdate(
             @NotBlank String key,
             @NotNull BookletAssessment assessment,
@@ -140,7 +161,7 @@ public final class RecruitmentDtos {
                                String matricule, String fullName, String cin, LocalDate birthDate, String phone,
                                String email, String address, String position, String department,
                                LocalDate hireDate, String educationLevel, String shift, String shiftLabel,
-                               StaffDto trainer, StaffDto teamLeader, String remarks, String createdBy,
+                               StaffDto trainer, StaffDto teamLeader, boolean teamLeaderAuto, String remarks, String createdBy,
                                LocalDateTime createdAt, LocalDateTime updatedAt, String trainingLevel,
                                String trainingLevelLabel, String trialLabel, LocalDate trialEndDate,
                                LocalDate formationValidatedOn) {
@@ -152,7 +173,7 @@ public final class RecruitmentDtos {
                     c.getDepartment(), c.getHireDate(), c.getEducationLevel(),
                     c.getShift() == null ? null : c.getShift().name(),
                     c.getShift() == null ? null : c.getShift().getLabel(),
-                    StaffDto.of(c.getTrainer()), StaffDto.of(c.getTeamLeader()), c.getRemarks(),
+                    StaffDto.of(c.getTrainer()), StaffDto.of(c.getTeamLeader()), c.isTeamLeaderAuto(), c.getRemarks(),
                     c.getCreatedBy(), c.getCreatedAt(), c.getUpdatedAt(),
                     level == null ? null : level.name(), level == null ? null : level.getLabel(),
                     level == null ? null : level.getTrialLabel(),

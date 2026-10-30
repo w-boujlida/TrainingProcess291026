@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import UsersPage from './pages/UsersPage';
 import AuditPage from './pages/AuditPage';
 import RecruitmentPage from './pages/RecruitmentPage';
+import HierarchyPage from './pages/HierarchyPage';
 import ForbiddenPage from './pages/ForbiddenPage';
 import { USER_MANAGERS } from './roles';
 
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/audit" element={<AuditPage />} />
           </Route>
           <Route path="/recruitment" element={<Navigate to="/recruitment/formation" replace />} />
+          <Route path="/recruitment/hierarchy" element={<HierarchyPage />} />
           <Route path="/recruitment/:category" element={<RecruitmentPage />} />
         </Route>
       </Route>

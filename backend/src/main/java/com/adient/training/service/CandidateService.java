@@ -11,10 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CandidateService {
+
+    /** Module team leaders and the HR "Team leader" job accounts can both lead a dossier. */
+    public static final List<Role> TEAM_LEADER_ROLES = List.of(Role.TEAM_LEADER, Role.JOB_TEAM_LEADER);
 
     private final CandidateRepository candidates;
     private final UserRepository users;
@@ -39,7 +44,7 @@ public class CandidateService {
 
     @Transactional(readOnly = true)
     public List<StaffDto> staff() {
-        return users.findAllByRoleInAndActiveTrueOrderByFullNameAsc(List.of(Role.FORMATRICE, Role.TEAM_LEADER))
+        return users.findAllByRoleInAndActiveTrueOrderByFullNameAsc(List.of(Role.FORMATRICE, Role.TEAM_LEADER, Role.JOB_TEAM_LEADER))
                 .stream().map(StaffDto::of).toList();
     }
 
@@ -104,6 +109,28 @@ public class CandidateService {
     }
 
     @Transactional
+    public List<CandidateDto> assign(AssignmentRequest req) {
+        if (!req.changeShift() && !req.changeTeamLeader())
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Choisissez un shift ou un team leader à affecter.");
+        Set<Long> wanted = new LinkedHashSet<>(req.ids());
+        List<Candidate> found = candidates.findAllById(wanted);
+        if (found.size() != wanted.size()) throw new ApiException(HttpStatus.NOT_FOUND, "Dossier introuvable.");
+        String leaderMatricule = req.changeTeamLeader() && req.teamLeaderId() != null
+                ? users.findById(req.teamLeaderId()).map(AppUser::getUsername).orElse(null) : null;
+        if (leaderMatricule != null && found.stream().anyMatch(c -> leaderMatricule.equalsIgnoreCase(c.getMatricule())))
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Un team leader ne peut pas être son propre team leader.");
+        for (Candidate c : found) {
+            if (req.changeShift()) c.setShift(req.shift());
+            if (req.changeTeamLeader()) {
+                setTeamLeader(c, req.teamLeaderId());
+                // Confirming the HR suggestion makes it a manual choice, kept on the next HR imports.
+                c.setTeamLeaderAuto(false);
+            }
+        }
+        return found.stream().map(CandidateDto::of).toList();
+    }
+
+    @Transactional
     public void delete(Long id) {
         candidates.delete(find(id));
     }
@@ -123,8 +150,8 @@ public class CandidateService {
         c.setHireDate(req.hireDate());
         c.setEducationLevel(clean(req.educationLevel()));
         c.setShift(req.shift());
-        c.setTrainer(staffMember(req.trainerId(), Role.FORMATRICE, "La formatrice sélectionnée est invalide."));
-        c.setTeamLeader(staffMember(req.teamLeaderId(), Role.TEAM_LEADER, "Le team leader sélectionné est invalide."));
+        c.setTrainer(staffMember(req.trainerId(), List.of(Role.FORMATRICE), "La formatrice sélectionnée est invalide."));
+        setTeamLeader(c, req.teamLeaderId());
         c.setRemarks(clean(req.remarks()));
         if (req.category().requiresTrainingLevel()) {
             if (req.trainingLevel() == null) {
@@ -145,10 +172,20 @@ public class CandidateService {
                 "Poste invalide pour la catégorie " + category.getLabel() + " : « " + v + " »."));
     }
 
-    private AppUser staffMember(Long id, Role expected, String error) {
+    /** A manual change of team leader stops the automatic HR linking for this dossier. */
+    private void setTeamLeader(Candidate c, Long teamLeaderId) {
+        Long current = c.getTeamLeader() == null ? null : c.getTeamLeader().getId();
+        if (java.util.Objects.equals(current, teamLeaderId)) return;
+        AppUser leader = staffMember(teamLeaderId, TEAM_LEADER_ROLES, "Le team leader sélectionné est invalide.");
+        if (leader != null && !leader.isActive()) throw new ApiException(HttpStatus.BAD_REQUEST, "Le team leader sélectionné est invalide.");
+        c.setTeamLeader(leader);
+        c.setTeamLeaderAuto(false);
+    }
+
+    private AppUser staffMember(Long id, List<Role> expected, String error) {
         if (id == null) return null;
         AppUser u = users.findById(id).orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, error));
-        if (u.getRole() != expected) throw new ApiException(HttpStatus.BAD_REQUEST, error);
+        if (!expected.contains(u.getRole())) throw new ApiException(HttpStatus.BAD_REQUEST, error);
         return u;
     }
 

@@ -84,6 +84,7 @@ export default function Layout({ children }) {
                 {RECRUITMENT_CATEGORIES.map((c) => (
                   <NavLink key={c.code} to={`/recruitment/${c.slug}`} className={navClass}><Icon name={c.icon} />{t(c.label)}</NavLink>
                 ))}
+                <NavLink to="/recruitment/hierarchy" className={navClass}><Icon name="layers" />{t("Hiérarchie")}</NavLink>
               </div>
             )}
           </div>}

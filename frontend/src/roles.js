@@ -43,11 +43,16 @@ export const CANDIDATE_STATUSES = [
 ];
 
 export const SHIFTS = [
+  { code: 'EQUIPE_A', label: 'Équipe A' },
+  { code: 'EQUIPE_B', label: 'Équipe B' },
   { code: 'MATIN', label: 'Matin' },
   { code: 'APRES_MIDI', label: 'Après-midi' },
   { code: 'NUIT', label: 'Nuit' },
   { code: 'NORMAL', label: 'Normal' },
 ];
+
+/** Mirrors backend CandidateService.TEAM_LEADER_ROLES. */
+export const TEAM_LEADER_ROLES = ['TEAM_LEADER', 'JOB_TEAM_LEADER'];
 
 /** Mirrors backend Role.canManage. */
 export function canManage(actorRole, targetRole) {

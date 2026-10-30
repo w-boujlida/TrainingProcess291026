@@ -5,13 +5,41 @@ import { Navigate, useParams } from 'react-router-dom';
 import { recruitmentApi } from '../api/recruitment.api';
 import { errorMessage } from '../api/client';
 import { useAuth } from '../contexts/AuthContext';
-import { CANDIDATE_STATUSES, RECRUITMENT_CATEGORIES, RECRUITMENT_EDITORS, SHIFTS, TRAINING_LEVELS } from '../roles';
+import { CANDIDATE_STATUSES, RECRUITMENT_CATEGORIES, RECRUITMENT_EDITORS, SHIFTS, TEAM_LEADER_ROLES, TRAINING_LEVELS } from '../roles';
 import PageHeader from '../components/PageHeader';
 import Icon from '../components/Icon';
 import ImportExcelModal from '../components/ImportExcelModal';
 import IntegrationBookletModal from '../components/IntegrationBookletModal';
 import TrainingSheetModal from '../components/TrainingSheetModal';
 import WorkstationFormModal from '../components/WorkstationFormModal';
+import { DEFAULT_FILTERS, NONE, activeFilters, facetOptions, filterCandidates, hrIndex, isFiltered } from '../recruitmentFilters';
+
+const FACET_ORDER = ['status', 'position', 'department', 'supervisor', 'line', 'team', 'shift', 'teamLeader', 'trainer', 'level', 'origin'];
+const FACET_TITLES = {
+  status: 'Statut', position: 'Poste', department: 'Département', supervisor: 'Superviseur', line: 'Ligne', team: 'Équipe',
+  shift: 'Shift', teamLeader: 'Team leader', trainer: 'Formatrice', level: 'Niveau', origin: 'Origine',
+};
+const SORT_LABELS = [['NAME_ASC', 'Nom A → Z'], ['NAME_DESC', 'Nom Z → A'], ['MATRICULE', 'Matricule'],
+  ['HIRED_DESC', 'Embauche récente'], ['HIRED_ASC', 'Embauche ancienne']];
+
+/** Detailed filter: values found in the list, each with its count given the other active filters. */
+function FacetSelect({ title, value, facet, onChange }) {
+  const total = facet.options.reduce((sum, o) => sum + o.count, facet.none);
+  if (!value && facet.options.length + (facet.none > 0 ? 1 : 0) < 2) return null;
+  return (
+    <label className="rec-filter">
+      <span className="rec-filter-title">{title}</span>
+      <select className={`filter-select${value ? ' rec-filter-on' : ''}`} value={value} onChange={(e) => onChange(e.target.value)}>
+        <option value="">{t("Tous")} ({total})</option>
+        {facet.options.map((o) => <option key={o.value} value={o.value}>{o.label || o.value} ({o.count})</option>)}
+        {(facet.none > 0 || value === NONE) && <option value={NONE}>{t("Non renseigné")} ({facet.none})</option>}
+        {value && value !== NONE && !facet.options.some((o) => o.value === value) && <option value={value}>{value} (0)</option>}
+      </select>
+    </label>
+  );
+}
+
+const NO_SHIFT = 'NONE';
 
 const EMPTY_FORM = {
   matricule: '', fullName: '', cin: '', birthDate: '', phone: '', email: '', address: '',
@@ -168,7 +196,7 @@ function CandidateModal({ candidate, preset, category, staff, positions, directP
   const [saving, setSaving] = useState(false);
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const trainers = staff.filter((s) => s.role === 'FORMATRICE');
-  const leaders = staff.filter((s) => s.role === 'TEAM_LEADER');
+  const leaders = staff.filter((s) => TEAM_LEADER_ROLES.includes(s.role));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -349,8 +377,8 @@ export default function RecruitmentPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [hrMap, setHrMap] = useState(new Map());
   const [modal, setModal] = useState(null);
   const [bookletCandidate, setBookletCandidate] = useState(null);
   const [trainingSheetCandidate, setTrainingSheetCandidate] = useState(null);
@@ -358,8 +386,9 @@ export default function RecruitmentPage() {
   const [importOpen, setImportOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [positionsMap, setPositionsMap] = useState({});
-  const [positionFilter, setPositionFilter] = useState('');
-  const [levelFilter, setLevelFilter] = useState('');
+  const [selectedIds, setSelectedIds] = useState(new Set());
+  const [bulkShift, setBulkShift] = useState('');
+  const [assigning, setAssigning] = useState(false);
   const [transferring, setTransferring] = useState(false);
   const positions = positionsMap[category?.code] || [];
   const directPositions = positionsMap.DIRECT || [];
@@ -371,23 +400,68 @@ export default function RecruitmentPage() {
   useEffect(() => {
     if (!category) return;
     let cancelled = false;
-    setLoading(true); setError(''); setNotice(''); setSearch(''); setStatusFilter(''); setPositionFilter(''); setLevelFilter(''); setModal(null); setBookletCandidate(null); setTrainingSheetCandidate(null); setWorkstationCandidate(null); setImportOpen(false);
+    setLoading(true); setError(''); setNotice(''); setFilters(DEFAULT_FILTERS); setHrMap(new Map()); setSelectedIds(new Set()); setBulkShift(''); setModal(null); setBookletCandidate(null); setTrainingSheetCandidate(null); setWorkstationCandidate(null); setImportOpen(false);
     Promise.all([recruitmentApi.list(category.code), recruitmentApi.staff()])
       .then(([c, s]) => { if (!cancelled) { setCandidates(c); setStaff(s); } })
       .catch((err) => { if (!cancelled) setError(errorMessage(err)); })
       .finally(() => { if (!cancelled) setLoading(false); });
+    // Supervisor / line / team come from the HR file (same source as the Hiérarchie screen).
+    if (!category.hasLevel) {
+      recruitmentApi.hierarchy(category.code)
+        .then((h) => { if (!cancelled) setHrMap(hrIndex(h)); })
+        .catch(() => {});
+    }
     return () => { cancelled = true; };
   }, [category?.code]);
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return candidates.filter((c) =>
-      (!statusFilter || c.status === statusFilter)
-      && (!positionFilter || c.position === positionFilter)
-      && (!levelFilter || c.trainingLevel === levelFilter)
-      && (!q || [c.fullName, c.cin, c.matricule, c.position, positions.includes(c.position) ? t(c.position) : '', c.department, c.phone]
-        .some((v) => (v || '').toLowerCase().includes(q))));
-  }, [candidates, search, statusFilter, positionFilter, levelFilter, positions, locale.language]);
+  const rows = useMemo(() => candidates.map((c) => ({ ...c, hr: hrMap.get(c.id) })), [candidates, hrMap]);
+  const filtered = useMemo(() => filterCandidates(rows, filters), [rows, filters]);
+  const setFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
+  const toggleFilter = (key, value) => setFilters((f) => ({ ...f, [key]: f[key] === value ? '' : value }));
+  const positionLabel = (p) => (positions.includes(p) ? t(p) : (p || '').trim());
+
+  const facets = useMemo(() => {
+    const leaderName = (c) => c.teamLeader?.fullName || '';
+    const trainerName = (c) => c.trainer?.fullName || '';
+    return {
+      status: facetOptions(rows, filters, 'status', (c) => t(c.statusLabel)),
+      position: facetOptions(rows, filters, 'position', (c) => positionLabel(c.position)),
+      department: facetOptions(rows, filters, 'department', (c) => (c.department || '').trim()),
+      supervisor: facetOptions(rows, filters, 'supervisor', (c) => c.hr.supervisor.trim()),
+      line: facetOptions(rows, filters, 'line', (c) => c.hr.line.trim()),
+      team: facetOptions(rows, filters, 'team', (c) => t("Équipe {0}", { 0: c.hr.team.trim().toUpperCase() })),
+      shift: facetOptions(rows, filters, 'shift', (c) => t(c.shiftLabel)),
+      teamLeader: facetOptions(rows, filters, 'teamLeader', leaderName),
+      trainer: facetOptions(rows, filters, 'trainer', trainerName),
+      level: facetOptions(rows, filters, 'level', (c) => t(c.trainingLevelLabel)),
+      origin: facetOptions(rows, filters, 'origin', (c) => (c.formationValidatedOn ? t("Issue de Formation") : t("Import RH / saisie"))),
+    };
+  }, [rows, filters, positions, locale.language]);
+
+  const shiftCounts = useMemo(() => {
+    const map = Object.fromEntries([...SHIFTS.map((s) => [s.code, 0]), [NO_SHIFT, facets.shift.none]]);
+    facets.shift.options.forEach((o) => { map[o.value] = o.count; });
+    return map;
+  }, [facets]);
+  const shiftFilter = filters.shift;
+  const statusFilter = filters.status;
+  const active = activeFilters(filters);
+  const facetLabel = (key) => {
+    const value = filters[key];
+    if (key === 'hiredFrom') return t("Embauche depuis {0}", { 0: formatDate(value) });
+    if (key === 'hiredTo') return t("Embauche jusqu’au {0}", { 0: formatDate(value) });
+    const title = t(FACET_TITLES[key]);
+    if (value === NONE) return `${title} : ${t("Non renseigné")}`;
+    return `${title} : ${facets[key]?.options.find((o) => o.value === value)?.label || value}`;
+  };
+
+  const selected = filtered.filter((c) => selectedIds.has(c.id));
+  const allSelected = filtered.length > 0 && selected.length === filtered.length;
+  const toggleSelection = (id) => setSelectedIds((current) => {
+    const next = new Set(current);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    return next;
+  });
 
   const counts = useMemo(() => {
     const map = Object.fromEntries(CANDIDATE_STATUSES.map((s) => [s.code, 0]));
@@ -438,6 +512,23 @@ export default function RecruitmentPage() {
     try { await recruitmentApi.exportExcel(category.code); } finally { setExporting(false); }
   });
 
+  const assignShift = () => {
+    if (!bulkShift || !selected.length) return;
+    const shift = bulkShift === NO_SHIFT ? null : bulkShift;
+    const label = shift ? t(SHIFTS.find((s) => s.code === shift).label) : t("Sans shift");
+    if (!window.confirm(t("Affecter le shift « {0} » à {1} dossier(s) ?", { 0: label, 1: selected.length }))) return;
+    run(async () => {
+      setAssigning(true);
+      try {
+        const updated = await recruitmentApi.assign(selected.map((c) => c.id), { changeShift: true, shift });
+        const byId = new Map(updated.map((c) => [c.id, c]));
+        setCandidates((list) => list.map((c) => byId.get(c.id) || c));
+        setSelectedIds(new Set());
+        setNotice(t("Shift « {0} » affecté à {1} dossier(s).", { 0: label, 1: updated.length }));
+      } finally { setAssigning(false); }
+    });
+  };
+
   const handleImported = (res) => {
     setNotice(t("Import {0} : {1} créé(s), {2} mis à jour, {3} en erreur.", { 0: t(category.label), 1: res.created, 2: res.updated, 3: res.skipped }));
     recruitmentApi.list(category.code).then(setCandidates).catch((err) => setError(errorMessage(err)));
@@ -468,7 +559,7 @@ export default function RecruitmentPage() {
           {STATUS_STATS.map((s) => (
             <button key={s.code} type="button"
               className={`stat-card stat-filter ${s.color}${statusFilter === s.code ? ' selected' : ''}`}
-              onClick={() => setStatusFilter((f) => (f === s.code ? '' : s.code))}>
+              onClick={() => toggleFilter('status', s.code)}>
               <div className="stat-header"><span className="stat-title">{t(s.label)}</span><span className="stat-icon"><Icon name={s.icon} size={18} /></span></div>
               <div className="stat-value">{counts[s.code]}</div>
             </button>
@@ -480,28 +571,15 @@ export default function RecruitmentPage() {
 
         <div className="table-container">
           <div className="table-header">
-            <div className="table-title">{t("Candidats")} {t(category.label)} <span className="table-count">{filtered.length}</span></div>
+            <div className="table-title">{t("Candidats")} {t(category.label)} <span className="table-count">{filtered.length}{filtered.length !== candidates.length ? ` / ${candidates.length}` : ''}</span></div>
             <div className="table-controls">
               <div className="search-container">
                 <span className="search-icon"><Icon name="search" size={14} /></span>
-                <input className="search-input" placeholder={t("Nom, CIN, matricule…")} value={search} onChange={(e) => setSearch(e.target.value)} />
+                <input className="search-input" placeholder={t("Nom, CIN, matricule, ligne, team leader…")} value={filters.search} onChange={(e) => setFilter('search', e.target.value)} />
               </div>
-              <select className="filter-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                <option value="">{t("Tous les statuts")}</option>
-                {CANDIDATE_STATUSES.map((s) => <option key={s.code} value={s.code}>{t(s.label)}</option>)}
+              <select className="filter-select" value={filters.sort} onChange={(e) => setFilter('sort', e.target.value)} aria-label={t("Trier")}>
+                {SORT_LABELS.map(([code, label]) => <option key={code} value={code}>{t(label)}</option>)}
               </select>
-              {positions.length > 0 && (
-                <select className="filter-select" value={positionFilter} onChange={(e) => setPositionFilter(e.target.value)} aria-label={t("Filtrer par poste")}>
-                  <option value="">{t("Tous les postes")}</option>
-                  {positions.map((p) => <option key={p} value={p}>{t(p)}</option>)}
-                </select>
-              )}
-              {category.hasLevel && (
-                <select className="filter-select" value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)} aria-label={t("Filtrer par niveau")}>
-                  <option value="">{t("Tous les niveaux")}</option>
-                  {TRAINING_LEVELS.map((l) => <option key={l.code} value={l.code}>{t(l.label)}</option>)}
-                </select>
-              )}
               <button className="tool-btn" onClick={handleExport} disabled={exporting || loading} title={t("Exporter la liste en Excel")}>
                 {exporting ? <span className="btn-spinner dark" /> : <Icon name="download" size={14} />}{t("Exporter")} </button>
               {canEdit && (
@@ -515,19 +593,100 @@ export default function RecruitmentPage() {
             </div>
           </div>
 
+          <div className="rec-filters" role="group" aria-label={t("Filtres détaillés")}>
+            {FACET_ORDER.filter((key) => (key !== 'level' || category.hasLevel) && (key !== 'origin' || !category.hasLevel)
+              && (!['supervisor', 'line', 'team'].includes(key) || !category.hasLevel))
+              .map((key) => (
+                <FacetSelect key={key} title={t(FACET_TITLES[key])} value={filters[key]} facet={facets[key]}
+                  onChange={(value) => setFilter(key, value)} />
+              ))}
+            <label className="rec-filter">
+              <span className="rec-filter-title">{t("Embauché du")}</span>
+              <input type="date" className="filter-select" value={filters.hiredFrom} max={filters.hiredTo || undefined}
+                onChange={(e) => setFilter('hiredFrom', e.target.value)} />
+            </label>
+            <label className="rec-filter">
+              <span className="rec-filter-title">{t("au")}</span>
+              <input type="date" className="filter-select" value={filters.hiredTo} min={filters.hiredFrom || undefined}
+                onChange={(e) => setFilter('hiredTo', e.target.value)} />
+            </label>
+          </div>
+
+          <div className="user-quick-filters">
+            <div className="chip-group" role="group" aria-label={t("Shift")}>
+              <span className="chip-label">{t("Shift")}</span>
+              {[...SHIFTS.map((s) => [s.code, s.label]), [NO_SHIFT, "Sans shift"]]
+                .filter(([code]) => shiftCounts[code] > 0 || shiftFilter === code)
+                .map(([code, label]) => (
+                  <button type="button" key={code} aria-pressed={shiftFilter === code}
+                    className={`filter-chip${shiftFilter === code ? ' filter-chip-on' : ''}`}
+                    onClick={() => toggleFilter('shift', code)}>
+                    {t(label)} <span className="chip-count">{shiftCounts[code]}</span>
+                  </button>))}
+            </div>
+            <div className="chip-group" role="group" aria-label={t("Team leader")}>
+              <span className="chip-label">{t("Team leader")}</span>
+              <button type="button" aria-pressed={filters.teamLeader === NONE}
+                className={`filter-chip${filters.teamLeader === NONE ? ' filter-chip-on' : ''}`}
+                onClick={() => toggleFilter('teamLeader', NONE)}>
+                {t("Sans team leader")} <span className="chip-count">{facets.teamLeader.none}</span>
+              </button>
+            </div>
+          </div>
+
+          {isFiltered(filters) && (
+            <div className="rec-active-filters" role="status">
+              <span className="chip-label">{t("{0} résultat(s)", { 0: filtered.length })}</span>
+              {active.map((key) => (
+                <button type="button" key={key} className="filter-chip filter-chip-on" title={t("Retirer ce filtre")}
+                  onClick={() => setFilter(key, '')}>
+                  {facetLabel(key)} <Icon name="x" size={11} />
+                </button>
+              ))}
+              <button type="button" className="tool-btn" onClick={() => setFilters((f) => ({ ...DEFAULT_FILTERS, sort: f.sort }))}>
+                <Icon name="refresh" size={13} />{t("Réinitialiser les filtres")}
+              </button>
+            </div>
+          )}
+
+          {canEdit && (
+            <div className="user-selection-toolbar" aria-busy={assigning}>
+              <span role="status">{t("{0} sélectionné(s)", { 0: selected.length })}</span>
+              <button type="button" className="tool-btn" disabled={assigning || !filtered.length}
+                onClick={() => setSelectedIds(allSelected ? new Set() : new Set(filtered.map((c) => c.id)))}>
+                {allSelected ? t("Tout désélectionner") : t("Tout sélectionner")}
+              </button>
+              <select className="filter-select" aria-label={t("Shift à affecter")} value={bulkShift}
+                disabled={assigning || !selected.length} onChange={(e) => setBulkShift(e.target.value)}>
+                <option value="">{t("Choisir le shift")}</option>
+                {SHIFTS.map((s) => <option key={s.code} value={s.code}>{t(s.label)}</option>)}
+                <option value={NO_SHIFT}>{t("Sans shift")}</option>
+              </select>
+              <button type="button" className="tool-btn" disabled={assigning || !selected.length || !bulkShift} onClick={assignShift}>
+                {assigning ? <span className="btn-spinner dark" /> : <Icon name="check" size={13} />}{t("Affecter le shift")}
+              </button>
+            </div>
+          )}
+
           <div className="table-wrapper">
             <table className="data-table compact">
               <thead>
                 <tr>
+                  {canEdit && <th><input type="checkbox" checked={allSelected} disabled={assigning || !filtered.length}
+                    aria-label={t("Tout sélectionner")}
+                    onChange={() => setSelectedIds(allSelected ? new Set() : new Set(filtered.map((c) => c.id)))} /></th>}
                   <th className="left">{t("Candidat")}</th><th>{t("Matricule")}</th><th className="left">{t("Poste / Département")}</th>
                   <th>{t("Date recrut.")}</th><th>{t("Shift")}</th><th className="left">{t("Formatrice / TL")}</th><th>{t("Statut")}</th><th>{t("Actions")}</th>
                 </tr>
               </thead>
               <tbody>
-                {loading && <tr><td colSpan="8" className="table-empty"><span className="spinner" /></td></tr>}
-                {!loading && filtered.length === 0 && <tr><td colSpan="8" className="table-empty">{t("Aucun candidat trouvé.")}</td></tr>}
+                {loading && <tr><td colSpan={canEdit ? 9 : 8} className="table-empty"><span className="spinner" /></td></tr>}
+                {!loading && filtered.length === 0 && <tr><td colSpan={canEdit ? 9 : 8} className="table-empty">{t("Aucun candidat trouvé.")}</td></tr>}
                 {!loading && filtered.map((c) => (
-                  <tr key={c.id}>
+                  <tr key={c.id} aria-selected={canEdit ? selectedIds.has(c.id) : undefined}
+                    className={selectedIds.has(c.id) ? 'user-selected-row' : undefined}>
+                    {canEdit && <td><input type="checkbox" checked={selectedIds.has(c.id)} disabled={assigning}
+                      aria-label={t("Sélectionner {0}", { 0: c.fullName })} onChange={() => toggleSelection(c.id)} /></td>}
                     <td className="left">
                       <div className="user-cell">
                         <div className={`user-avatar cand-${c.status}`}>{initials(c.fullName)}</div>

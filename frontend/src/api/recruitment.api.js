@@ -7,6 +7,8 @@ export const recruitmentApi = {
   create: (data) => client.post('/recruitment/candidates', data).then((r) => r.data),
   update: (id, data) => client.put(`/recruitment/candidates/${id}`, data).then((r) => r.data),
   setStatus: (id, status, position) => client.patch(`/recruitment/candidates/${id}/status`, { status, position }).then((r) => r.data),
+  assign: (ids, changes) => client.patch('/recruitment/candidates/assignment', { ids, ...changes }).then((r) => r.data),
+  hierarchy: (category) => client.get('/recruitment/hierarchy', { params: { category: category || undefined } }).then((r) => r.data),
   getBooklet: (id) => client.get(`/recruitment/candidates/${id}/booklet`).then((r) => r.data),
   updateBooklet: (id, data) => client.put(`/recruitment/candidates/${id}/booklet`, data).then((r) => r.data),
   signCandidateBooklet: (id, signature) => client.post(`/recruitment/candidates/${id}/booklet/candidate-signature`, { signature }).then((r) => r.data),

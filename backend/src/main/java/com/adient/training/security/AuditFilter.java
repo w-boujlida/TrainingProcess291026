@@ -27,7 +27,7 @@ public class AuditFilter extends OncePerRequestFilter {
     private static final Pattern KNOWN_PATH = Pattern.compile(
             "/api/(?:auth/(?:login|logout|me|change-password)|audit-events"
             + "|users(?:/roles|/hr-import/(?:preview|apply)|/excel/(?:import|export|template)|/\\d+(?:/status|/reset-password|/hr-profile)?)?"
-            + "|recruitment/(?:staff|positions|excel/(?:import|export|template)|candidates(?:/\\d+(?:/status|/booklet(?:/candidate-signature|/trainer-signature)?)?)?)"
+            + "|recruitment/(?:staff|positions|hierarchy|excel/(?:import|export|template)|candidates(?:/assignment|/\\d+(?:/status|/booklet(?:/candidate-signature|/trainer-signature)?)?)?)"
             + "|training-sheets/candidates/\\d+(?:/periods/\\d+/(?:trainer-signature|team-leader-signature)|/supervisor-signature|/quality-signature)?"
             + "|workstation-forms/candidates/\\d+(?:/(?:INITIAL|REFRESHER)/(?:steps/\\d+/signature|operator-signature))?)");
     private final AuditService audit;

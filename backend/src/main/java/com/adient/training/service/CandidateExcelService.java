@@ -158,7 +158,7 @@ public class CandidateExcelService {
         }
 
         Map<String, AppUser> trainers = staffIndex(Role.FORMATRICE);
-        Map<String, AppUser> leaders = staffIndex(Role.TEAM_LEADER);
+        Map<String, AppUser> leaders = staffIndex(CandidateService.TEAM_LEADER_ROLES.toArray(Role[]::new));
         DataFormatter formatter = new DataFormatter(Locale.FRANCE);
 
         int created = 0, updated = 0, skipped = 0;
@@ -295,9 +295,9 @@ public class CandidateExcelService {
         }
     }
 
-    private Map<String, AppUser> staffIndex(Role role) {
+    private Map<String, AppUser> staffIndex(Role... roles) {
         Map<String, AppUser> map = new HashMap<>();
-        for (AppUser u : users.findAllByRoleInAndActiveTrueOrderByFullNameAsc(List.of(role))) {
+        for (AppUser u : users.findAllByRoleInAndActiveTrueOrderByFullNameAsc(List.of(roles))) {
             map.put(normalize(u.getUsername()), u);
             map.putIfAbsent(normalize(u.getFullName()), u);
         }

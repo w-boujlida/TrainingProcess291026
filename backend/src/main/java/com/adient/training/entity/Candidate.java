@@ -74,6 +74,10 @@ public class Candidate {
     @JoinColumn(name = "team_leader_id")
     private AppUser teamLeader;
 
+    /** True when the team leader was linked automatically from the HR file (refreshed on each HR import). */
+    @Column(name = "team_leader_auto", nullable = false)
+    private boolean teamLeaderAuto;
+
     @Column(length = 2000)
     private String remarks;
 
@@ -133,6 +137,8 @@ public class Candidate {
     public void setTrainer(AppUser trainer) { this.trainer = trainer; }
     public AppUser getTeamLeader() { return teamLeader; }
     public void setTeamLeader(AppUser teamLeader) { this.teamLeader = teamLeader; }
+    public boolean isTeamLeaderAuto() { return teamLeaderAuto; }
+    public void setTeamLeaderAuto(boolean teamLeaderAuto) { this.teamLeaderAuto = teamLeaderAuto; }
     public String getRemarks() { return remarks; }
     public void setRemarks(String remarks) { this.remarks = remarks; }
     public String getCreatedBy() { return createdBy; }

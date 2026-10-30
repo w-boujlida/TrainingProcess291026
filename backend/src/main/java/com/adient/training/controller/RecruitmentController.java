@@ -6,6 +6,7 @@ import com.adient.training.security.AuthUser;
 import com.adient.training.service.CandidateExcelService;
 import com.adient.training.service.CandidateService;
 import com.adient.training.service.IntegrationBookletService;
+import com.adient.training.service.RecruitmentHierarchyService;
 import jakarta.validation.Valid;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -30,12 +31,14 @@ public class RecruitmentController {
     private final CandidateService service;
     private final CandidateExcelService excelService;
     private final IntegrationBookletService bookletService;
+    private final RecruitmentHierarchyService hierarchyService;
 
     public RecruitmentController(CandidateService service, CandidateExcelService excelService,
-                                 IntegrationBookletService bookletService) {
+                                 IntegrationBookletService bookletService, RecruitmentHierarchyService hierarchyService) {
         this.service = service;
         this.excelService = excelService;
         this.bookletService = bookletService;
+        this.hierarchyService = hierarchyService;
     }
 
     @GetMapping("/candidates")
@@ -76,6 +79,18 @@ public class RecruitmentController {
     @PatchMapping("/candidates/{id}/status")
     public CandidateDto setStatus(@PathVariable Long id, @Valid @RequestBody CandidateStatusRequest req) {
         return service.setStatus(id, req.status(), req.position());
+    }
+
+    @PatchMapping("/candidates/assignment")
+    public List<CandidateDto> assign(@Valid @RequestBody AssignmentRequest req, HttpServletRequest request) {
+        List<CandidateDto> updated = service.assign(req);
+        request.setAttribute(AuditFilter.AFFECTED, updated.size());
+        return updated;
+    }
+
+    @GetMapping("/hierarchy")
+    public Hierarchy hierarchy(@RequestParam(required = false) RecruitmentCategory category) {
+        return hierarchyService.hierarchy(category);
     }
 
     @GetMapping("/candidates/{id}/booklet")

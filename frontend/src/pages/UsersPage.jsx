@@ -9,6 +9,13 @@ import Icon from '../components/Icon';
 import ImportExcelModal from '../components/ImportExcelModal';
 import UserHrProfileModal from '../components/UserHrProfileModal';
 import HrUpdateImportModal from '../components/HrUpdateImportModal';
+import { DEFAULT_FILTERS, filterUsers, isFiltered, quickCounts } from '../usersFilters';
+
+const PAGE_SIZE = 200;
+const STATUS_CHIPS = [['ALL', 'Tous'], ['ACTIVE', 'Actifs'], ['INACTIVE', 'Inactifs'], ['PENDING', 'MDP à changer']];
+const TYPE_CHIPS = [['ALL', 'Tous'], ['CADRE', 'Cadre'], ['DIRECT', 'Direct'], ['INDIRECT', 'Indirect'], ['NONE', 'Sans type']];
+const SORT_OPTIONS = [['NAME_ASC', 'Nom A → Z'], ['NAME_DESC', 'Nom Z → A'], ['USERNAME', 'Matricule / identifiant'],
+  ['LAST_LOGIN', 'Dernière connexion'], ['RECENT', 'Comptes les plus récents']];
 
 const EMPTY_FORM = { username: '', fullName: '', email: '', role: '', password: '', workType: '' };
 const WORK_TYPES = { CADRE: 'Cadre', DIRECT: 'Direct', INDIRECT: 'Indirect' };
@@ -124,8 +131,8 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [search, setSearch] = useState('');
-  const [roleFilter, setRoleFilter] = useState('');
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [visible, setVisible] = useState(PAGE_SIZE);
   const [modal, setModal] = useState(null);
   const [hrUser, setHrUser] = useState(null);
   const [importOpen, setImportOpen] = useState(false);
@@ -144,13 +151,15 @@ export default function UsersPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return users.filter((u) =>
-      (!roleFilter || u.role === roleFilter)
-      && (!q || u.fullName.toLowerCase().includes(q) || u.username.toLowerCase().includes(q)
-        || (u.email || '').toLowerCase().includes(q)));
-  }, [users, search, roleFilter]);
+  const filtered = useMemo(() => filterUsers(users, filters), [users, filters]);
+  const counts = useMemo(() => quickCounts(users, filters), [users, filters]);
+  const shown = filtered.slice(0, visible);
+  const setFilter = (key, value) => {
+    setFilters((previous) => ({ ...previous, [key]: value }));
+    setVisible(PAGE_SIZE);
+    if (key !== 'sort') setSelectedIds(new Set());
+  };
+  const resetFilters = () => { setFilters(DEFAULT_FILTERS); setVisible(PAGE_SIZE); setSelectedIds(new Set()); };
 
   const selected = filtered.filter((u) => selectedIds.has(u.id));
   const allSelected = filtered.length > 0 && selected.length === filtered.length;
@@ -251,22 +260,16 @@ export default function UsersPage() {
       <PageHeader title={t("Utilisateurs")} subtitle={t("Gestion des comptes et des rôles")} />
       <div className="content">
         <div className="stats-grid">
-          <div className="stat-card stat-green">
-            <div className="stat-header"><span className="stat-title">{t("Total comptes")}</span><span className="stat-icon"><Icon name="users" size={18} /></span></div>
-            <div className="stat-value">{stats.total}</div>
-          </div>
-          <div className="stat-card stat-teal">
-            <div className="stat-header"><span className="stat-title">{t("Actifs")}</span><span className="stat-icon"><Icon name="userCheck" size={18} /></span></div>
-            <div className="stat-value">{stats.active}</div>
-          </div>
-          <div className="stat-card stat-red">
-            <div className="stat-header"><span className="stat-title">{t("Inactifs")}</span><span className="stat-icon"><Icon name="power" size={18} /></span></div>
-            <div className="stat-value">{stats.inactive}</div>
-          </div>
-          <div className="stat-card stat-amber">
-            <div className="stat-header"><span className="stat-title">{t("MDP à changer")}</span><span className="stat-icon"><Icon name="key" size={18} /></span></div>
-            <div className="stat-value">{stats.pending}</div>
-          </div>
+          {[['ALL', 'stat-green', 'Total comptes', 'users', stats.total], ['ACTIVE', 'stat-teal', 'Actifs', 'userCheck', stats.active],
+            ['INACTIVE', 'stat-red', 'Inactifs', 'power', stats.inactive], ['PENDING', 'stat-amber', 'MDP à changer', 'key', stats.pending]]
+            .map(([status, color, title, icon, value]) => (
+              <button type="button" key={status} disabled={applyingSelection} aria-pressed={filters.status === status}
+                title={t("Filtrer la liste")} onClick={() => setFilter('status', status)}
+                className={`stat-card stat-card-filter ${color}${filters.status === status ? ' stat-card-selected' : ''}`}>
+                <div className="stat-header"><span className="stat-title">{t(title)}</span><span className="stat-icon"><Icon name={icon} size={18} /></span></div>
+                <div className="stat-value">{value}</div>
+              </button>
+            ))}
         </div>
 
         {error && <div className="alert alert-error"><Icon name="alert" size={14} />{error}</div>}
@@ -284,15 +287,19 @@ export default function UsersPage() {
             <div className="table-controls">
               <div className="search-container">
                 <span className="search-icon"><Icon name="search" size={14} /></span>
-                <input className="search-input" placeholder="Rechercher…" value={search} disabled={applyingSelection}
-                  onChange={(e) => { setSearch(e.target.value); setSelectedIds(new Set()); }} />
+                <input className="search-input" placeholder={t("Nom, matricule, e-mail…")} value={filters.search} disabled={applyingSelection}
+                  aria-label={t("Rechercher")} onChange={(e) => setFilter('search', e.target.value)} />
               </div>
-              <select className="filter-select" value={roleFilter} disabled={applyingSelection}
-                onChange={(e) => { setRoleFilter(e.target.value); setSelectedIds(new Set()); }}>
+              <select className="filter-select" value={filters.role} disabled={applyingSelection} aria-label={t("Rôle")}
+                onChange={(e) => setFilter('role', e.target.value)}>
                 <option value="">{t("Tous les rôles")}</option>
                 {[...new Map([...roles, ...users.map((u) => ({ code: u.role, label: u.roleLabel }))]
                   .map((r) => [r.code, r])).values()].map((r) =>
                   <option key={r.code} value={r.code}>{t(r.label)}</option>)}
+              </select>
+              <select className="filter-select" value={filters.sort} disabled={applyingSelection} aria-label={t("Trier par")}
+                onChange={(e) => setFilter('sort', e.target.value)}>
+                {SORT_OPTIONS.map(([code, label]) => <option key={code} value={code}>{t("Trier : {0}", { 0: t(label) })}</option>)}
               </select>
               <button type="button" className="tool-btn" disabled={applyingSelection || downloading || loading}
                 title={t("Exporter tous les comptes, sans mot de passe")} onClick={() => download(usersApi.exportExcel)}>
@@ -307,6 +314,27 @@ export default function UsersPage() {
               <button className="add-btn" onClick={() => setModal({})} disabled={applyingSelection || !roles.length}>
                 <Icon name="plus" size={13} strokeWidth={2.5} />{t("Nouvel utilisateur")} </button>
             </div>
+          </div>
+
+          <div className="user-quick-filters">
+            <div className="chip-group" role="group" aria-label={t("Statut")}>
+              <span className="chip-label">{t("Statut")}</span>
+              {STATUS_CHIPS.map(([code, label]) => (
+                <button type="button" key={code} disabled={applyingSelection} aria-pressed={filters.status === code}
+                  className={`filter-chip${filters.status === code ? ' filter-chip-on' : ''}`} onClick={() => setFilter('status', code)}>
+                  {t(label)} <span className="chip-count">{counts.status[code]}</span>
+                </button>))}
+            </div>
+            <div className="chip-group" role="group" aria-label={t("Type de travail")}>
+              <span className="chip-label">{t("Type de travail")}</span>
+              {TYPE_CHIPS.map(([code, label]) => (
+                <button type="button" key={code} disabled={applyingSelection} aria-pressed={filters.type === code}
+                  className={`filter-chip${filters.type === code ? ' filter-chip-on' : ''}`} onClick={() => setFilter('type', code)}>
+                  {t(label)} <span className="chip-count">{counts.type[code]}</span>
+                </button>))}
+            </div>
+            {isFiltered(filters) && <button type="button" className="tool-btn" disabled={applyingSelection} onClick={resetFilters}>
+              <Icon name="refresh" size={13} />{t("Réinitialiser les filtres")}</button>}
           </div>
 
           <div className="user-selection-toolbar" aria-busy={applyingSelection}>
@@ -348,7 +376,7 @@ export default function UsersPage() {
               <tbody>
                 {loading && <tr><td colSpan="8" className="table-empty"><span className="spinner" /></td></tr>}
                 {!loading && filtered.length === 0 && <tr><td colSpan="8" className="table-empty">{t("Aucun utilisateur trouvé.")}</td></tr>}
-                {filtered.map((u) => {
+                {shown.map((u) => {
                   const self = u.id === me.id;
                   const manageable = !self && canManage(me.role, u.role);
                   return (
@@ -396,6 +424,11 @@ export default function UsersPage() {
               </tbody>
             </table>
           </div>
+          {filtered.length > shown.length && <div className="table-more">
+            <span>{t("{0} affiché(s) sur {1}", { 0: shown.length, 1: filtered.length })}</span>
+            <button type="button" className="tool-btn" onClick={() => setVisible((v) => v + PAGE_SIZE)}>{t("Afficher plus")}</button>
+            <button type="button" className="tool-btn" onClick={() => setVisible(filtered.length)}>{t("Tout afficher")}</button>
+          </div>}
         </div>
       </div>
 

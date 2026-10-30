@@ -4,7 +4,9 @@ public enum WorkShift {
     MATIN("Matin"),
     APRES_MIDI("Après-midi"),
     NUIT("Nuit"),
-    NORMAL("Normal");
+    NORMAL("Normal"),
+    EQUIPE_A("Équipe A"),
+    EQUIPE_B("Équipe B");
 
     private final String label;
 

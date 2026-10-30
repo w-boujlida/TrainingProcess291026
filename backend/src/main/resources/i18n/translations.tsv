@@ -17,7 +17,8 @@ Erreurs Excel conservées : {0}. Formules sans résultat : {1} (Non calculé dan
 Corrigez les lignes en erreur avant de confirmer l’import.	Fix invalid rows before confirming the import.	Correggi le righe non valide prima di confermare l’importazione.	صحح الصفوف الخاطئة قبل تأكيد الاستيراد.
 Import enregistré. Les comptes existants non présents dans le fichier sont conservés.	Import saved. Existing accounts missing from the file are retained.	Importazione salvata. Gli account esistenti assenti dal file vengono conservati.	تم حفظ الاستيراد. تبقى الحسابات الحالية غير الموجودة في الملف محفوظة.
 Nouvelles recrues à traiter dans Recrutement	New recruits to process in Recruitment	Nuovi assunti da gestire in Reclutamento	موظفون جدد للمعالجة في التوظيف
-Aucun dossier ni workflow créé automatiquement. Les nouveaux comptes Employé n’ont pas accès aux modules.	No records or workflows created automatically. New Employee accounts have no module access.	Nessuna pratica o workflow creato automaticamente. I nuovi account Dipendente non hanno accesso ai moduli.	لا تُنشأ ملفات أو مسارات عمل تلقائياً. حسابات الموظفين الجديدة لا تملك صلاحية الوصول للوحدات.
+Les salariés actifs avec un CIN valide reçoivent un dossier En formation dans Cadre, Direct ou Indirect selon le type de travail. Les nouveaux comptes Employé n’ont pas accès aux modules.	Active employees with a valid ID card number get an In training record in Cadre, Direct or Indirect according to their work type. New Employee accounts have no module access.	I dipendenti attivi con una CIN valida ricevono una pratica In formazione in Quadri, Diretti o Indiretti secondo il tipo di lavoro. I nuovi account Dipendente non hanno accesso ai moduli.	يحصل الموظفون النشطون الذين لديهم رقم بطاقة تعريف صالح على ملف قيد التكوين في الإطارات أو المباشرين أو غير المباشرين حسب نوع العمل. حسابات الموظفين الجديدة لا تملك صلاحية الوصول للوحدات.
+Recrutement : {0} dossiers créés (En formation), {1} dossiers déplacés vers Cadre / Direct / Indirect. Salariés actifs sans dossier (CIN manquant ou en double) : {2}.	Recruitment: {0} records created (In training), {1} records moved to Cadre / Direct / Indirect. Active employees without a record (missing or duplicate ID card number): {2}.	Reclutamento: {0} pratiche create (In formazione), {1} pratiche spostate in Quadri / Diretti / Indiretti. Dipendenti attivi senza pratica (CIN mancante o duplicata): {2}.	التوظيف: تم إنشاء {0} ملفاً (قيد التكوين)، ونقل {1} ملفاً إلى الإطارات / المباشرين / غير المباشرين. موظفون نشطون بدون ملف (رقم بطاقة مفقود أو مكرر): {2}.
 Téléchargez les mots de passe temporaires avant de fermer. Ils ne seront plus affichés après cette opération. Conservez ce fichier dans un emplacement privé.	Download temporary passwords before closing. They will not be available again after this operation. Keep this file in a private location.	Scarica le password temporanee prima di chiudere. Non saranno più disponibili dopo questa operazione. Conserva il file in un luogo privato.	نزّل كلمات المرور المؤقتة قبل الإغلاق. لن تتوفر مجدداً بعد هذه العملية. احفظ الملف في مكان خاص.
 Télécharger les accès des nouvelles recrues	Download new recruits’ credentials	Scarica le credenziali dei nuovi assunti	تنزيل بيانات دخول الموظفين الجدد
 Ouvrir Recrutement	Open Recruitment	Apri Reclutamento	فتح التوظيف
@@ -808,3 +809,147 @@ Changement du mot de passe	Password change	Cambio password	تغيير كلمة �
 Réinitialisation du mot de passe	Password reset	Reimpostazione password	إعادة تعيين كلمة المرور
 Requête	Request	Richiesta	طلب
 {0} invalide : « {1} » (format JJ/MM/AAAA).	Invalid {0}: “{1}” (DD/MM/YYYY format).	{0} non valido: « {1} » (formato GG/MM/AAAA).	{0} غير صالح: « {1} » (الصيغة يوم/شهر/سنة).
+Filtrer la liste	Filter the list	Filtra l'elenco	تصفية القائمة
+Nom, matricule, e-mail…	Name, ID, e-mail…	Nome, matricola, e-mail…	الاسم، الرقم، البريد…
+Rechercher	Search	Cerca	بحث
+Trier par	Sort by	Ordina per	ترتيب حسب
+Trier : {0}	Sort: {0}	Ordina: {0}	ترتيب: {0}
+Nom A → Z	Name A → Z	Nome A → Z	الاسم أ → ي
+Nom Z → A	Name Z → A	Nome Z → A	الاسم ي → أ
+Matricule / identifiant	Employee ID / username	Matricola / identificativo	الرقم / المعرّف
+Comptes les plus récents	Newest accounts	Account più recenti	أحدث الحسابات
+Sans type	No type	Senza tipo	بدون نوع
+Réinitialiser les filtres	Reset filters	Reimposta filtri	إعادة ضبط عوامل التصفية
+{0} affiché(s) sur {1}	{0} shown of {1}	{0} visualizzati su {1}	عرض {0} من {1}
+Afficher plus	Show more	Mostra altri	عرض المزيد
+Tout afficher	Show all	Mostra tutti	عرض الكل
+Autres	Others	Altri	أخرى
+Femme	Woman	Donna	امرأة
+Homme	Man	Uomo	رجل
+En attente	Pending	In attesa	قيد الانتظار
+Conforme (OK)	Compliant (OK)	Conforme (OK)	مطابق (OK)
+Non conforme (NOK)	Non-compliant (NOK)	Non conforme (NOK)	غير مطابق (NOK)
+< 25 ans	< 25 years	< 25 anni	أقل من 25 سنة
+25 – 35 ans	25 – 35 years	25 – 35 anni	25 – 35 سنة
+35 – 45 ans	35 – 45 years	35 – 45 anni	35 – 45 سنة
+45 – 55 ans	45 – 55 years	45 – 55 anni	45 – 55 سنة
+> 55 ans	> 55 years	> 55 anni	أكثر من 55 سنة
+< 1 an	< 1 year	< 1 anno	أقل من سنة
+1 – 2 ans	1 – 2 years	1 – 2 anni	1 – 2 سنة
+2 – 3 ans	2 – 3 years	2 – 3 anni	2 – 3 سنوات
+3 – 4 ans	3 – 4 years	3 – 4 anni	3 – 4 سنوات
+> 4 ans	> 4 years	> 4 anni	أكثر من 4 سنوات
+Aucune donnée	No data	Nessun dato	لا توجد بيانات
+Embauches	Hires	Assunzioni	التوظيفات
+Départs	Departures	Uscite	المغادرات
+Embauches et départs par mois	Hires and departures per month	Assunzioni e uscite per mese	التوظيفات والمغادرات شهرياً
+Salariés actifs	Active employees	Dipendenti attivi	الموظفون النشطون
+{0} fiches RH, {1} inactifs	{0} HR records, {1} inactive	{0} schede HR, {1} inattivi	{0} ملف موارد بشرية، {1} غير نشط
+des actifs	of active	degli attivi	من النشطين
+Embauches du mois	Hires this month	Assunzioni del mese	توظيفات الشهر
+Départs du mois	Departures this month	Uscite del mese	مغادرات الشهر
+Femmes	Women	Donne	النساء
+CDI	Permanent (CDI)	Indeterminato (CDI)	عقد دائم (CDI)
+Embauches et départs (12 derniers mois)	Hires and departures (last 12 months)	Assunzioni e uscite (ultimi 12 mesi)	التوظيفات والمغادرات (آخر 12 شهراً)
+Actifs par département	Active by department	Attivi per reparto	النشطون حسب القسم
+Actifs par ligne de production	Active by production line	Attivi per linea di produzione	النشطون حسب خط الإنتاج
+Ancienneté	Seniority	Anzianità	الأقدمية
+Tranches d'âge	Age groups	Fasce di età	الفئات العمرية
+Type de contrat	Contract type	Tipo di contratto	نوع العقد
+Homme / Femme	Man / Woman	Uomo / Donna	رجل / امرأة
+Dossiers Recrutement	Recruitment records	Pratiche di reclutamento	ملفات التوظيف
+Note moyenne des compétences	Average competency rating	Valutazione media delle competenze	متوسط تقييم الكفاءات
+{0} compétence(s) notée(s)	{0} rated competencies	{0} competenze valutate	{0} كفاءة مقيمة
+Dossiers par catégorie et statut	Records by category and status	Pratiche per categoria e stato	الملفات حسب الفئة والحالة
+Livret d'intégration	Integration booklet	Libretto di integrazione	كتيب الإدماج
+Signés par le salarié	Signed by employee	Firmati dal dipendente	موقعة من الموظف
+Signés par la formatrice	Signed by trainer	Firmati dalla formatrice	موقعة من المكونة
+Résultat de l’évaluation	Evaluation result	Risultato della valutazione	نتيجة التقييم
+Objectifs du livret	Booklet objectives	Obiettivi del libretto	أهداف الكتيب
+Visa superviseur	Supervisor approval	Visto supervisore	تأشيرة المشرف
+Visa qualité	Quality approval	Visto qualità	تأشيرة الجودة
+Périodes signées par la formatrice	Periods signed by trainer	Periodi firmati dalla formatrice	فترات موقعة من المكونة
+Périodes signées par le team leader	Periods signed by team leader	Periodi firmati dal team leader	فترات موقعة من قائد الفريق
+Notes des compétences (1 à 5)	Competency ratings (1 to 5)	Valutazioni delle competenze (1-5)	تقييمات الكفاءات (1 إلى 5)
+Aucune compétence notée	No rated competency	Nessuna competenza valutata	لا توجد كفاءة مقيمة
+Fiche d'intégration au poste — étapes	Workstation integration form — steps	Scheda di integrazione alla postazione — fasi	بطاقة الإدماج في المنصب — المراحل
+Connectés (7 jours)	Logged in (7 days)	Connessi (7 giorni)	متصلون (7 أيام)
+{0} jamais connecté(s)	{0} never logged in	{0} mai connessi	{0} لم يتصلوا أبداً
+Comptes verrouillés	Locked accounts	Account bloccati	حسابات مقفلة
+Effectifs (fiches RH)	Workforce (HR records)	Organico (schede HR)	القوى العاملة (ملفات الموارد البشرية)
+Suivi des fiches de formation	Training records follow-up	Monitoraggio schede di formazione	متابعة بطاقات التكوين
+Comptes	Accounts	Account	الحسابات
+shift « {0} »	shift “{0}”	turno «{0}»	الوردية «{0}»
+Sans shift	No shift	Senza turno	بدون وردية
+team leader « {0} »	team leader “{0}”	team leader «{0}»	قائد الفريق «{0}»
+Aucun	None	Nessuno	لا شيء
+Affecter {0} à {1} dossier(s) ?	Assign {0} to {1} file(s)?	Assegnare {0} a {1} pratica/e?	تعيين {0} لـ {1} ملف(ات)؟
+{0} dossier(s) mis à jour : {1}.	{0} file(s) updated: {1}.	{0} pratica/e aggiornata/e: {1}.	تم تحديث {0} ملف(ات): {1}.
+Hiérarchie	Hierarchy	Gerarchia	التسلسل الهرمي
+Superviseur → Team leader → Couturières, regroupées par ligne selon la fiche RH	Supervisor → Team leader → Seamstresses, grouped by line from the HR record	Supervisore → Team leader → Cucitrici, raggruppate per linea secondo la scheda HR	المشرف ← قائد الفريق ← الخياطات، مجمعات حسب الخط وفق بطاقة الموارد البشرية
+Superviseurs	Supervisors	Supervisori	المشرفون
+Sans team leader	No team leader	Senza team leader	بدون قائد فريق
+Superviseur, team leader, ligne, nom…	Supervisor, team leader, line, name…	Supervisore, team leader, linea, nome…	المشرف، قائد الفريق، الخط، الاسم…
+Tout replier	Collapse all	Comprimi tutto	طي الكل
+Tout déplier	Expand all	Espandi tutto	توسيع الكل
+Shift à affecter	Shift to assign	Turno da assegnare	الوردية المراد تعيينها
+Shift : inchangé	Shift: unchanged	Turno: invariato	الوردية: دون تغيير
+Team leader à affecter	Team leader to assign	Team leader da assegnare	قائد الفريق المراد تعيينه
+Team leader : inchangé	Team leader: unchanged	Team leader: invariato	قائد الفريق: دون تغيير
+Team leaders du superviseur	Supervisor's team leaders	Team leader del supervisore	قادة فرق المشرف
+Tous les team leaders	All team leaders	Tutti i team leader	جميع قادة الفرق
+Aucun team leader	No team leader	Nessun team leader	لا يوجد قائد فريق
+Affecter	Assign	Assegna	تعيين
+Aucun employé trouvé.	No employee found.	Nessun dipendente trovato.	لم يتم العثور على أي موظف.
+Sélectionner toute l’équipe de {0}	Select {0}'s whole team	Seleziona tutto il team di {0}	تحديد كامل فريق {0}
+Sans superviseur	No supervisor	Senza supervisore	بدون مشرف
+{0} employé(s)	{0} employee(s)	{0} dipendente/i	{0} موظف(ين)
+{0} team leader(s)	{0} team leader(s)	{0} team leader	{0} قائد(ة) فريق
+{0} sans team leader	{0} without team leader	{0} senza team leader	{0} بدون قائد فريق
+Équipe {0}	Team {0}	Squadra {0}	الفريق {0}
+Rôle du compte à passer en « Team Leader » pour l’affecter	Change the account role to “Team Leader” to assign it	Impostare il ruolo dell'account su «Team Leader» per assegnarlo	غيّر دور الحساب إلى «قائد فريق» لتعيينه
+Sélectionner la ligne {0}	Select line {0}	Seleziona la linea {0}	تحديد الخط {0}
+Sans ligne	No line	Senza linea	بدون خط
+Équipe	Team	Squadra	الفريق
+Automatique (fiche RH)	Automatic (HR record)	Automatico (scheda HR)	تلقائي (بطاقة الموارد البشرية)
+Affecté manuellement	Assigned manually	Assegnato manualmente	معيّن يدويًا
+Suggéré : {0}	Suggested: {0}	Suggerito: {0}	مقترح: {0}
+Affecter le shift « {0} » à {1} dossier(s) ?	Assign shift “{0}” to {1} file(s)?	Assegnare il turno «{0}» a {1} pratica/e?	تعيين الوردية «{0}» لـ {1} ملف(ات)؟
+Shift « {0} » affecté à {1} dossier(s).	Shift “{0}” assigned to {1} file(s).	Turno «{0}» assegnato a {1} pratica/e.	تم تعيين الوردية «{0}» لـ {1} ملف(ات).
+Choisir le shift	Choose the shift	Scegli il turno	اختر الوردية
+Affecter le shift	Assign shift	Assegna turno	تعيين الوردية
+Hiérarchie : {0} shifts mis à jour (équipe A / B), {1} liens team leader mis à jour.	Hierarchy: {0} shifts updated (team A / B), {1} team leader links updated.	Gerarchia: {0} turni aggiornati (squadra A / B), {1} collegamenti team leader aggiornati.	التسلسل الهرمي: تم تحديث {0} وردية (الفريق A / B)، وتحديث {1} رابط قائد فريق.
+Équipe A	Team A	Squadra A	الفريق A
+Équipe B	Team B	Squadra B	الفريق B
+Choisissez un shift ou un team leader à affecter.	Choose a shift or a team leader to assign.	Scegli un turno o un team leader da assegnare.	اختر وردية أو قائد فريق لتعيينه.
+Dossier introuvable.	File not found.	Pratica non trovata.	الملف غير موجود.
+Un team leader ne peut pas être son propre team leader.	A team leader cannot be their own team leader.	Un team leader non può essere il proprio team leader.	لا يمكن لقائد الفريق أن يكون قائد فريق نفسه.
+Sélectionnez au moins un dossier.	Select at least one file.	Seleziona almeno una pratica.	حدد ملفًا واحدًا على الأقل.
+Trop de dossiers sélectionnés.	Too many files selected.	Troppe pratiche selezionate.	تم تحديد عدد كبير جدًا من الملفات.
+Département	Department	Reparto	القسم
+Origine	Origin	Origine	المصدر
+Import RH / saisie	HR import / manual entry	Import HR / inserimento	استيراد الموارد البشرية / إدخال
+Embauche récente	Most recent hire	Assunzione più recente	التوظيف الأحدث
+Embauche ancienne	Oldest hire	Assunzione più vecchia	التوظيف الأقدم
+Trier	Sort	Ordina	ترتيب
+Nom, CIN, matricule, ligne, team leader…	Name, ID card, employee ID, line, team leader…	Nome, CIN, matricola, linea, team leader…	الاسم، رقم البطاقة، الرقم التسلسلي، الخط، قائد الفريق…
+Filtres détaillés	Detailed filters	Filtri dettagliati	فلاتر مفصلة
+Embauché du	Hired from	Assunto dal	موظف من
+au	to	al	إلى
+Embauche depuis {0}	Hired since {0}	Assunto dal {0}	موظف منذ {0}
+Embauche jusqu’au {0}	Hired until {0}	Assunto fino al {0}	موظف حتى {0}
+{0} résultat(s)	{0} result(s)	{0} risultato/i	{0} نتيجة
+Retirer ce filtre	Remove this filter	Rimuovi questo filtro	إزالة هذا الفلتر
+Couturières & postes	Seamstresses & positions	Cucitrici e posizioni	الخياطات والمناصب
+Dossiers Direct	Direct files	Pratiche Direct	ملفات المباشرين
+Couturières	Seamstresses	Cucitrici	الخياطات
+des Directs	of Direct	dei Direct	من المباشرين
+Projets	Projects	Progetti	المشاريع
+{0} poste(s) différent(s)	{0} different position(s)	{0} posizione/i diversa/e	{0} منصب مختلف
+Nouvelles recrues du mois	New hires this month	Nuovi assunti del mese	المنتدبون الجدد هذا الشهر
+Nombre par poste (dossiers Direct)	Count per position (Direct files)	Numero per posizione (pratiche Direct)	العدد حسب المنصب (ملفات المباشرين)
+Couturières par projet	Seamstresses per project	Cucitrici per progetto	الخياطات حسب المشروع
+Postes par projet	Positions per project	Posizioni per progetto	المناصب حسب المشروع
+Projet	Project	Progetto	المشروع
+Aucune recrue ce mois-ci.	No new hire this month.	Nessun nuovo assunto questo mese.	لا يوجد منتدبون جدد هذا الشهر.
+Date d'embauche	Hire date	Data di assunzione	تاريخ التوظيف

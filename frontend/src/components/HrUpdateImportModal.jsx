@@ -109,9 +109,13 @@ export default function HrUpdateImportModal({ onClose, onImported }) {
           </div>}
         </>}
         {result && <div role="status" className="alert alert-success">{t('Import enregistré. Les comptes existants non présents dans le fichier sont conservés.')}</div>}
+        {result?.recruitment && <p role="status">{t('Recrutement : {0} dossiers créés (En formation), {1} dossiers déplacés vers Cadre / Direct / Indirect. Salariés actifs sans dossier (CIN manquant ou en double) : {2}.',
+          { 0: result.recruitment.created, 1: result.recruitment.moved, 2: result.recruitment.withoutDossier })}</p>}
+        {result?.recruitment && <p role="status">{t('Hiérarchie : {0} shifts mis à jour (équipe A / B), {1} liens team leader mis à jour.',
+          { 0: result.recruitment.shifts ?? 0, 1: result.recruitment.teamLeaders ?? 0 })}</p>}
         {recruits.length > 0 && <section className="hr-import-recruits">
           <h4>{t('Nouvelles recrues à traiter dans Recrutement')} ({recruits.length})</h4>
-          <p>{t('Aucun dossier ni workflow créé automatiquement. Les nouveaux comptes Employé n’ont pas accès aux modules.')}</p>
+          <p>{t('Les salariés actifs avec un CIN valide reçoivent un dossier En formation dans Cadre, Direct ou Indirect selon le type de travail. Les nouveaux comptes Employé n’ont pas accès aux modules.')}</p>
           <ul>{recruits.map((user) => <li key={user.username}><span className="mono">{user.username}</span> — {user.fullName} · {user.active ? t('Actif') : t('Inactif')}</li>)}</ul>
         </section>}
         {result?.created > 0 && <>
